@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<game>
+	<gamename>심연탐험 Exploring the Abyss</gamename>
+	<maxmoney>10000000</maxmoney>
+	<maxbyss>10000000</maxbyss>
+	<maxdate>365</maxdate>
+	<maxphase>6</maxphase>
+
+	<!-- initial data -->
+	<money>0</money>
+	<byss>0</byss>
+	<date>0</date>
+	<phase>0</phase>
+	<startyear>2014</startyear>
+	<startmonth>2</startmonth>
+	<startday>21</startday>
+</game>
