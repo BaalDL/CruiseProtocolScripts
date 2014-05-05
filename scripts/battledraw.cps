@@ -1,6 +1,6 @@
 #function loadptypebattlefunctions
 
-	//정해진 크기의 블럭을 출력한다. 출력할 블럭은 argument에 행 단위로 집어넣는다. next는 "right"나 "down", "enter"를 받아서 width 내지 height에 입력한 만큼 커서 위치를 바꾼다.
+	--정해진 크기의 블럭을 출력한다. 출력할 블럭은 argument에 행 단위로 집어넣는다. next는 "right"나 "down", "enter"를 받아서 width 내지 height에 입력한 만큼 커서 위치를 바꾼다.
 	function printblock(width, height, next, ...)
 		for i = 1, arg.n do
 			draw (arg[i], getct() - 1 + i)
@@ -15,7 +15,7 @@
 		end
 	end
 
-	// 전투용 체력 바를 만든다.
+	--전투용 체력 바를 만든다.
 	function makebar(width, current, maximum, info, char)
 		local curlen = string.len(tostring(current))
 		local maxlen = string.len(tostring(maximum))
@@ -42,7 +42,7 @@
 	  return "NEXT " .. order
 	end
 
-	// 매번 화면을 그리는 함수. argument로 전투 메세지를 전달해야 한다.
+	--매번 화면을 그리는 함수. argument로 전투 메세지를 전달해야 한다.
 	function draweachtime(...)
 		local t, l = getc()
 		if (t >= bufferheight - windowheight - 1) then

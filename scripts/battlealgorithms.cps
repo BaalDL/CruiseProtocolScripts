@@ -1,14 +1,12 @@
 #function battleheader
 
-// 전투 캐릭터용 템플릿 구조
-
-// 임시로 여기에 데이터 하나를 추가해 봄. 나중에 빼고 대량화해야 함. 구조는 http://ericjmritz.name/2013/10/31/xml-versus-lua-for-game-data/
+-- 전투 캐릭터용 템플릿 구조
 
 EnemyHandler = {}
 EnemyHandler.init = function(enemyT)
   enemy = {}
   enemy.skills = {}
-  enemy.templetes = EnemyTempletes["thug"]
+  enemy.templetes = enemyT
   enemy.name = EnemyTempletes[enemyT].name
   enemy.ally = false
   enemy.alive = true
@@ -16,22 +14,23 @@ EnemyHandler.init = function(enemyT)
   local t = EnemyTempletes[enemyT].strengthTable
   local p = EnemyTempletes[enemyT].strengthPercent
   
-  enemy.maxHP = EnemyTempletes[enemyT].HPBase * (1 + p*t[ math.random (#t)])
+  enemy.maxHP = math.floor(EnemyTempletes[enemyT].HPBase * (1 + p*t[ math.random (#t)]))
   enemy.currHP = enemy.maxHP
   enemy.maxResource = EnemyTempletes[enemyT].ResourceBase
   enemy.currResource = enemy.maxResource
   enemy.resourceType = EnemyTempletes[enemyT].ResourceType
-  enemy.physicalAttack = EnemyTempletes[enemyT].physicalAttack * (1 + p*t[ math.random (#t)])
-  enemy.physicalDefense = EnemyTempletes[enemyT].physicalDefense * (1 + p*t[ math.random (#t)])
-  enemy.physicalSpeed = EnemyTempletes[enemyT].physicalSpeed * (1 + p*t[ math.random (#t)])
-  enemy.specialAttack = EnemyTempletes[enemyT].specialAttack * (1 + p*t[ math.random (#t)])
-  enemy.specialDefense = EnemyTempletes[enemyT].specialDefense * (1 + p*t[ math.random (#t)])
-  enemy.specialSpeed = EnemyTempletes[enemyT].specialSpeed * (1 + p*t[ math.random (#t)])
+  enemy.physicalAttack = math.floor(EnemyTempletes[enemyT].physicalAttack * (1 + p*t[ math.random (#t)]))
+  enemy.physicalDefense = math.floor(EnemyTempletes[enemyT].physicalDefense * (1 + p*t[ math.random (#t)]))
+  enemy.physicalSpeed = math.floor(EnemyTempletes[enemyT].physicalSpeed * (1 + p*t[ math.random (#t)]))
+  enemy.specialAttack = math.floor(EnemyTempletes[enemyT].specialAttack * (1 + p*t[ math.random (#t)]))
+  enemy.specialDefense = math.floor(EnemyTempletes[enemyT].specialDefense * (1 + p*t[ math.random (#t)]))
+  enemy.specialSpeed = math.floor(EnemyTempletes[enemyT].specialSpeed * (1 + p*t[ math.random (#t)]))
   enemy.attackType = EnemyTempletes[enemyT].AttackType
   enemy.skills[0] = SkillList[enemy.attackType]
   for i = 1, 8 do
     enemy.skills[i] = EnemyTempletes[enemyT].skills[i]
   end
+  enemy.info = EnemyInfo[enemy.templetes]
   
   enemy.playerCommand = function(self, party, enemyparty)
   end
@@ -46,7 +45,7 @@ party[1] = EnemyHandler.init("thug")
 party[2] = EnemyHandler.init("thug")
 party[3] = EnemyHandler.init("thug")
 enemyparty[1] = EnemyHandler.init("thug")
-enemyparty[2] = EnemyHandler.init("thug")
+enemyparty[2] = EnemyHandler.init("knifethug")
 enemyparty[3] = EnemyHandler.init("thug")
 
 party[1].ally = true
@@ -275,7 +274,14 @@ function characterdie(actor, skill, target, battle)
   target.status = "전투불능"
   table.remove(orderedCharacters[target.turnorder])
   -- 여기에 온갖 상태이상 초기화 등등을 집어넣는다.
-  message = message .. "\n" .. target.name .. "(은)는 전투 불능이 되었다!"  
+  message = message .. "\n" .. target.name .. "(은)는 전투 불능이 되었다!" 
+  if not target.ally then
+    printl (target.templetes)
+    EnemyInfo[target.templetes] = true
+    for k, v in pairs(enemyparty) do
+      enemyparty[k].info = EnemyInfo[enemyparty[k].templetes]
+    end
+  end
 end
 
 function pickrandomtarget(party, amount, battle)

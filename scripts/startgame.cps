@@ -15,6 +15,8 @@
       battlehandler(party, enemyparty)
     elseif playerchoice == "2" then
       save("savetemp.txt")
+    elseif playerchoice == "3" then
+      party[1].name = "여장남자"
     elseif playerchoice == "4" then
       load("savetemp.txt")
     end
@@ -56,7 +58,7 @@
   return ans
   end
 
-  // 특정한 장소에 들어갔을 때 표시되는 장소 표시용 함수. argument를 넣으면, 장소를 묘사하는 텍스트가 추가적으로 붙는다.
+  --특정한 장소에 들어갔을 때 표시되는 장소 표시용 함수. argument를 넣으면, 장소를 묘사하는 텍스트가 추가적으로 붙는다.
   function printplace(placename, ...)
   	printl ("")
   	_print ("~=~+~=~ ")
@@ -128,7 +130,7 @@
   	end
   end
 
-  // 캐릭터의 대사를 띄워준다. argument에 말하게 될 대사를 넣을 수 있다. 플레이어의 입력을 기다리지 않는다.
+  --캐릭터의 대사를 띄워준다. argument에 말하게 될 대사를 넣을 수 있다. 플레이어의 입력을 기다리지 않는다.
   function say(actor, ...)
   printl ("<" .. actor .. ">")
   for i=1, arg.n do
@@ -137,7 +139,7 @@
   printl ("--------")
   end
 
-  // 캐릭터의 대사를 띄워준다. argument에 말하게 될 대사를 넣을 수 있다. 플레이어의 입력을 기다린다.
+  --캐릭터의 대사를 띄워준다. argument에 말하게 될 대사를 넣을 수 있다. 플레이어의 입력을 기다린다.
   function sayw(actor, ...)
   printl ("<" .. actor .. ">")
   for i=1, arg.n-1 do
@@ -149,19 +151,19 @@
   printlw ("--------")
   end
 
-  // 여러 줄을 표시하되, 매번 기다린다.
+  --여러 줄을 표시하되, 매번 기다린다.
   function printpara(...)
   for i=1, arg.n do
     printlw (arg[i])
   end
   end
 
-  // 커서의 현재 위치를 받는다. 위에서의 위치(top 내지 row), 왼쪽에서의 위치(left내지 column)를 각각 반환.
+  --커서의 현재 위치를 받는다. 위에서의 위치(top 내지 row), 왼쪽에서의 위치(left내지 column)를 각각 반환.
   function getc(...)
   return getct(), getcl()
   end
 
-  //지정한 위치에 string을 표시하고, 커서를 원래 위치로 돌린다. 위치를 입력하지 않으면 자기 자리에 출력하고 커서를 원래 자리로 돌려놓는다. 개행 지원 안함.
+  --지정한 위치에 string을 표시하고, 커서를 원래 위치로 돌린다. 위치를 입력하지 않으면 자기 자리에 출력하고 커서를 원래 자리로 돌려놓는다. 개행 지원 안함.
   function draw(string, row, column)
   	if not row then
   	  row = getct()
@@ -183,7 +185,7 @@
   	end
   end
 
-  //지정한 행에 string을 표시하고, 커서를 원래 위치로 돌린다. 행을 지정하지 않으면 자기 자리에 출력하고 커서를 원래 자리로 돌려놓는다.
+  --지정한 행에 string을 표시하고, 커서를 원래 위치로 돌린다. 행을 지정하지 않으면 자기 자리에 출력하고 커서를 원래 자리로 돌려놓는다.
   function drawl(string, row)
   if not row then
     row = getct()
@@ -191,7 +193,7 @@
   _drawLine(string, row)
   end
 
-  //깔끔하게 글을 쓸 수 있도록 지정한 영역을 지운다. startl과 endl을 지정하지 않으면 줄 전체를 지운다.
+  --깔끔하게 글을 쓸 수 있도록 지정한 영역을 지운다. startl과 endl을 지정하지 않으면 줄 전체를 지운다.
   function erase(startt, endt, startl, endl)
     if not startl then startl = 0 end
     if not endl then endl = windowwidth end
@@ -227,7 +229,7 @@
   	return _getYear(date), _getMonth(date), _getDay(date)
   end
 
-  // table.val_to_str, key_to_str, tostring 코드 출처: http://lua-users.org/wiki/TableUtils (누가 썼는지 정말 성은이 망극)
+  --table.val_to_str, key_to_str, tostring 코드 출처: http://lua-users.org/wiki/TableUtils (누가 썼는지 정말 성은이 망극)
 
   function table.val_to_str ( v )
     if "string" == type( v ) then
@@ -406,7 +408,6 @@
   end
 
   function save(filename)
-    printl(table.tostring(tosave))
   	local file = io.open(filename, "w")
   	--세이브할 변수들의 이름을 아래에 넣는다.
   	--[[for k, v in pairs(tosave) do
@@ -425,10 +426,8 @@
   	local file = io.open(filename, "rb")
     local loadedstring = file:read("*all")
     local loadedtables = loadstring(loadedstring)()
-    print (table.tostring(loadedtables))
     for k, v in pairs(loadedtables) do
       _G[k] = v
-      print (table.tostring(k) .. " " .. table.tostring(v) .. "\n")
     end
     file:close()
   end
