@@ -61,7 +61,7 @@
 				nameline = "[" .. tostring(enemyparty[i].targetnumber) .. "]" .. enemyparty[i].name
 				hpline = "     " .. "HP [" .. makebar(EBARWIDTH, enemyparty[i].currHP, enemyparty[i].maxHP, enemyparty[i].info, '*') .. "]"
 				if enemyparty[i].ResourceType == "Mana" then
-				  mpline = "     " .. "MP [" .. makebar(EBARWIDTH, enemyparty[i].currResource, enemyparty[i].maxResource, enemyparty[i].info, '*') .. "]"
+				  mpline = "     " .. "魔 [" .. makebar(EBARWIDTH, enemyparty[i].currResource, enemyparty[i].maxResource, enemyparty[i].info, '*') .. "]"
 				elseif enemyparty[i].ResourceType == "Ki" then
 				  mpline = "     " .. "氣 [" .. makebar(EBARWIDTH, enemyparty[i].currResource, enemyparty[i].maxResource, enemyparty[i].info, '*') .. "]"
 				elseif enemyparty[i].ResourceType == "Rage" then
@@ -90,7 +90,7 @@
 				nameline = "[" .. tostring(party[i].targetnumber)  .. "]" .. party[i].name
 				hpline = "     " .. "HP [" .. makebar(PBARWIDTH, party[i].currHP, party[i].maxHP, true, '*') .. "]"
 				if party[i].ResourceType == "Mana" then
-				  mpline = "     " .. "MP [" .. makebar(PBARWIDTH, party[i].currResource, party[i].maxResource, true, '*') .. "]"
+				  mpline = "     " .. "魔 [" .. makebar(PBARWIDTH, party[i].currResource, party[i].maxResource, true, '*') .. "]"
 				elseif party[i].ResourceType == "Ki" then
 				  mpline = "     " .. "氣 [" .. makebar(PBARWIDTH, party[i].currResource, party[i].maxResource, true, '*') .. "]"
 				elseif party[i].ResourceType == "Rage" then
