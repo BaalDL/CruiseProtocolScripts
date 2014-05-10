@@ -4,7 +4,7 @@
 
 EnemyHandler = {}
 EnemyHandler.init = function(enemyT)
-  enemy = {}
+  local enemy = {}
   enemy.skills = {}
   enemy.templetes = enemyT
   enemy.name = EnemyTempletes[enemyT].name
@@ -188,7 +188,10 @@ function askplayer(char, party, enemyparty, battle)
   
     if (pc <= 8 and pc >= 0) then
 	    playertarget = lookuptarget(char.skills[pc].MoveType, char.skills[pc].Target)
-	    if (playertarget ~= "-1") then
+	    if (playertarget == "100") then
+        local targets = enemyparty
+        skillhandler(char, char.skills[pc], targets)
+      elseif (playertarget ~= "-1") then
         local targets = {targettable[playertarget]}
 	      skillhandler(char, char.skills[pc], targets)
       end
@@ -212,14 +215,19 @@ function lookuptarget(type, target)
 
   if target == "AnEnemy" then
     for k, v in pairs(e) do
-	  if e[k].alive then table.insert(targets, tostring(e[k].targetnumber)) end
-	end
+	    if e[k].alive then table.insert(targets, tostring(e[k].targetnumber)) end
+    end
+    if type == "Attack" then
+      selection = ask("누구를 공격합니까?", unpack(targets))
+    elseif type == "Harass" then
+      selection = ask("누구를 목표로 삼습니까?", unpack(targets))
+    end
+  elseif target == "WholeEnemy" or
+  target == "RandomEnemies" or
+  target == "PWREnemies" then
+    selection = ask("적 전체를 목표로 삼습니까?", "-1", "100")
   end
-  if type == "Attack" then
-    selection = ask("누구를 공격합니까?", unpack(targets))
-  elseif type == "Harass" then
-    selection = ask("누구를 목표로 삼습니까?", unpack(targets))
-  end
+
   return selection
 end
 
@@ -232,14 +240,23 @@ function skillhandler(char, skill, skilltarget)
 	  skill.Target == "Self" or
 	  skill.Target == "AnAlly" or
 	  skill.Target == "WholeAlly" then
-	  targets = skilltarget
+	    targets = skilltarget
+    elseif skill.Target == "RandomEnemies" then
+    elseif skill.Target == "PWREnemies" then
+      local numTarget = math.random(skill.minTarget, skill.maxTarget)
+      local first, second = unpack(pickrandomtarget(enemyparty, 2))
+      table.insert(targets, first)
+      table.insert(targets, second)
+      for i = 3, numTarget do
+        if i <= numTarget then table.insert(targets, unpack(pickrandomtarget(enemyparty, 1))) end
+      end
+    end
 	end
 	
 	for k, v in pairs(targets) do
 	  if not checkavailable(char, skill, targets[k], battle) then break end
 	  inflictdamage(char, skill, targets[k], battle)
 	end
-  end
 end
 
 function calculatedamage(actor, skill, target, battle)
@@ -262,7 +279,7 @@ end
 
 function checkavailable(actor, skill, target, battle)
   if not target.alive and skill.MoveType == "Attack" then
-    message = message .. "\n지정한 타겟은 이미 전투불능이다!"
+    message = message .. "\n" .. target.name .. "(은)는 이미 전투불능이다!"
     return false
   end
   return true
