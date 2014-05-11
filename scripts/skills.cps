@@ -299,5 +299,20 @@
       DelayType = "specialSpeed",
       Name = "마구 타오"
     }
+
+    SkillList["WholeAttack_Fire1"] = {
+      MoveType="Attack",
+      Target="WholeEnemy",
+      AttackType="Fire",
+      AttackParameter="40",
+      AttackerParameter="specialAttack",
+      TargetParameter="specialDefense",
+      DamageCalculationType="Basic",
+      ResourceType="Mana",
+      ResourceAmount="40",
+      AfterDelay = 150,
+      DelayType = "specialSpeed",
+      Name = "모두 타오"
+    }
   // Skills End
 #end

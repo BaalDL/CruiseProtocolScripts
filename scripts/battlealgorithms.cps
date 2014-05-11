@@ -57,6 +57,8 @@ party[2].name = "여자"
 party[3].name = "사람"
 party[1].maxHP = 10000
 party[1].currHP = 10000
+enemyparty[2].maxHP = 40
+enemyparty[2].currHP = 40
 party[1].ResourceType = "Mana"
 party[2].ResourceType = "Ki"
 party[3].ResourceType = "Rage"
@@ -187,9 +189,12 @@ function askplayer(char, party, enemyparty, battle)
 	  pc = tonumber(playercommand)
   
     if (pc <= 8 and pc >= 0) then
-	    playertarget = lookuptarget(char.skills[pc].MoveType, char.skills[pc].Target)
+	    playertarget = lookuptarget(char.skills[pc].MoveType, char.skills[pc].Target, char.targetnumber)
 	    if (playertarget == "100") then
         local targets = enemyparty
+        for k, v in pairs(targets) do
+          printl(targets[k].targetnumber)
+        end
         skillhandler(char, char.skills[pc], targets)
       elseif (playertarget ~= "-1") then
         local targets = {targettable[playertarget]}
@@ -207,7 +212,7 @@ function askplayer(char, party, enemyparty, battle)
   return char.skills[pc]
 end
 
-function lookuptarget(type, target)
+function lookuptarget(type, target, selfnum)
   local targets = {"-1"}
   local p = currentbattle.party
   local e = currentbattle.enemyparty
@@ -223,9 +228,29 @@ function lookuptarget(type, target)
       selection = ask("누구를 목표로 삼습니까?", unpack(targets))
     end
   elseif target == "WholeEnemy" or
-  target == "RandomEnemies" or
-  target == "PWREnemies" then
+    target == "RandomEnemies" or
+    target == "PWREnemies" then
     selection = ask("적 전체를 목표로 삼습니까?", "-1", "100")
+  elseif target == "AnAlly" then
+    for k, v in pairs(p) do
+      if p[k].alive then table.insert(targets, tostring(e[k].targetnumber)) end
+    end
+    if type == "Heal" or
+      type == "Support" then
+      selection = ask("누구를 목표로 삼습니까?", unpack(targets))
+    end
+  elseif target == "AnAllyIncludingDead" then
+    for k, v in pairs(p) do
+      table.insert(targets, tostring(e[k].targetnumber))
+    end
+    if type == "Heal" or
+      type == "Support" then
+      selection = ask("누구를 목표로 삼습니까?", unpack(targets))
+    end
+  elseif target == "WholeAlly" then
+    selection = ask("아군 전체를 목표로 삼습니까?", "-1", "10")
+  elseif target == "Self" then
+    selection = ask("자기 자신을 목표로 삼습니까?", "-1", selfnum.toString)
   end
 
   return selection
@@ -233,22 +258,33 @@ end
 
 function skillhandler(char, skill, skilltarget)
   message = message .. "\n" .. char.name .. "의 " .. skill.Name .. "!"
+  local opponents = enemyparty
+  if not char.ally then
+    opponents = party
+  end
   local targets = {}
   if skill.MoveType == "Attack" then
     if skill.Target == "AnEnemy" or 
-	  skill.Target == "WholeEnemy" or
 	  skill.Target == "Self" or
 	  skill.Target == "AnAlly" or
 	  skill.Target == "WholeAlly" then
 	    targets = skilltarget
+    elseif skill.Target == "WholeEnemy" then
+      for k, v in pairs(skilltarget) do
+        if skilltarget[k].alive then table.insert(targets, skilltarget[k]) end
+      end
     elseif skill.Target == "RandomEnemies" then
+      local numTarget = math.random(skill.minTarget, skill.maxTarget)
+      for k, v in pairs(pickrandomtarget(opponents, numTarget)) do
+        table.insert(target, v)
+      end
     elseif skill.Target == "PWREnemies" then
       local numTarget = math.random(skill.minTarget, skill.maxTarget)
-      local first, second = unpack(pickrandomtarget(enemyparty, 2))
+      local first, second = unpack(pickrandomtarget(opponents, 2))
       table.insert(targets, first)
       table.insert(targets, second)
       for i = 3, numTarget do
-        if i <= numTarget then table.insert(targets, unpack(pickrandomtarget(enemyparty, 1))) end
+        if i <= numTarget then table.insert(targets, unpack(pickrandomtarget(opponents, 1))) end
       end
     end
 	end
@@ -293,7 +329,6 @@ function characterdie(actor, skill, target, battle)
   -- 여기에 온갖 상태이상 초기화 등등을 집어넣는다.
   message = message .. "\n" .. target.name .. "(은)는 전투 불능이 되었다!" 
   if not target.ally then
-    printl (target.templetes)
     EnemyInfo[target.templetes] = true
     for k, v in pairs(enemyparty) do
       enemyparty[k].info = EnemyInfo[enemyparty[k].templetes]

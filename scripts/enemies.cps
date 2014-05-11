@@ -21,7 +21,8 @@
     skills = {
       SkillList["SingleAttack_Fire1"],
       SkillList["SingleAttack_Water1"],
-      SkillList["RandomAttack_Fire1"]
+      SkillList["RandomAttack_Fire1"],
+      SkillList["WholeAttack_Fire1"]
     },
     AICommand = function(self, party, enemyparty)
       targets = {}
