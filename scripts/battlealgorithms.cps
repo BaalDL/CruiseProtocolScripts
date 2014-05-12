@@ -193,7 +193,6 @@ function askplayer(char, party, enemyparty, battle)
 	    if (playertarget == "100") then
         local targets = enemyparty
         for k, v in pairs(targets) do
-          printl(targets[k].targetnumber)
         end
         skillhandler(char, char.skills[pc], targets)
       elseif (playertarget ~= "-1") then
@@ -281,6 +280,7 @@ function skillhandler(char, skill, skilltarget)
     elseif skill.Target == "PWREnemies" then
       local numTarget = math.random(skill.minTarget, skill.maxTarget)
       local first, second = unpack(pickrandomtarget(opponents, 2))
+      second = second or first
       table.insert(targets, first)
       table.insert(targets, second)
       for i = 3, numTarget do
@@ -340,14 +340,14 @@ function pickrandomtarget(party, amount, battle)
   local alivelist = {} 
   for i = 1, #party do
     if party[i].alive then
-	  table.insert(alivelist,party[i])
-	end
+	    table.insert(alivelist,party[i])
+	  end
   end
   if next(alivelist) == nil then
   message = message .. "\n그러나 공격할 수 있는 대상이 없다!"
     return false
   end
-  local targetlist = combo(alivelist, math.min(amount, #party))
+  local targetlist = combo(alivelist, math.min(amount, #alivelist))
   return targetlist[math.random(#targetlist)]
 end
 
