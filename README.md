@@ -35,5 +35,4 @@ NOTE
 ================
 
 Lauguage used for this game is Korean, for now.
-[3] key doesn't works for now.
 Unused codes not cleaned.

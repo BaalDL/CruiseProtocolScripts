@@ -41,31 +41,33 @@ end
 
 party = {}
 enemyparty = {}
-party[1] = EnemyHandler.init("thug")
-party[2] = EnemyHandler.init("thug")
-party[3] = EnemyHandler.init("thug")
-enemyparty[1] = EnemyHandler.init("thug")
-enemyparty[2] = EnemyHandler.init("knifethug")
-enemyparty[3] = EnemyHandler.init("thug")
 
-party[1].ally = true
-party[2].ally = true
-party[3].ally = true
+--임시 영역. 제대로 된 전투데이터 삽입자로 대체해야 함.
+  party[1] = EnemyHandler.init("thug")
+  party[2] = EnemyHandler.init("thug")
+  party[3] = EnemyHandler.init("thug")
+  enemyparty[1] = EnemyHandler.init("thug")
+  enemyparty[2] = EnemyHandler.init("knifethug")
+  enemyparty[3] = EnemyHandler.init("thug")
 
-party[1].name = "남자"
-party[2].name = "여자"
-party[3].name = "사람"
-party[1].maxHP = 10000
-party[1].currHP = 10000
-enemyparty[2].maxHP = 40
-enemyparty[2].currHP = 40
-party[1].ResourceType = "Mana"
-party[2].ResourceType = "Ki"
-party[3].ResourceType = "Rage"
+  party[1].ally = true
+  party[2].ally = true
+  party[3].ally = true
 
-enemyparty[1].name = enemyparty[1].name .. "A"
-enemyparty[2].name = enemyparty[2].name .. "B"
-enemyparty[3].name = enemyparty[3].name .. "C"
+  party[1].name = "남자"
+  party[2].name = "여자"
+  party[3].name = "사람"
+  party[1].maxHP = 10000
+  party[1].currHP = 10000
+  enemyparty[2].maxHP = 40
+  enemyparty[2].currHP = 40
+  party[1].ResourceType = "Mana"
+  party[2].ResourceType = "Ki"
+  party[3].ResourceType = "Rage"
+
+  enemyparty[1].name = enemyparty[1].name .. "A"
+  enemyparty[2].name = enemyparty[2].name .. "B"
+  enemyparty[3].name = enemyparty[3].name .. "C"
 
 
 function initializebattle(battle)
