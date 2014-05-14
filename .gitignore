@@ -1,3 +1,3 @@
-/CruiseProtocolScripts*.*
+*.sublime*
 /CruiserConsole*.*
 /*.dll
