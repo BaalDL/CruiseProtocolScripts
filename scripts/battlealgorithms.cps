@@ -42,13 +42,10 @@ end
 party = {}
 enemyparty = {}
 
---임시 영역. 제대로 된 전투데이터 삽입자로 대체해야 함.
+--임시 영역. 제대로 된 파티 삽입자로 대체해야 함.
   party[1] = EnemyHandler.init("thug")
   party[2] = EnemyHandler.init("thug")
   party[3] = EnemyHandler.init("thug")
-  -- enemyparty[1] = EnemyHandler.init("thug")
-  -- enemyparty[2] = EnemyHandler.init("knifethug")
-  -- enemyparty[3] = EnemyHandler.init("thug")
 
   party[1].ally = true
   party[2].ally = true
@@ -63,9 +60,6 @@ enemyparty = {}
   party[2].ResourceType = "Ki"
   party[3].ResourceType = "Rage"
 
-  -- enemyparty[1].name = enemyparty[1].name .. "A"
-  -- enemyparty[2].name = enemyparty[2].name .. "B"
-  -- enemyparty[3].name = enemyparty[3].name .. "C"
   enemyparty = initializeenemyparty(EnemyPartyTempletes["thugs1"])
 
 function initializebattle(battle)
@@ -73,24 +67,20 @@ function initializebattle(battle)
   local e = battle.enemyparty
   orderedCharacters = {}
   battleStopWatch = 200
-  local i = 1
   targettable = {}
   targettable["10"] = battle.party
   targettable["100"] = battle.enemyparty
   for k, v in pairs(p) do
     p[k].turntime = math.floor((battleStopWatch / p[k].physicalSpeed) + math.random(10))
 	table.insert(orderedCharacters, p[k]) 
-	p[k].targetnumber = 10 + i
-	targettable[tostring(10+i)] = p[k]
-	i = i + 1
+	p[k].targetnumber = 10 + k
+	targettable[tostring(10+k)] = p[k]
   end
-  i = 1
   for k, v in pairs(e) do
     e[k].turntime = math.floor((battleStopWatch / e[k].physicalSpeed) + math.random(10))
 	table.insert(orderedCharacters, e[k])
-	e[k].targetnumber = 100 + i
-	targettable[tostring(100+i)] = e[k]
-	i = i + 1
+	e[k].targetnumber = 100 + k
+	targettable[tostring(100+k)] = e[k]
   end
   sortcharacters(orderedCharacters)
 end
@@ -338,9 +328,9 @@ end
 
 function pickrandomtarget(party, amount, battle)
   local alivelist = {} 
-  for i = 1, #party do
-    if party[i].alive then
-	    table.insert(alivelist,party[i])
+  for k, _ in pairs(party) do
+    if party[k].alive then
+	    table.insert(alivelist,party[k])
 	  end
   end
   if next(alivelist) == nil then
@@ -353,15 +343,15 @@ end
 
 function checkbattleend()
   local partyeliminated, enemypartyeliminated = true, true
-  for i = 1, #party do
-    if party[i].alive then
+  for k, _ in pairs(party) do
+    if party[k].alive then
 	  partyeliminated = false
       break
 	end
   end
   if partyeliminated then return "defeat" end
-  for i = 1, #enemyparty do
-    if enemyparty[i].alive then
+  for k, _ in pairs(enemyparty) do
+    if enemyparty and enemyparty[k].alive then
 	  enemypartyeliminated = false
       break
 	end
