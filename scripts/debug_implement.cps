@@ -62,6 +62,8 @@
 
   execute ("skilllist")
   execute ("enemylist")
+  execute ("enemypartylist")
+  execute ("enemypartyheader")
   execute ("battleheader")
 
   addsave("party")

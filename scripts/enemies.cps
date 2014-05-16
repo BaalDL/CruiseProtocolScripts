@@ -38,7 +38,7 @@
     genderTable = { 'male', 'male', 'male', 'female' },
     strengthTable = { -1, 0, 0, 0, 0, 0, 1, 1, 2},
     strengthPercent = 0.05,
-    HPBase = 94,
+    HPBase = 50,
     ResourceBase = 100,
     ResourceType = "None",
     Race = "Human",

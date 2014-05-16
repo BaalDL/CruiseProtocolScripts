@@ -46,9 +46,9 @@ enemyparty = {}
   party[1] = EnemyHandler.init("thug")
   party[2] = EnemyHandler.init("thug")
   party[3] = EnemyHandler.init("thug")
-  enemyparty[1] = EnemyHandler.init("thug")
-  enemyparty[2] = EnemyHandler.init("knifethug")
-  enemyparty[3] = EnemyHandler.init("thug")
+  -- enemyparty[1] = EnemyHandler.init("thug")
+  -- enemyparty[2] = EnemyHandler.init("knifethug")
+  -- enemyparty[3] = EnemyHandler.init("thug")
 
   party[1].ally = true
   party[2].ally = true
@@ -59,16 +59,14 @@ enemyparty = {}
   party[3].name = "사람"
   party[1].maxHP = 10000
   party[1].currHP = 10000
-  enemyparty[2].maxHP = 40
-  enemyparty[2].currHP = 40
   party[1].ResourceType = "Mana"
   party[2].ResourceType = "Ki"
   party[3].ResourceType = "Rage"
 
-  enemyparty[1].name = enemyparty[1].name .. "A"
-  enemyparty[2].name = enemyparty[2].name .. "B"
-  enemyparty[3].name = enemyparty[3].name .. "C"
-
+  -- enemyparty[1].name = enemyparty[1].name .. "A"
+  -- enemyparty[2].name = enemyparty[2].name .. "B"
+  -- enemyparty[3].name = enemyparty[3].name .. "C"
+  enemyparty = initializeenemyparty(EnemyPartyTempletes["thugs1"])
 
 function initializebattle(battle)
   local p = battle.party
@@ -300,7 +298,7 @@ end
 function calculatedamage(actor, skill, target, battle)
   local damage = 0
   if skill.DamageCalculationType == "Basic" then
-    damage = math.ceil(skill.AttackParameter * actor[skill.AttackerParameter] / actor[skill.TargetParameter])
+    damage = math.ceil(skill.AttackParameter * actor[skill.AttackerParameter] / target[skill.TargetParameter])
   end
   return damage
 end

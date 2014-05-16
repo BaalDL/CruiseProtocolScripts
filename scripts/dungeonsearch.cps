@@ -412,6 +412,11 @@
   	
     firstdungeon.zonetext["ㅑ"] = [[
     좁은 통로다. 통로 저편으로 빛이 보인다.]]
+
+    firstdungeon.encounter = {}
+
+    firstdungeon.encounter["ㄱ"] = null
+    
   end
 
   firstdungeoninitialized = true
