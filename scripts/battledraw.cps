@@ -70,8 +70,8 @@
 				  mpline = ""
 				end
 				order = stringorder(enemyparty[i].turnorder)
-				blanklen = EWIDTH - string.len(enemyparty[i].status or "정상") - string.len(order) - 2 - string.len(enemyparty[i].turntime) - 1
-				statusline = enemyparty[i].status or "정상" .. string.rep(" ",blanklen) .. enemyparty[i].turntime .. " " .. order
+				blanklen = EWIDTH - string.len(enemyparty[i].status or "정상") - string.len(order) - 2
+				statusline = enemyparty[i].status or "정상" .. string.rep(" ",blanklen) .. order
 			else
 				nameline = ""
 				hpline = ""
@@ -99,8 +99,8 @@
 	        mpline = ""
 	      end
 				order = stringorder(party[i].turnorder)
-				blanklen = PWIDTH - string.len(party[i].status or "정상") - string.len(order) - 2 - string.len(party[i].turntime) - 1
-				statusline = party[i].status or "정상" .. string.rep(" ",blanklen) .. party[i].turntime .. " " .. order
+				blanklen = PWIDTH - string.len(party[i].status or "정상") - string.len(order) - 2
+				statusline = party[i].status or "정상" .. string.rep(" ",blanklen) .. order
 			 else
 				nameline = ""
 				hpline = ""
