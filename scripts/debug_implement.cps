@@ -62,6 +62,7 @@
 
   execute ("skilllist")
   execute ("enemylist")
+  execute ("partydata")
   execute ("enemypartylist")
   execute ("enemypartyheader")
   execute ("battleheader")
