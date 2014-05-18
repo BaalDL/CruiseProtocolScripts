@@ -211,7 +211,6 @@ function lookuptarget(type, target, selfnum)
     for k, v in pairs(e) do
 	    if e[k].alive then table.insert(targets, tostring(e[k].targetnumber)) end
     end
-    table.sort(targets)
     if type == "Attack" then
       selection = ask("누구를 공격합니까?", unpack(targets))
     elseif type == "Harass" then
