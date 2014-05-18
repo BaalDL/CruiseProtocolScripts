@@ -211,6 +211,7 @@ function lookuptarget(type, target, selfnum)
     for k, v in pairs(e) do
 	    if e[k].alive then table.insert(targets, tostring(e[k].targetnumber)) end
     end
+    table.sort(targets)
     if type == "Attack" then
       selection = ask("누구를 공격합니까?", unpack(targets))
     elseif type == "Harass" then
@@ -224,6 +225,7 @@ function lookuptarget(type, target, selfnum)
     for k, v in pairs(p) do
       if p[k].alive then table.insert(targets, tostring(e[k].targetnumber)) end
     end
+    table.sort(targets)
     if type == "Heal" or
       type == "Support" then
       selection = ask("누구를 목표로 삼습니까?", unpack(targets))
@@ -232,6 +234,7 @@ function lookuptarget(type, target, selfnum)
     for k, v in pairs(p) do
       table.insert(targets, tostring(e[k].targetnumber))
     end
+    table.sort(targets)
     if type == "Heal" or
       type == "Support" then
       selection = ask("누구를 목표로 삼습니까?", unpack(targets))
