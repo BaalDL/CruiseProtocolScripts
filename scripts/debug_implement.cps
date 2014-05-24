@@ -60,6 +60,7 @@
   EBARWIDTH = (EWIDTH - string.len("     HP [] "))
   PBARWIDTH = (PWIDTH - string.len("     MP [] "))
 
+
   execute ("skilllist")
   execute ("enemylist")
   execute ("partydata")
@@ -67,8 +68,10 @@
   execute ("enemypartyheader")
   execute ("battleheader")
 
-  addsave("party")
-  addsave("EWIDTH")
+  addsave("allpartymembers")
+  addsave("currentpartymembers")
+  addreset("allpartymembers")
+  addreset("currentpartymembers")  
   addreset("party")
 
   addsave("money")

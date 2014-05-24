@@ -2,63 +2,45 @@
 
 -- 전투 캐릭터용 템플릿 구조
 
-EnemyHandler = {}
-EnemyHandler.init = function(enemyT)
-  local enemy = {}
-  enemy.skills = {}
-  enemy.templetes = enemyT
-  enemy.name = EnemyTempletes[enemyT].name
-  enemy.ally = false
-  enemy.alive = true
-  enemy.gender = EnemyTempletes[enemyT].genderTable[math.random( #EnemyTempletes[enemyT].genderTable )]
-  local t = EnemyTempletes[enemyT].strengthTable
-  local p = EnemyTempletes[enemyT].strengthPercent
-  
-  enemy.maxHP = math.floor(EnemyTempletes[enemyT].HPBase * (1 + p*t[ math.random (#t)]))
-  enemy.currHP = enemy.maxHP
-  enemy.maxResource = EnemyTempletes[enemyT].ResourceBase
-  enemy.currResource = enemy.maxResource
-  enemy.resourceType = EnemyTempletes[enemyT].ResourceType
-  enemy.physicalAttack = math.floor(EnemyTempletes[enemyT].physicalAttack * (1 + p*t[ math.random (#t)]))
-  enemy.physicalDefense = math.floor(EnemyTempletes[enemyT].physicalDefense * (1 + p*t[ math.random (#t)]))
-  enemy.physicalSpeed = math.floor(EnemyTempletes[enemyT].physicalSpeed * (1 + p*t[ math.random (#t)]))
-  enemy.specialAttack = math.floor(EnemyTempletes[enemyT].specialAttack * (1 + p*t[ math.random (#t)]))
-  enemy.specialDefense = math.floor(EnemyTempletes[enemyT].specialDefense * (1 + p*t[ math.random (#t)]))
-  enemy.specialSpeed = math.floor(EnemyTempletes[enemyT].specialSpeed * (1 + p*t[ math.random (#t)]))
-  enemy.attackType = EnemyTempletes[enemyT].AttackType
-  enemy.skills[0] = SkillList[enemy.attackType]
-  for i = 1, 8 do
-    enemy.skills[i] = EnemyTempletes[enemyT].skills[i]
+  EnemyHandler = {}
+  EnemyHandler.init = function(enemyT)
+    local enemy = {}
+    enemy.skills = {}
+    enemy.templetes = enemyT
+    enemy.name = EnemyTempletes[enemyT].name
+    enemy.ally = false
+    enemy.alive = true
+    enemy.gender = EnemyTempletes[enemyT].genderTable[math.random( #EnemyTempletes[enemyT].genderTable )]
+    local t = EnemyTempletes[enemyT].strengthTable
+    local p = EnemyTempletes[enemyT].strengthPercent
+    
+    enemy.maxHP = math.floor(EnemyTempletes[enemyT].HPBase * (1 + p*t[ math.random (#t)]))
+    enemy.currHP = enemy.maxHP
+    enemy.maxResource = EnemyTempletes[enemyT].ResourceBase
+    enemy.currResource = enemy.maxResource
+    enemy.resourceType = EnemyTempletes[enemyT].ResourceType
+    enemy.physicalAttack = math.floor(EnemyTempletes[enemyT].physicalAttack * (1 + p*t[ math.random (#t)]))
+    enemy.physicalDefense = math.floor(EnemyTempletes[enemyT].physicalDefense * (1 + p*t[ math.random (#t)]))
+    enemy.physicalSpeed = math.floor(EnemyTempletes[enemyT].physicalSpeed * (1 + p*t[ math.random (#t)]))
+    enemy.specialAttack = math.floor(EnemyTempletes[enemyT].specialAttack * (1 + p*t[ math.random (#t)]))
+    enemy.specialDefense = math.floor(EnemyTempletes[enemyT].specialDefense * (1 + p*t[ math.random (#t)]))
+    enemy.specialSpeed = math.floor(EnemyTempletes[enemyT].specialSpeed * (1 + p*t[ math.random (#t)]))
+    enemy.attackType = EnemyTempletes[enemyT].AttackType
+    enemy.skills[0] = SkillList[enemy.attackType]
+    for i = 1, 8 do
+      enemy.skills[i] = EnemyTempletes[enemyT].skills[i]
+    end
+    enemy.info = EnemyInfo[enemy.templetes]
+    
+    enemy.playerCommand = function(self, party, enemyparty)
+    end
+
+    enemy.AICommand = EnemyTempletes[enemyT].AICommand
+    return enemy
   end
-  enemy.info = EnemyInfo[enemy.templetes]
-  
-  enemy.playerCommand = function(self, party, enemyparty)
-  end
 
-  enemy.AICommand = EnemyTempletes[enemyT].AICommand
-  return enemy
-end
-
-party = {}
-enemyparty = {}
-
---임시 영역. 제대로 된 파티 삽입자로 대체해야 함.
-  party[1] = EnemyHandler.init("thug")
-  party[2] = EnemyHandler.init("thug")
-  party[3] = EnemyHandler.init("thug")
-
-  party[1].ally = true
-  party[2].ally = true
-  party[3].ally = true
-
-  party[1].name = "남자"
-  party[2].name = "여자"
-  party[3].name = "사람"
-  party[1].maxHP = 10000
-  party[1].currHP = 10000
-  party[1].ResourceType = "Mana"
-  party[2].ResourceType = "Ki"
-  party[3].ResourceType = "Rage"
+  party = {}
+  enemyparty = {}
 
   enemyparty = initializeenemyparty(EnemyPartyTempletes["thugs1"])
 
@@ -101,9 +83,10 @@ function progressturntime(X)
   end
 end
 
-function battlehandler(party, enemyparty)
+function battlehandler(battleparty, enemyparty)
 	currentbattle = {}
-	currentbattle.party = party
+  party = battleparty
+	currentbattle.party = battleparty
 	currentbattle.enemyparty = enemyparty
 	initializebattle(currentbattle)
 	battleeachturn()
@@ -129,8 +112,10 @@ function battleeachturn()
 	  orderedCharacters[1].playerCommand(orderedCharacters[1], party, enemyparty)
 	elseif orderedCharacters[1].ally then
 	  message = message .. "\n" .. orderedCharacters[1].name .. "(은)는 행동할 수 없다…."
-	else
+	elseif orderedCharacters[1].alive then
 	  usedskill = orderedCharacters[1].AICommand(orderedCharacters[1], party, emenyparty)
+  else
+    message = message .. "\n" .. orderedCharacters[1].name .. "(은)는 행동할 수 없다…."
 	end
 	draweachtime(message)
 	message = ""

@@ -56,58 +56,60 @@
 		printdelimiter("=")
 		printmid("ENEMY")
 		local nameline, hpilne, mpline, statusline
-		for i=1, 5 do
-			if enemyparty[i] then
-				nameline = "[" .. tostring(enemyparty[i].targetnumber) .. "]" .. enemyparty[i].name
-				hpline = "     " .. "HP [" .. makebar(EBARWIDTH, enemyparty[i].currHP, enemyparty[i].maxHP, enemyparty[i].info, '*') .. "]"
-				if enemyparty[i].ResourceType == "Mana" then
-				  mpline = "     " .. "魔 [" .. makebar(EBARWIDTH, enemyparty[i].currResource, enemyparty[i].maxResource, enemyparty[i].info, '*') .. "]"
-				elseif enemyparty[i].ResourceType == "Ki" then
-				  mpline = "     " .. "氣 [" .. makebar(EBARWIDTH, enemyparty[i].currResource, enemyparty[i].maxResource, enemyparty[i].info, '*') .. "]"
-				elseif enemyparty[i].ResourceType == "Rage" then
-				  mpline = "     " .. "怒 [" .. makebar(EBARWIDTH, enemyparty[i].currResource, enemyparty[i].maxResource, enemyparty[i].info, '*') .. "]"
+		local e = currentbattle.enemyparty
+		local p = currentbattle.party
+		for k = 1, 5 do
+			if e[k] then
+				nameline = "[" .. tostring(e[k].targetnumber) .. "]" .. e[k].name
+				hpline = "     " .. "HP [" .. makebar(EBARWIDTH, e[k].currHP, e[k].maxHP, e[k].info, '*') .. "]"
+				if e[k].ResourceType == "Mana" then
+				  mpline = "     " .. "魔 [" .. makebar(EBARWIDTH, e[k].currResource, e[k].maxResource, e[k].info, '*') .. "]"
+				elseif e[k].ResourceType == "Ki" then
+				  mpline = "     " .. "氣 [" .. makebar(EBARWIDTH, e[k].currResource, e[k].maxResource, e[k].info, '*') .. "]"
+				elseif e[k].ResourceType == "Rage" then
+				  mpline = "     " .. "怒 [" .. makebar(EBARWIDTH, e[k].currResource, e[k].maxResource, e[k].info, '*') .. "]"
 				else  
 				  mpline = ""
 				end
-				order = stringorder(enemyparty[i].turnorder)
-				blanklen = EWIDTH - string.len(enemyparty[i].status or "정상") - string.len(order) - 2
-				statusline = enemyparty[i].status or "정상" .. string.rep(" ",blanklen) .. order
+				order = stringorder(e[k].turnorder)
+				blanklen = EWIDTH - string.len(e[k].status or "정상") - string.len(order) - 2
+				statusline = e[k].status or "정상" .. string.rep(" ",blanklen) .. order
 			else
 				nameline = ""
 				hpline = ""
 				mpline = ""
 				statusline = ""
 			end
-			printblock(EWIDTH, 4, (i < 5) and "right" or "enter", nameline, hpline, mpline, statusline)
+			printblock(EWIDTH, 4, (k < 5) and "right" or "enter", nameline, hpline, mpline, statusline)
 		end
 		printdelimiter("-")
 		for i = 1, arg.n do
 		printl (arg[i])
 		end
 		printdelimiter("-")
-		for i=1, 4 do
-			if party[i] then
-				nameline = "[" .. tostring(party[i].targetnumber)  .. "]" .. party[i].name
-				hpline = "     " .. "HP [" .. makebar(PBARWIDTH, party[i].currHP, party[i].maxHP, true, '*') .. "]"
-				if party[i].ResourceType == "Mana" then
-				  mpline = "     " .. "魔 [" .. makebar(PBARWIDTH, party[i].currResource, party[i].maxResource, true, '*') .. "]"
-				elseif party[i].ResourceType == "Ki" then
-				  mpline = "     " .. "氣 [" .. makebar(PBARWIDTH, party[i].currResource, party[i].maxResource, true, '*') .. "]"
-				elseif party[i].ResourceType == "Rage" then
-				  mpline = "     " .. "怒 [" .. makebar(PBARWIDTH, party[i].currResource, party[i].maxResource, true, '*') .. "]"
-	      else
-	        mpline = ""
-	      end
-				order = stringorder(party[i].turnorder)
-				blanklen = PWIDTH - string.len(party[i].status or "정상") - string.len(order) - 2
-				statusline = party[i].status or "정상" .. string.rep(" ",blanklen) .. order
-			 else
+		for k = 1, 4 do
+			if p[k] then
+				nameline = "[" .. tostring(p[k].targetnumber)  .. "]" .. p[k].name
+				hpline = "     " .. "HP [" .. makebar(PBARWIDTH, p[k].currHP, p[k].maxHP, true, '*') .. "]"
+				if p[k].ResourceType == "Mana" then
+				  mpline = "     " .. "魔 [" .. makebar(PBARWIDTH, p[k].currResource, p[k].maxResource, true, '*') .. "]"
+				elseif p[k].ResourceType == "Ki" then
+				  mpline = "     " .. "氣 [" .. makebar(PBARWIDTH, p[k].currResource, p[k].maxResource, true, '*') .. "]"
+				elseif p[k].ResourceType == "Rage" then
+				  mpline = "     " .. "怒 [" .. makebar(PBARWIDTH, p[k].currResource, p[k].maxResource, true, '*') .. "]"
+			    else
+	        	  mpline = ""
+	      		end
+				order = stringorder(p[k].turnorder)
+				blanklen = PWIDTH - string.len(p[k].status or "정상") - string.len(order) - 2
+				statusline = p[k].status or "정상" .. string.rep(" ",blanklen) .. order
+			else
 				nameline = ""
 				hpline = ""
 				mpline = ""
 				statusline = ""
 			end
-			printblock(PWIDTH, 4, (i < 4) and "right" or "enter", nameline, hpline, mpline, statusline)
+			printblock(PWIDTH, 4, (k < 4) and "right" or "enter", nameline, hpline, mpline, statusline)
 		end
 		printmid("PARTY")
 		printdelimiter("=")

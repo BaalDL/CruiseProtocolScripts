@@ -13,7 +13,7 @@
     printl ("[1] 전투 [2] 저장 [3] 탐험 [4] 로드 [0] 종료")
     playerchoice = ask("무엇을 합니까?", "1", "2", "3", "4", "0")
     if playerchoice == "1" then
-      battlehandler(party, enemyparty)
+      battlehandler(currentpartymembers, enemyparty)
     elseif playerchoice == "2" then
       save("savetemp.txt")
     elseif playerchoice == "3" then
