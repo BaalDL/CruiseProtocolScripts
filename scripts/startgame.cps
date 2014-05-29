@@ -8,10 +8,12 @@
   execute ("configurebasicparameters")
   execute ("loadbattledata")
   execute ("dungeonsearchfunctions")
+  execute ("playmenu")
+  activatesubmenu(1,2,3,4,5,6,7,8,9)
   local playerchoice
   while(playerchoice ~= "0") do
-    printl ("[1] 전투 [2] 저장 [3] 탐험 [4] 로드 [0] 종료")
-    playerchoice = ask("무엇을 합니까?", "1", "2", "3", "4", "0")
+    printl ("[1] 전투 [2] 저장 [3] 탐험 [4] 로드 [5] 메뉴 [0] 종료")
+    playerchoice = ask("무엇을 합니까?", "1", "2", "3", "4", "5", "0")
     if playerchoice == "1" then
       battlehandler(currentpartymembers, enemyparty)
     elseif playerchoice == "2" then
@@ -20,6 +22,8 @@
       execute ("firstdungeon")
     elseif playerchoice == "4" then
       load("savetemp.txt")
+    elseif playerchoice == "5" then
+      campmenu()
     end
   end
 
