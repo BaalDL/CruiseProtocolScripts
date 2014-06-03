@@ -28,25 +28,74 @@
   end
 
   function campmenu()
-    local playerchoice = ask("조작할 메뉴를 선택해 주십시오", unpack(showavailablemenu()))
-    if playerchoice == "1" then
+    local playerchoice
+    while(playerchoice ~= "0") do
+      playerchoice = ask("조작할 메뉴를 선택해 주십시오", unpack(showavailablemenu()))
+      if playerchoice == "1" then
+        partymenu()
+      elseif playerchoice == "2" then
+        statusmenu()
+      elseif playerchoice == "3" then
+        skillmenu()
+      elseif playerchoice == "4" then
+        equipmenu()
+      elseif playerchoice == "5" then
+        inventorymenu()
+      elseif playerchoice == "6" then
+        journalmenu()
+      elseif playerchoice == "7" then
+        optionmenu()
+      elseif playerchoice == "8" then
+        savemenu()
+      elseif playerchoice == "9" then
+        loadmenu()
+      end
+    end
+  end
 
-    elseif playerchoice == "2" then
+  function partymenu()
 
-    elseif playerchoice == "3" then
+  end
 
-    elseif playerchoice == "4" then
+  function statusmenu()
+    local playerchoice
+    while(playerchoice ~= "0") do
+      playerchoice = ask("파티 멤버를 선택해 주십시오", "0")
+    end
+  end
 
-    elseif playerchoice == "5" then
+  function skillmenu()
+    local playerchoice
+    while(playerchoice ~= "0") do
+      playerchoice = ask("사용할 스킬을 선택해 주십시오", "0")
+    end
+  end
 
-    elseif playerchoice == "6" then
+  function equipmenu()
+    local playerchoice
+    while(playerchoice ~= "0") do
+      playerchoice = ask("파티 멤버를 선택해 주십시오", "0")
+    end
+  end
 
-    elseif playerchoice == "7" then
+  function inventorymenu()
 
-    elseif playerchoice == "8" then
+  end
 
-    elseif playerchoice == "9" then
+  function journalmenu()
+    
+  end
 
+  function optionmenu()
+
+  end
+
+  function savemenu()
+    
+  end
+
+  function loadmenu()
+    
   end
 
   function showavailablemenu()
