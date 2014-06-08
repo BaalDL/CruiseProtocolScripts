@@ -28,6 +28,42 @@
       SkillList["RandomAttack_Fire1"],
       SkillList["AllAttack_Fire1"]
     },
+    defensiveType = {
+      Slash = "s",
+      Strike = "s",
+      Pierce = "s",
+      Bite = "s",
+      Bullet = "s",
+      Throwing = "s",
+      Burst = "s",
+      Fire = "s",
+      Water = "s",
+      Ice = "s",
+      Grass = "s",
+      Wind = "s",
+      Electric = "s",
+      Ground = "s",
+      Luminous = "n",
+      Dark = "s"
+    },
+    defensiveFactor = {
+      Slash = 100,
+      Strike = 100,
+      Pierce = 100,
+      Bite = 100,
+      Bullet = 100,
+      Throwing = 100,
+      Burst = 100,
+      Fire = 150,
+      Water = 100,
+      Ice = 100,
+      Grass = 50,
+      Wind = 100,
+      Electric = 100,
+      Ground = 100,
+      Luminous = 0,
+      Dark = 100
+    },
     AICommand = function(self, party, enemyparty)
       targets = {}
       targets = pickrandomtarget(party, 1)
@@ -68,6 +104,42 @@
       SkillList["RandomAttack_Bullet1"],
       SkillList["AllAttack_Throwing1"]
     },
+    defensiveType = {
+      Slash = "s",
+      Strike = "s",
+      Pierce = "s",
+      Bite = "s",
+      Bullet = "s",
+      Throwing = "s",
+      Burst = "s",
+      Fire = "s",
+      Water = "s",
+      Ice = "s",
+      Grass = "s",
+      Wind = "s",
+      Electric = "s",
+      Ground = "s",
+      Luminous = "n",
+      Dark = "s"
+    },
+    defensiveFactor = {
+      Slash = 100,
+      Strike = 100,
+      Pierce = 100,
+      Bite = 100,
+      Bullet = 100,
+      Throwing = 100,
+      Burst = 100,
+      Fire = 150,
+      Water = 100,
+      Ice = 100,
+      Grass = 50,
+      Wind = 100,
+      Electric = 100,
+      Ground = 100,
+      Luminous = 0,
+      Dark = 100
+    },
     AICommand = function(self, party, enemyparty)
       targets = {}
       targets = pickrandomtarget(party, 1)
@@ -107,6 +179,42 @@
       SkillList["SingleAttack_Burst1"],
       SkillList["RandomAttack_Slash1"],
       SkillList["AllAttack_Strike1"]
+    },
+    defensiveType = {
+      Slash = "s",
+      Strike = "s",
+      Pierce = "s",
+      Bite = "s",
+      Bullet = "s",
+      Throwing = "s",
+      Burst = "s",
+      Fire = "s",
+      Water = "s",
+      Ice = "s",
+      Grass = "s",
+      Wind = "s",
+      Electric = "s",
+      Ground = "s",
+      Luminous = "n",
+      Dark = "s"
+    },
+    defensiveFactor = {
+      Slash = 100,
+      Strike = 100,
+      Pierce = 100,
+      Bite = 100,
+      Bullet = 100,
+      Throwing = 100,
+      Burst = 100,
+      Fire = 150,
+      Water = 100,
+      Ice = 100,
+      Grass = 50,
+      Wind = 100,
+      Electric = 100,
+      Ground = 100,
+      Luminous = 0,
+      Dark = 100
     },
     AICommand = function(self, party, enemyparty)
       targets = {}

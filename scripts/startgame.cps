@@ -673,6 +673,20 @@
       return table.concat(items)
     end
   end
+
+  function shallowcopy(orig)
+    local orig_type = type(orig)
+    local copy
+    if orig_type == 'table' then
+        copy = {}
+        for orig_key, orig_value in pairs(orig) do
+            copy[orig_key] = orig_value
+        end
+    else -- number, string, boolean, etc
+        copy = orig
+    end
+    return copy
+  end
 #end
 
 #function configurebasicparameters
@@ -680,6 +694,9 @@
   windowheight = 40
   bufferwidth = 120
   bufferheight = 300
+  defaultforeground = 'w'
+  defaultbackground = 'K'
   _setwindowsize(windowwidth, windowheight)
   _setbuffersize(bufferwidth, bufferheight)
+  _setdefaultcolor(defaultforeground, defaultbackground)
 #end

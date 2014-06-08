@@ -70,9 +70,13 @@
 
   addsave("allpartymembers")
   addsave("currentpartymembers")
+  addsave("EnemyInfo")
+  addsave("EnemyDefenseInfo")
   addreset("allpartymembers")
   addreset("currentpartymembers")  
   addreset("party")
+  addreset("EnemyInfo")
+  addreset("EnemyDefenseInfo")
 
   addsave("money")
   addsave("byss")

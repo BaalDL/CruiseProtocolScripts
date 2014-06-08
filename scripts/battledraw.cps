@@ -42,6 +42,56 @@
 	  return "NEXT " .. order
 	end
 
+  function defensivecolor(skilltype, deftype, deffactor, info, ally)
+    local toreturn = ""
+    if not info[skilltype] and not ally then
+    	toreturn = "/fK/bw？/x"
+    else
+	    if deftype[skilltype] == "s" then
+	    	if deffactor[skilltype] == 100 then
+	    		toreturn = "/fW"
+	    	elseif deffactor[skilltype] == 0 then
+	    		toreturn = "/fK/bk"
+	    	elseif deffactor[skilltype] > 100 then
+	    		toreturn = "/fy"
+	    	elseif deffactor[skilltype] < 100 then
+	    		toreturn = "/fb"
+	    	end
+	    elseif deftype[skilltype] == "n" then
+	    	toreturn = "/fK/bk"
+	    elseif deftype[skilltype] == "r" then
+	    	toreturn = "/fy/bb"
+	    end
+	    toreturn = toreturn .. attackType.toChar(skilltype) .. "/x"
+	  end
+    
+  	return toreturn
+  end
+
+  function defensivechar(t,f, i, a, physical)
+  	local toreturn
+  	if physical then
+    	toreturn = defensivecolor("Slash", t, f, i, a)
+    	toreturn = toreturn .. defensivecolor("Strike", t, f, i, a)
+    	toreturn = toreturn .. defensivecolor("Pierce", t, f, i, a)
+    	toreturn = toreturn .. defensivecolor("Bite", t, f, i, a)
+    	toreturn = toreturn .. defensivecolor("Bullet", t, f, i, a)
+    	toreturn = toreturn .. defensivecolor("Throwing", t, f, i, a)
+    	toreturn = toreturn .. defensivecolor("Burst", t, f, i, a)
+    elseif not physical then
+    	toreturn = defensivecolor("Fire", t, f, i, a)
+    	toreturn = toreturn .. defensivecolor("Water", t, f, i, a)
+    	toreturn = toreturn .. defensivecolor("Ice", t, f, i, a)
+    	toreturn = toreturn .. defensivecolor("Grass", t, f, i, a)
+    	toreturn = toreturn .. defensivecolor("Wind", t, f, i, a)
+    	toreturn = toreturn .. defensivecolor("Electric", t, f, i, a)
+    	toreturn = toreturn .. defensivecolor("Ground", t, f, i, a)
+    	toreturn = toreturn .. defensivecolor("Luminous", t, f, i, a)
+    	toreturn = toreturn .. defensivecolor("Dark", t, f, i, a)
+    end
+    return toreturn
+  end
+
 	--매번 화면을 그리는 함수. argument로 전투 메세지를 전달해야 한다.
 	function draweachtime(...)
 		local t, l = getc()
@@ -55,7 +105,7 @@
 		moveto(t, l)
 		printdelimiter("=")
 		printmid("ENEMY")
-		local nameline, hpilne, mpline, statusline
+		local nameline, hpilne, mpline, statusline, defline1, defline2
 		local e = currentbattle.enemyparty
 		local p = currentbattle.party
 		for k = 1, 5 do
@@ -72,15 +122,19 @@
 				  mpline = ""
 				end
 				order = stringorder(e[k].turnorder)
-				blanklen = EWIDTH - string.len(e[k].status or "정상") - string.len(order) - 2
+				local blanklen = EWIDTH - string.len(e[k].status or "정상") - string.len(order) - 2
 				statusline = e[k].status or "정상" .. string.rep(" ",blanklen) .. order
+				defline1 = defensivechar(e[k].defensiveType,e[k].defensiveFactor,EnemyDefenseInfo[e[k].templetes],false,true)
+				defline2 = defensivechar(e[k].defensiveType,e[k].defensiveFactor,EnemyDefenseInfo[e[k].templetes],false,false)
 			else
 				nameline = ""
 				hpline = ""
 				mpline = ""
 				statusline = ""
+				defline1 = ""
+				defline2 = ""
 			end
-			printblock(EWIDTH, 4, (k < 5) and "right" or "enter", nameline, hpline, mpline, statusline)
+			printblock(EWIDTH, 6, (k < 5) and "right" or "enter", nameline, hpline, mpline, statusline, defline1, defline2)
 		end
 		printdelimiter("-")
 		for i = 1, arg.n do
@@ -101,7 +155,7 @@
 	        	  mpline = ""
 	      		end
 				order = stringorder(p[k].turnorder)
-				blanklen = PWIDTH - string.len(p[k].status or "정상") - string.len(order) - 2
+				local blanklen = PWIDTH - string.len(p[k].status or "정상") - string.len(order) - 2
 				statusline = p[k].status or "정상" .. string.rep(" ",blanklen) .. order
 			else
 				nameline = ""

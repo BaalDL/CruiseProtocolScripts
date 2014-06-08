@@ -30,8 +30,10 @@
     for i = 1, 8 do
       enemy.skills[i] = EnemyTempletes[enemyT].skills[i]
     end
+    enemy.defensiveType = shallowcopy(EnemyTempletes[enemyT].defensiveType)
+    enemy.defensiveFactor = shallowcopy(EnemyTempletes[enemyT].defensiveFactor)
     enemy.info = EnemyInfo[enemy.templetes]
-    
+    enemy.defenseinfo = EnemyDefenseInfo[enemy.templetes]
     enemy.playerCommand = function(self, party, enemyparty)
     end
 
@@ -131,7 +133,11 @@ function battleeachturn()
   elseif orderedCharacters[1].ally then
 	  delay = math.floor((battleStopWatch / orderedCharacters[1].physicalSpeed) + math.random(15))
   else
-    delay = math.floor((battleStopWatch / orderedCharacters[1][usedskill.DelayType]) + math.random(5))
+    if usedskill then
+      delay = math.floor((battleStopWatch / orderedCharacters[1][usedskill.DelayType]) + math.random(5))
+    else
+      delay = math.floor((battleStopWatch / orderedCharacters[1].physicalSpeed) + math.random(15))
+    end
 	end
 	printw ("엔터키를 눌러 계속합니다.\n")
 	
@@ -276,18 +282,34 @@ end
 function calculatedamage(actor, skill, target, battle)
   local damage = 0
   if skill.DamageCalculationType == "Basic" then
-    damage = math.ceil(skill.AttackParameter * actor[skill.AttackerParameter] / target[skill.TargetParameter])
+    damage = math.ceil(skill.AttackParameter * actor[skill.AttackerParameter] / target[skill.TargetParameter] * target.defensiveFactor[skill.AttackType] / 100)
   end
   return damage
 end
 
-function inflictdamage(actor, skill, target, battle)
-  local damage = calculatedamage(actor, skill, target, battle)
-  message = message .. "\n" .. target.name .. "에게 " .. damage .. "의 데미지!"
-  if target.currHP - damage > 0 then
-    target.currHP = target.currHP - damage
-  else
-    characterdie(actor, skill, target, battle)
+function inflictdamage(actor, skill, target, battle, reflected)
+  local damage
+  if target.defensiveType[skill.AttackType] == "s" then
+    damage = calculatedamage(actor, skill, target, battle)
+    message = message .. "\n" .. target.name .. "에게 " .. damage .. "의 데미지!"
+    if target.currHP - damage > 0 then
+      target.currHP = target.currHP - damage
+    else
+      characterdie(actor, skill, target, battle)
+    end
+  elseif target.defensiveType[skill.AttackType] == "n" or (target.defensiveType[skill.AttackType] == "n" and reflected) then
+    damage = 0
+    message = message .. "\n" .. "그러나" .. target.name .. "에게는 효과가 없었다!"
+  elseif target.defensiveType[skill.AttackType] == "r" then
+      damage = 0
+      message = message .. "\n" .. "그러나" .. target.name .. "(은)는 공격을 튕겨냈다!"
+      inflictdamage(target, skill, actor, battle, true)
+  end
+  if not target.ally then
+    EnemyDefenseInfo[target.templetes][skill.AttackType] = true
+    for k, v in pairs(enemyparty) do
+      enemyparty[k].defenseinfo = EnemyDefenseInfo[enemyparty[k].templetes]
+    end
   end
 end
 

@@ -42,6 +42,45 @@
 	  return "없음"
   end
 
+  attackType.toChar = function(name)
+    if name == "BasicAttack_Slash" or name == "Slash" then
+      return "참"
+    elseif name == "BasicAttack_Strike" or name == "Strike" then
+      return "타"
+    elseif name == "BasicAttack_Pierce" or name == "Pierce" then
+      return "관"
+    elseif name == "BasicAttack_Bite" or name == "Bite" then
+      return "저"
+    elseif name == "BasicAttack_Bullet" or name == "Bullet" then
+      return "탄"
+    elseif name == "BasicAttack_Throwing" or name == "Throwing" then
+      return "투"
+    elseif name == "BasicAttack_Burst" or name == "Burst" then
+      return "충"
+    elseif name == "BasicAttack_Fire" or name == "Fire" then
+      return "화"
+    elseif name == "BasicAttack_Water" or name == "Water" then
+      return "수"
+    elseif name == "BasicAttack_Ice" or name == "Ice" then
+      return "빙"
+    elseif name == "BasicAttack_Grass" or name == "Grass" then
+      return "목"
+    elseif name == "BasicAttack_Wind" or name == "Wind" then
+      return "풍"
+    elseif name == "BasicAttack_Electric" or name == "Electric" then
+      return "뢰"
+    elseif name == "BasicAttack_Ground" or name == "Ground" then
+      return "지"
+    elseif name == "BasicAttack_Luminous" or name == "Luminous" then
+      return "광"
+    elseif name == "BasicAttack_Dark" or name == "Dark" then
+      return "암"
+    else
+      return "미구현"
+    end 
+    return "없음"
+  end
+
   ResourceType.toString = function(name)
     if name == "Mana" then
       return "마나"
