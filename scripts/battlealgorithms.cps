@@ -56,15 +56,15 @@ function initializebattle(battle)
   targettable["100"] = battle.enemyparty
   for k, v in pairs(p) do
     p[k].turntime = math.floor((battleStopWatch / p[k].physicalSpeed) + math.random(10))
-	table.insert(orderedCharacters, p[k]) 
-	p[k].targetnumber = 10 + k
-	targettable[tostring(10+k)] = p[k]
+	  table.insert(orderedCharacters, p[k]) 
+	  p[k].targetnumber = 10 + k
+	  targettable[tostring(10+k)] = p[k]
   end
   for k, v in pairs(e) do
     e[k].turntime = math.floor((battleStopWatch / e[k].physicalSpeed) + math.random(10))
-	table.insert(orderedCharacters, e[k])
-	e[k].targetnumber = 100 + k
-	targettable[tostring(100+k)] = e[k]
+	  table.insert(orderedCharacters, e[k])
+	  e[k].targetnumber = 100 + k
+	  targettable[tostring(100+k)] = e[k]
   end
   sortcharacters(orderedCharacters)
 end
@@ -91,9 +91,9 @@ function battlehandler(battleparty, enemyparty)
 	currentbattle.party = battleparty
 	currentbattle.enemyparty = enemyparty
 	initializebattle(currentbattle)
-	battleeachturn()
+	battlefirstturn(currentbattle)
 	while (not checkbattleend()) do
-	  battleeachturn()
+	  battleeachturn(currentbattle)
 	end
 	if checkbattleend() == "defeat" then
 	  printl ("전투에서 패배하였습니다.")
@@ -102,9 +102,33 @@ function battlehandler(battleparty, enemyparty)
 	end
 end
 
-function battleeachturn()
+function battlefirstturn(battle)
+  local dicepool = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2}
+  local result = dicepool[math.random(#dicepool)]
+  local p = battle.party
+  local e = battle.enemyparty
+  if result == 1 then
+    message = "적의 습격!"
+    for k, v in pairs(p) do
+      p[k].turntime = p[k].turntime + math.random(5, 10)
+    end
+    sortcharacters(orderedCharacters)
+  elseif result == 2 then
+    message = "적을 습격했다!"
+    for k, v in pairs(e) do
+      e[k].turntime = e[k].turntime + math.random(7, 15)
+    end
+    sortcharacters(orderedCharacters)
+  else
+    message = "적의 출현!"
+  end
+  draweachtime(message)
+  printw( "" )
+end
+
+function battleeachturn(battle)
 	message = ""
-	delay = 10
+	local delay = 10
 	local usedskill
   progressturntime(orderedCharacters)
 	message = message .. orderedCharacters[1].name .. "의 턴입니다."
@@ -299,10 +323,10 @@ function inflictdamage(actor, skill, target, battle, reflected)
     end
   elseif target.defensiveType[skill.AttackType] == "n" or (target.defensiveType[skill.AttackType] == "n" and reflected) then
     damage = 0
-    message = message .. "\n" .. "그러나" .. target.name .. "에게는 효과가 없었다!"
+    message = message .. "\n" .. "그러나 " .. target.name .. "에게는 효과가 없었다!"
   elseif target.defensiveType[skill.AttackType] == "r" then
       damage = 0
-      message = message .. "\n" .. "그러나" .. target.name .. "(은)는 공격을 튕겨냈다!"
+      message = message .. "\n" .. "그러나 " .. target.name .. "(은)는 공격을 튕겨냈다!"
       inflictdamage(target, skill, actor, battle, true)
   end
   if not target.ally then
