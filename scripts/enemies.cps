@@ -62,30 +62,12 @@
       Dark = 100
     },
     AICommand = function(self, party, enemyparty)
-      targets = {}
+      local targets = {}
       targets = pickrandomtarget(party, 1)
       if targets then skillhandler(self, SkillList[self.attackType], targets) end
       return SkillList[self.attackType]
     end
   }
-  EnemyInfo["thug"] = false
-  EnemyDefenseInfo["thug"] = {}
-  EnemyDefenseInfo["thug"]["Slash"] = false
-  EnemyDefenseInfo["thug"]["Strike"] = false
-  EnemyDefenseInfo["thug"]["Pierce"] = false
-  EnemyDefenseInfo["thug"]["Bite"] = false
-  EnemyDefenseInfo["thug"]["Bullet"] = false
-  EnemyDefenseInfo["thug"]["Throwing"] = false
-  EnemyDefenseInfo["thug"]["Burst"] = false
-  EnemyDefenseInfo["thug"]["Fire"] = false
-  EnemyDefenseInfo["thug"]["Water"] = false
-  EnemyDefenseInfo["thug"]["Ice"] = false
-  EnemyDefenseInfo["thug"]["Grass"] = false
-  EnemyDefenseInfo["thug"]["Wind"] = false
-  EnemyDefenseInfo["thug"]["Electric"] = false
-  EnemyDefenseInfo["thug"]["Ground"] = false
-  EnemyDefenseInfo["thug"]["Luminous"] = false
-  EnemyDefenseInfo["thug"]["Dark"] = false
 
   EnemyTempletes["knifethug"] = {
     name = "칼잡이",
@@ -142,29 +124,32 @@
       Dark = 100
     },
     AICommand = function(self, party, enemyparty)
-      targets = {}
+      local targets = {}
       targets = pickrandomtarget(party, 1)
       if targets then skillhandler(self, SkillList[self.attackType], targets) end
       return SkillList[self.attackType]
     end    
   }
-  EnemyInfo["knifethug"] = false
-  EnemyDefenseInfo["knifethug"] = {}
-  EnemyDefenseInfo["knifethug"]["Slash"] = false
-  EnemyDefenseInfo["knifethug"]["Strike"] = false
-  EnemyDefenseInfo["knifethug"]["Pierce"] = false
-  EnemyDefenseInfo["knifethug"]["Bite"] = false
-  EnemyDefenseInfo["knifethug"]["Bullet"] = false
-  EnemyDefenseInfo["knifethug"]["Throwing"] = false
-  EnemyDefenseInfo["knifethug"]["Burst"] = false
-  EnemyDefenseInfo["knifethug"]["Fire"] = false
-  EnemyDefenseInfo["knifethug"]["Water"] = false
-  EnemyDefenseInfo["knifethug"]["Ice"] = false
-  EnemyDefenseInfo["knifethug"]["Grass"] = false
-  EnemyDefenseInfo["knifethug"]["Wind"] = false
-  EnemyDefenseInfo["knifethug"]["Electric"] = false
-  EnemyDefenseInfo["knifethug"]["Ground"] = false
-  EnemyDefenseInfo["knifethug"]["Luminous"] = false
-  EnemyDefenseInfo["knifethug"]["Dark"] = false
 
+  for k, _ in pairs(EnemyTempletes) do
+    EnemyInfo[k] = false
+    EnemyDefenseInfo[k] = {
+      Slash = false,
+      Strike = false,
+      Pierce = false,
+      Bite = false,
+      Bullet = false,
+      Throwing = false,
+      Burst = false,
+      Fire = false,
+      Water = false,
+      Ice = false,
+      Grass = false,
+      Wind = false,
+      Electric = false,
+      Ground = false,
+      Luminous = false,
+      Dark = false
+    }
+  end
 #end
