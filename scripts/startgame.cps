@@ -424,16 +424,20 @@
   end
 
   function load(filename)
-  	for k, v in pairs(toreset) do
-  		_G[k] = nil
-  	end
-  	local file = io.open(filename, "rb")
-    local loadedstring = file:read("*all")
-    local loadedtables = loadstring(loadedstring)()
-    for k, v in pairs(loadedtables) do
-      _G[k] = v
+    local file = io.open(filename, "rb")
+  	if file then
+      for k, v in pairs(toreset) do
+    		_G[k] = nil
+    	end
+      local loadedstring = file:read("*all")
+      local loadedtables = loadstring(loadedstring)()
+      for k, v in pairs(loadedtables) do
+        _G[k] = v
+      end
+      file:close()
+    else
+      printl ("로드할 파일이 없습니다.")
     end
-    file:close()
   end
 
   function savemenu(...)
