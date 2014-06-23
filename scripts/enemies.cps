@@ -3,6 +3,9 @@
   EnemyInfo = {}
   EnemyDefenseInfo = {}
 
+  execute("enemyalgorithms")
+  --enter EnemyTempletes[tab] to load snippet
+
   EnemyTempletes["thug"] = {
     name = "불량배",
     genderTable = { 'male', 'male', 'male', 'female' },
@@ -20,10 +23,7 @@
     specialDefense = 14,
     specialSpeed = 11,
     skills = {
-      SkillList["SingleAttack_Fire1"],
-      SkillList["SingleAttack_Water1"],
-      SkillList["RandomAttack_Fire1"],
-      SkillList["AllAttack_Fire1"]
+      SkillList["SingleAttack_Strike1"]
     },
     defensiveType = {
       Slash = "s",
@@ -61,12 +61,7 @@
       Luminous = 0,
       Dark = 100
     },
-    AICommand = function(self, party, enemyparty)
-      local targets = {}
-      targets = pickrandomtarget(party, 1)
-      if targets then skillhandler(self, SkillList[self.attackType], targets) end
-      return SkillList[self.attackType]
-    end
+    AICommand = randomlyattacktargetwithskills  
   }
 
   EnemyTempletes["knifethug"] = {
@@ -86,6 +81,8 @@
     specialDefense = 12,
     specialSpeed = 14,
     skills = {
+      SkillList["SingleAttack_Strike1"],
+      SkillList["SingleAttack_Slash1"]
     },
     defensiveType = {
       Slash = "r",
@@ -123,13 +120,9 @@
       Luminous = 0,
       Dark = 100
     },
-    AICommand = function(self, party, enemyparty)
-      local targets = {}
-      targets = pickrandomtarget(party, 1)
-      if targets then skillhandler(self, SkillList[self.attackType], targets) end
-      return SkillList[self.attackType]
-    end    
+    AICommand = randomlyattacktargetwithskills
   }
+
 
   for k, _ in pairs(EnemyTempletes) do
     EnemyInfo[k] = false
