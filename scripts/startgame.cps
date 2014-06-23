@@ -15,6 +15,7 @@
     printl ("[1] 전투 [2] 저장 [3] 탐험 [4] 로드 [5] 메뉴 [0] 종료")
     playerchoice = ask("무엇을 합니까?", "1", "2", "3", "4", "5", "0")
     if playerchoice == "1" then
+      enemyparty = initializeenemyparty(EnemyPartyTempletes["thugs1"])
       battlehandler(currentpartymembers, enemyparty)
     elseif playerchoice == "2" then
       save("savetemp.txt")

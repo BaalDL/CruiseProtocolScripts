@@ -44,8 +44,6 @@
   party = {}
   enemyparty = {}
 
-  enemyparty = initializeenemyparty(EnemyPartyTempletes["thugs1"])
-
 function initializebattle(battle)
   local p = battle.party
   local e = battle.enemyparty
@@ -95,11 +93,15 @@ function battlehandler(battleparty, enemyparty)
 	while (not checkbattleend()) do
 	  battleeachturn(currentbattle)
 	end
-	if checkbattleend() == "defeat" then
+  local result = checkbattleend()
+	if result == "defeat" then
 	  printl ("전투에서 패배하였습니다.")
-	else
+	elseif result == "victory" then
 	  printl ("전투에서 승리하였습니다.")
+  else
+    printl ("전투에서 도망쳤습니다...")
 	end
+    return result
 end
 
 function battlefirstturn(battle)
@@ -283,7 +285,7 @@ function skillhandler(char, skill, skilltarget)
     elseif skill.Target == "RandomEnemies" then
       local numTarget = math.random(skill.minTarget, skill.maxTarget)
       for k, v in pairs(pickrandomtarget(opponents, numTarget)) do
-        table.insert(target, v)
+        table.insert(targets, v)
       end
     elseif skill.Target == "PWREnemies" then
       local numTarget = math.random(skill.minTarget, skill.maxTarget)
@@ -349,7 +351,7 @@ function characterdie(actor, skill, target, battle)
   target.currHP = 0
   target.alive = false
   target.status = "전투불능"
-  table.remove(orderedCharacters[target.turnorder])
+  if orderedCharacters[target.turnorder] then table.remove(orderedCharacters[target.turnorder]) end
   -- 여기에 온갖 상태이상 초기화 등등을 집어넣는다.
   message = message .. "\n" .. target.name .. "(은)는 전투 불능이 되었다!" 
   if not target.ally then
