@@ -178,7 +178,9 @@ function askplayer(char, party, enemyparty, battle)
   local movelist = {"-1"}
   local moveliststring = ""
   local pc = 0
+  local itemmove
   while (not playercommand) do
+    itemmove = -1
     moveto(startaskt, startaskl)
 	  if char.attackType then
 	    table.insert(movelist, "0")
@@ -191,7 +193,8 @@ function askplayer(char, party, enemyparty, battle)
         .. ResourceType.toString(char.skills[i].ResourceType) .. ": " .. char.skills[i].ResourceAmount .. ") "
 	    end
 	  end
-    printl(moveliststring .. "[-1] 대기(취소)")
+    table.insert(movelist, "10")
+    printl(moveliststring .. "\n[10] 아이템 [-1] 대기(취소)")
     playercommand = ask("무엇을 하시겠습니까?", unpack(movelist))
 	  pc = tonumber(playercommand)
   
@@ -199,12 +202,26 @@ function askplayer(char, party, enemyparty, battle)
 	    playertarget = lookuptarget(char.skills[pc].MoveType, char.skills[pc].Target, char.targetnumber)
 	    if (playertarget == "100") then
         local targets = enemyparty
-        for k, v in pairs(targets) do
-        end
+        skillhandler(char, char.skills[pc], targets)
+      elseif (playertarget == "10") then
+        local targets = party
         skillhandler(char, char.skills[pc], targets)
       elseif (playertarget ~= "-1") then
         local targets = {targettable[playertarget]}
 	      skillhandler(char, char.skills[pc], targets)
+      end
+    elseif (pc == 10) then
+      itemmove = inventorymenu("battle")
+      playertarget = lookuptarget(ItemList[itemmove].ItemType, ItemList[itemmove].Target, char.targetnumber)
+      if (playertarget == "100") then
+        local targets = enemyparty
+        itemhandler(char, itemmove, targets)
+      elseif (playertarget == "10") then
+        local targets = party
+        itemhandler(char, itemmove, targets)
+      elseif (playertarget ~= "-1") then
+        local targets = {targettable[playertarget]}
+        itemhandler(char, itemmove, targets)
       end
 	  end
     if (playertarget == "-1") then
@@ -215,7 +232,12 @@ function askplayer(char, party, enemyparty, battle)
       erase(startaskt, endaskt)
     end
   end
-  return char.skills[pc]
+  if (pc <= 8 and pc >= 0) then
+    return char.skills[pc]
+  elseif pc == 10 then
+    return SkillList["UseItem"]
+  end
+  return -1
 end
 
 function lookuptarget(type, target, selfnum)
@@ -240,7 +262,7 @@ function lookuptarget(type, target, selfnum)
     selection = ask("적 전체를 목표로 삼습니까?", "-1", "100")
   elseif target == "AnAlly" then
     for k, v in pairs(p) do
-      if p[k].alive then table.insert(targets, tostring(e[k].targetnumber)) end
+      if p[k].alive then table.insert(targets, tostring(p[k].targetnumber)) end
     end
     table.sort(targets)
     if type == "Heal" or
@@ -249,7 +271,7 @@ function lookuptarget(type, target, selfnum)
     end
   elseif target == "AnAllyIncludingDead" then
     for k, v in pairs(p) do
-      table.insert(targets, tostring(e[k].targetnumber))
+      table.insert(targets, tostring(p[k].targetnumber))
     end
     table.sort(targets)
     if type == "Heal" or
@@ -305,6 +327,20 @@ function skillhandler(char, skill, skilltarget)
 	end
 end
 
+function itemhandler(char, item, itemtarget)
+  local itemdata = ItemList[item]
+  message = message .. char.name .. "(은)는 " .. itemdata.Name .. "(을)를 사용했다!"
+  if (itemdata.ItemType == "Heal") then
+    for k, v in pairs(itemtarget) do
+      applyheal(char, itemdata, itemtarget[k])
+    end
+  end
+  inventory[item] = inventory[item] - 1
+  if (inventory[item] == 0) then
+    message = message .. "\n가지고 있던 " .. itemdata.Name .. "(을)를 모두 사용해 버렸다!"
+  end
+end
+
 function calculatedamage(actor, skill, target, battle)
   local damage = 0
   if skill.DamageCalculationType == "Basic" then
@@ -336,6 +372,15 @@ function inflictdamage(actor, skill, target, battle, reflected)
     for k, v in pairs(enemyparty) do
       enemyparty[k].defenseinfo = EnemyDefenseInfo[enemyparty[k].templetes]
     end
+  end
+end
+
+function applyheal(actor, skill, target)
+  local heal = 0
+  if skill.Amount then
+    heal = skill.Amount
+    message = message .. "\n" .. target.name .. "의 체력이 " .. heal .. " 회복되었다!"
+    target.currHP = math.min(target.maxHP, target.currHP + heal)
   end
 end
 

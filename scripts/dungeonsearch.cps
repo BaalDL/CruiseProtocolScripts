@@ -297,6 +297,8 @@
   firstdungeon = {}
   firstdungeon.name = "firstdungeon"
   if not firstdungeoninitialized then
+    local width = 20
+    local height = 20
     local firstlevel = [[
     ＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃
     ＃　　　　　　　　　　　　　　　　＃Ｆ＃
@@ -342,10 +344,10 @@
     ＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃]]
     
     firstlevelzone = firstlevelzone:gsub("\n", "")
-    firstdungeon.map = {initializedungeonfile(firstlevel, 20, 20)}
+    firstdungeon.map = {initializedungeonfile(firstlevel, height, width)}
     firstdungeon.map[1].visualmap = {}
     firstdungeon.map[1].zonemap = {}
-    for i=1, 20*20 do
+    for i=1, height*width do
       firstdungeon.map[1].visualmap[i] = "■"
       firstdungeon.map[1].zonemap[i] = firstlevelzone:sub(2*i-1,2*i)
     end
@@ -422,6 +424,14 @@
     
     firstdungeon.zonetext["ㅑ"] = [[
     좁은 통로다. 통로 저편으로 빛이 보인다.]]
+
+    firstdungeon.zonetext["ㄷ"] = [[
+    침침한 빛 아래 나무상자들이 군데군데 흩어져 있다.
+    값나가는 것은 없어 보인다.]]
+
+    firstdungeon.zonetext["ㅓ"] = [[
+    조심스레 문을 여니, 두 갈래 길이 보인다.
+    왼쪽으로 꺾이는 길 끝에 문이 보이고, 직진하는 길은 끝이 보이지 않는다.]]
 
     firstdungeon.encounter = {}
 

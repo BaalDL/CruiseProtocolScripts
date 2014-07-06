@@ -95,6 +95,13 @@
     end
   end
 
+    SkillList["UseItem"] = {
+      MoveType="UseItem",
+      AfterDelay = 100,
+      DelayType = "physicalSpeed",
+      Name = "아이템 사용"
+    }
+
   // BasicAttacks
     SkillList["BasicAttack_Slash"] = {
       MoveType="Attack",
