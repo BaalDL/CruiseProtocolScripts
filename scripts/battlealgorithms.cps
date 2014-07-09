@@ -292,58 +292,58 @@ end
 function skillhandler(char, skill, skilltarget)
   message = message .. "\n" .. char.name .. "의 " .. skill.Name .. "!"
   local opponents = enemyparty
+  local samesides = party
   if not char.ally then
     opponents = party
+    samesides = enemyparty
   end
   local targets = {}
-  if skill.MoveType == "Attack" then
-    if skill.Target == "AnEnemy" then
-	    targets = skilltarget
-    elseif skill.Target == "WholeEnemy" then
-      for k, v in pairs(skilltarget) do
-        if skilltarget[k].alive then table.insert(targets, skilltarget[k]) end
-      end
-    elseif skill.Target == "RandomEnemies" then
-      local numTarget = math.random(skill.minTarget, skill.maxTarget)
-      for k, v in pairs(pickrandomtarget(opponents, numTarget)) do
-        table.insert(targets, v)
-      end
-    elseif skill.Target == "PWREnemies" then
-      local numTarget = math.random(skill.minTarget, skill.maxTarget)
-      local first, second = unpack(pickrandomtarget(opponents, 2))
-      second = second or first
-      table.insert(targets, first)
-      table.insert(targets, second)
-      for i = 3, numTarget do
-        if i <= numTarget then table.insert(targets, unpack(pickrandomtarget(opponents, 1))) end
-      end
+  if skill.Target == "AnEnemy" or
+  skill.Target == "Self" or
+  skill.Target == "AnAlly" or
+  skill.Target == "AnAllyIncludingDead" or
+  skill.Target == "WholeAllyIncludingDead" then
+    targets = skilltarget
+  elseif skill.Target == "WholeEnemy" or skill.Target == "WholeAlly" then
+    for k, v in pairs(skilltarget) do
+      if skilltarget[k].alive then table.insert(targets, skilltarget[k]) end
     end
+  elseif skill.Target == "RandomEnemies" then
+    local numTarget = math.random(skill.minTarget, skill.maxTarget)
+    for k, v in pairs(pickrandomtarget(opponents, numTarget)) do
+      table.insert(targets, v)
+    end
+  elseif skill.Target == "RandomAllies" then
+    local numTarget = math.random(skill.minTarget, skill.maxTarget)
+    for k, v in pairs(pickrandomtarget(samesides, numTarget)) do
+      table.insert(targets, v)
+    end    
+  elseif skill.Target == "PWREnemies" then
+    local numTarget = math.random(skill.minTarget, skill.maxTarget)
+    local first, second = unpack(pickrandomtarget(opponents, 2))
+    second = second or first
+    table.insert(targets, first)
+    table.insert(targets, second)
+    for i = 3, numTarget do
+      if i <= numTarget then table.insert(targets, unpack(pickrandomtarget(opponents, 1))) end
+    end
+  elseif skill.Target == "PWRAllies" then
+    local numTarget = math.random(skill.minTarget, skill.maxTarget)
+    local first, second = unpack(pickrandomtarget(samesides, 2))
+    second = second or first
+    table.insert(targets, first)
+    table.insert(targets, second)
+    for i = 3, numTarget do
+      if i <= numTarget then table.insert(targets, unpack(pickrandomtarget(samesides, 1))) end
+    end
+  end
+
+  if skill.MoveType == "Attack" then  
     for k, v in pairs(targets) do
       if not checkavailable(char, skill, targets[k], battle) then break end
       inflictdamage(char, skill, targets[k], battle)
     end
-
   elseif skill.MoveType == "Heal" then
-    if skill.Target == "Self" or
-    skill.Target == "AnAlly" or
-    skill.Target == "AnAllyIncludingDead" or
-    skill.Target == "WholeAllyIncludingDead" then
-      targets = skilltarget
-    elseif skill.Target == "RandomAllies" then
-      local numTarget = math.random(skill.minTarget, skill.maxTarget)
-      for k, v in pairs(pickrandomtarget(opponents, numTarget)) do
-        table.insert(targets, v)
-      end
-    elseif skill.Target == "PWRAllies" then
-      local numTarget = math.random(skill.minTarget, skill.maxTarget)
-      local first, second = unpack(pickrandomtarget(opponents, 2))
-      second = second or first
-      table.insert(targets, first)
-      table.insert(targets, second)
-      for i = 3, numTarget do
-        if i <= numTarget then table.insert(targets, unpack(pickrandomtarget(opponents, 1))) end
-      end
-    end
     for k, v in pairs(targets) do
       if not checkavailable(char, skill, targets[k], battle) then break end
       applyheal(char, skill, targets[k])
