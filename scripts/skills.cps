@@ -426,5 +426,12 @@
     SkillList["AllAttack_Ground2"] = {Name="모드 흔들린", MoveType="Attack", Target="WholeEnemy", AttackType="Ground", AttackParameter="80", AttackerParameter="physicalAttack", TargetParameter="specialDefense", DamageCalculationType="Basic", ResourceType="Mana", ResourceAmount="80", AfterDelay="210", DelayType="specialSpeed"} 
     SkillList["AllAttack_Ground3"] = {Name="모드 흔들린다", MoveType="Attack", Target="WholeEnemy", AttackType="Ground", AttackParameter="120", AttackerParameter="physicalAttack", TargetParameter="specialDefense", DamageCalculationType="Basic", ResourceType="Mana", ResourceAmount="150", AfterDelay="240", DelayType="specialSpeed"} 
 
+    SkillList["SingleHeal_Basic1"] = {Name="나아", MoveType="Heal", Target="AnAlly", Amount="20", ResourceType="Mana", ResourceAmount="20", AfterDelay="120", DelayType="specialSpeed"} 
+    SkillList["SingleHeal_Basic2"] = {Name="나아간", MoveType="Heal", Target="AnAlly", Amount="50", ResourceType="Mana", ResourceAmount="60", AfterDelay="150", DelayType="specialSpeed"} 
+    SkillList["SingleHeal_Basic3"] = {Name="나아간다", MoveType="Heal", Target="AnAlly", Amount="100", ResourceType="Mana", ResourceAmount="120", AfterDelay="180", DelayType="specialSpeed"} 
+    SkillList["AllHeal_Basic1"] = {Name="가치 나아", MoveType="Heal", Target="WholeAlly", Amount="20", ResourceType="Mana", ResourceAmount="60", AfterDelay="180", DelayType="specialSpeed"} 
+    SkillList["AllHeal_Basic2"] = {Name="가치 나아간", MoveType="Heal", Target="WholeAlly", Amount="50", ResourceType="Mana", ResourceAmount="120", AfterDelay="210", DelayType="specialSpeed"} 
+    SkillList["AllHeal_Basic3"] = {Name="가치 나아간다", MoveType="Heal", Target="WholeAlly", Amount="100", ResourceType="Mana", ResourceAmount="300", AfterDelay="240", DelayType="specialSpeed"} 
+
   // Skills End
 #end
