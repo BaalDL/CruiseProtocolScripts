@@ -12,6 +12,7 @@
   execute ("playmenu")
   activatesubmenu(1,2,3,4,5,6,7,8,9)
   inventory = {}
+  addsave("inventory")
   inventory[101] = 1
   inventory[102] = 5
   inventory[103] = 5
