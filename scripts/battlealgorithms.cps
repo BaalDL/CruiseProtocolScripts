@@ -280,6 +280,8 @@ function lookuptarget(type, target, selfnum)
     end
   elseif target == "WholeAlly" then
     selection = ask("아군 전체를 목표로 삼습니까?", "-1", "10")
+  elseif target == "WholeAllyIncludingDead" then
+    selection = ask("아군 전체를 목표로 삼습니까?", "-1", "10")
   elseif target == "Self" then
     selection = ask("자기 자신을 목표로 삼습니까?", "-1", selfnum.toString)
   end
@@ -295,10 +297,7 @@ function skillhandler(char, skill, skilltarget)
   end
   local targets = {}
   if skill.MoveType == "Attack" then
-    if skill.Target == "AnEnemy" or 
-	  skill.Target == "Self" or
-	  skill.Target == "AnAlly" or
-	  skill.Target == "WholeAlly" then
+    if skill.Target == "AnEnemy" then
 	    targets = skilltarget
     elseif skill.Target == "WholeEnemy" then
       for k, v in pairs(skilltarget) do
@@ -319,12 +318,38 @@ function skillhandler(char, skill, skilltarget)
         if i <= numTarget then table.insert(targets, unpack(pickrandomtarget(opponents, 1))) end
       end
     end
+    for k, v in pairs(targets) do
+      if not checkavailable(char, skill, targets[k], battle) then break end
+      inflictdamage(char, skill, targets[k], battle)
+    end
+
+  elseif skill.MoveType == "Heal" then
+    if skill.Target == "Self" or
+    skill.Target == "AnAlly" or
+    skill.Target == "AnAllyIncludingDead" or
+    skill.Target == "WholeAllyIncludingDead" then
+      targets = skilltarget
+    elseif skill.Target == "RandomAllies" then
+      local numTarget = math.random(skill.minTarget, skill.maxTarget)
+      for k, v in pairs(pickrandomtarget(opponents, numTarget)) do
+        table.insert(targets, v)
+      end
+    elseif skill.Target == "PWRAllies" then
+      local numTarget = math.random(skill.minTarget, skill.maxTarget)
+      local first, second = unpack(pickrandomtarget(opponents, 2))
+      second = second or first
+      table.insert(targets, first)
+      table.insert(targets, second)
+      for i = 3, numTarget do
+        if i <= numTarget then table.insert(targets, unpack(pickrandomtarget(opponents, 1))) end
+      end
+    end
+    for k, v in pairs(targets) do
+      if not checkavailable(char, skill, targets[k], battle) then break end
+      applyheal(char, skill, targets[k])
+    end
 	end
-	
-	for k, v in pairs(targets) do
-	  if not checkavailable(char, skill, targets[k], battle) then break end
-	  inflictdamage(char, skill, targets[k], battle)
-	end
+
 end
 
 function itemhandler(char, item, itemtarget)
@@ -387,6 +412,9 @@ end
 function checkavailable(actor, skill, target, battle)
   if not target.alive and skill.MoveType == "Attack" then
     message = message .. "\n" .. target.name .. "(은)는 이미 전투불능이다!"
+    return false
+  elseif not target.alive and skill.Target ~= "AnAllyIncludingDead" and skill.Target ~= "WholeAllyIncludingDead" then
+    message = message .. "\n" .. target.name .. "(은)는 전투불능이다!"
     return false
   end
   return true
