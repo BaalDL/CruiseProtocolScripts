@@ -180,7 +180,7 @@ function askplayer(char, party, enemyparty, battle)
   local pc = 0
   local itemmove
   while (not playercommand) do
-    itemmove = -1
+    itemmove = -2
     moveto(startaskt, startaskl)
 	  if char.attackType then
 	    table.insert(movelist, "0")
@@ -212,19 +212,21 @@ function askplayer(char, party, enemyparty, battle)
       end
     elseif (pc == 10) then
       itemmove = inventorymenu("battle")
-      playertarget = lookuptarget(ItemList[itemmove].ItemType, ItemList[itemmove].Target, char.targetnumber)
-      if (playertarget == "100") then
-        local targets = enemyparty
-        itemhandler(char, itemmove, targets)
-      elseif (playertarget == "10") then
-        local targets = party
-        itemhandler(char, itemmove, targets)
-      elseif (playertarget ~= "-1") then
-        local targets = {targettable[playertarget]}
-        itemhandler(char, itemmove, targets)
+      if (itemmove ~= -1) then
+        playertarget = lookuptarget(ItemList[itemmove].ItemType, ItemList[itemmove].Target, char.targetnumber)
+        if (playertarget == "100") then
+          local targets = enemyparty
+          itemhandler(char, itemmove, targets)
+        elseif (playertarget == "10") then
+          local targets = party
+          itemhandler(char, itemmove, targets)
+        elseif (playertarget ~= "-1") then
+          local targets = {targettable[playertarget]}
+          itemhandler(char, itemmove, targets)
+        end
       end
 	  end
-    if (playertarget == "-1") then
+    if (playertarget == "-1") or (itemmove == -1) then
       playercommand, playersingletarget = false, singletarget
       movelist = {"-1"}
       moveliststring = ""

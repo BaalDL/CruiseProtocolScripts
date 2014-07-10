@@ -102,7 +102,7 @@
           useitem(tonumber(endmenu))
         end
       end
-      
+      return -1
     end
   end
 
