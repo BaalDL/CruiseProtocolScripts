@@ -63,11 +63,14 @@
 
   execute ("skilllist")
   execute ("enemylist")
+  execute ("itemlist")
+  execute ("partyheader")
   execute ("partydata")
   execute ("enemypartylist")
   execute ("enemypartyheader")
   execute ("battleheader")
-
+  execute ("itemheader")
+  
   addsave("allpartymembers")
   addsave("currentpartymembers")
   addsave("EnemyInfo")

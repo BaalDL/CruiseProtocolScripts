@@ -7,7 +7,6 @@
   execute ("loadptypebattlefunctions")
   execute ("configurebasicparameters")
   execute ("loadbattledata")
-  execute ("itemheader")
   execute ("dungeonsearchfunctions")
   execute ("playmenu")
   activatesubmenu(1,2,3,4,5,6,7,8,9)
@@ -18,13 +17,14 @@
   inventory[103] = 5
   inventory[104] = 5
   table.sort(inventory)
+  party = partyhandler(currentpartymembers)
   local playerchoice
   while(playerchoice ~= "-1") do
     printl ("[1] 전투 [2] 저장 [3] 탐험 [4] 로드 [5] 메뉴 [-1] 종료")
     playerchoice = ask("무엇을 합니까?", "1", "2", "3", "4", "5", "-1")
     if playerchoice == "1" then
       enemyparty = initializeenemyparty(EnemyPartyTempletes["thugs1"])
-      battlehandler(currentpartymembers, enemyparty)
+      battlehandler(enemyparty)
     elseif playerchoice == "2" then
       save("savetemp.txt")
     elseif playerchoice == "3" then

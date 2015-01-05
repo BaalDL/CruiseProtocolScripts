@@ -43,20 +43,18 @@
 
   party = {}
   enemyparty = {}
+  targettable = {}
 
 function initializebattle(battle)
   local p = battle.party
   local e = battle.enemyparty
   orderedCharacters = {}
   battleStopWatch = 200
-  targettable = {}
-  targettable["10"] = battle.party
+  
   targettable["100"] = battle.enemyparty
   for k, v in pairs(p) do
     p[k].turntime = math.floor((battleStopWatch / p[k].physicalSpeed) + math.random(10))
 	  table.insert(orderedCharacters, p[k]) 
-	  p[k].targetnumber = 10 + k
-	  targettable[tostring(10+k)] = p[k]
   end
   for k, v in pairs(e) do
     e[k].turntime = math.floor((battleStopWatch / e[k].physicalSpeed) + math.random(10))
@@ -83,11 +81,10 @@ function progressturntime(X)
   end
 end
 
-function battlehandler(battleparty, enemyparty)
+function battlehandler(enemyparty)
 	currentbattle = {}
-  party = battleparty
-	currentbattle.party = battleparty
-	currentbattle.enemyparty = enemyparty
+	currentbattle.party = party
+  currentbattle.enemyparty = enemyparty
 	initializebattle(currentbattle)
 	battlefirstturn(currentbattle)
 	while (not checkbattleend()) do
@@ -180,6 +177,7 @@ function askplayer(char, party, enemyparty, battle)
   local pc = 0
   local itemmove
   while (not playercommand) do
+    local targets
     itemmove = -2
     moveto(startaskt, startaskl)
 	  if char.attackType then
@@ -201,29 +199,25 @@ function askplayer(char, party, enemyparty, battle)
     if (pc <= 8 and pc >= 0) then
 	    playertarget = lookuptarget(char.skills[pc].MoveType, char.skills[pc].Target, char.targetnumber)
 	    if (playertarget == "100") then
-        local targets = enemyparty
-        skillhandler(char, char.skills[pc], targets)
+        targets = enemyparty
       elseif (playertarget == "10") then
-        local targets = party
-        skillhandler(char, char.skills[pc], targets)
+        targets = party
       elseif (playertarget ~= "-1") then
-        local targets = {targettable[playertarget]}
-	      skillhandler(char, char.skills[pc], targets)
+        targets = {targettable[playertarget]}
       end
+      skillhandler(char, char.skills[pc], targets)
     elseif (pc == 10) then
       itemmove = inventorymenu("battle")
       if (itemmove ~= -1) then
-        playertarget = lookuptarget(ItemList[itemmove].ItemType, ItemList[itemmove].Target, char.targetnumber)
+        playertarget = itemtarget(ItemList[itemmove].ItemType, ItemList[itemmove].Target, char.targetnumber)
         if (playertarget == "100") then
-          local targets = enemyparty
-          itemhandler(char, itemmove, targets)
+          targets = enemyparty
         elseif (playertarget == "10") then
-          local targets = party
-          itemhandler(char, itemmove, targets)
+          targets = party
         elseif (playertarget ~= "-1") then
-          local targets = {targettable[playertarget]}
-          itemhandler(char, itemmove, targets)
+          targets = {targettable[playertarget]}
         end
+        itemhandler(char, itemmove, targets)
       end
 	  end
     if (playertarget == "-1") or (itemmove == -1) then
@@ -234,7 +228,9 @@ function askplayer(char, party, enemyparty, battle)
       erase(startaskt, endaskt)
     end
   end
-  if (pc <= 8 and pc >= 0) then
+  if (pc == -1) then
+    return nil
+  elseif (pc <= 8 and pc >= 0) then
     return char.skills[pc]
   elseif pc == 10 then
     return SkillList["UseItem"]
@@ -352,20 +348,6 @@ function skillhandler(char, skill, skilltarget)
     end
 	end
 
-end
-
-function itemhandler(char, item, itemtarget)
-  local itemdata = ItemList[item]
-  message = message .. char.name .. "(은)는 " .. itemdata.Name .. "(을)를 사용했다!"
-  if (itemdata.ItemType == "Heal") then
-    for k, v in pairs(itemtarget) do
-      applyheal(char, itemdata, itemtarget[k])
-    end
-  end
-  inventory[item] = inventory[item] - 1
-  if (inventory[item] == 0) then
-    message = message .. "\n가지고 있던 " .. itemdata.Name .. "(을)를 모두 사용해 버렸다!"
-  end
 end
 
 function calculatedamage(actor, skill, target, battle)
