@@ -131,8 +131,8 @@
         table.insert(movelist, tostring(k))
       end
     end
-    moveliststring = moveliststring .. "[0] 메뉴 닫기"
-    table.insert(movelist, "0")
+    moveliststring = moveliststring .. "[-1] 메뉴 닫기"
+    table.insert(movelist, "-1")
     printl(moveliststring)
     return movelist
   end
