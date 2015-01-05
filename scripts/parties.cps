@@ -1,3 +1,15 @@
+#function partyheader
+  function partyhandler(partyarchtype)
+    party = partyarchtype
+    targettable["10"] = party
+    for k, v in pairs(party) do
+      party[k].targetnumber = 10 + k
+      targettable[tostring(10+k)] = party[k]
+    end
+    return party
+  end
+#end
+
 #function partydata
 
   allpartymembers = {}
