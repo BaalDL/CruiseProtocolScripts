@@ -211,26 +211,31 @@
     
       if (pc <= 8 and pc >= 0) then
   	    playertarget = lookuptarget(char.skills[pc].MoveType, char.skills[pc].Target, char.targetnumber)
-  	    if (playertarget == "100") then
-          targets = enemyparty
-        elseif (playertarget == "10") then
-          targets = party
-        elseif (playertarget ~= "-1") then
-          targets = {targettable[playertarget]}
-        end
-        skillhandler(char, char.skills[pc], targets)
-      elseif (pc == 10) then
-        itemmove = inventorymenu("battle")
-        if (itemmove ~= -1) then
-          playertarget = itemtarget(ItemList[itemmove].ItemType, ItemList[itemmove].Target, char.targetnumber)
+  	    
+        if (playertarget ~= "-1") then
           if (playertarget == "100") then
             targets = enemyparty
           elseif (playertarget == "10") then
             targets = party
-          elseif (playertarget ~= "-1") then
+          else
             targets = {targettable[playertarget]}
           end
-          itemhandler(char, itemmove, targets)
+          skillhandler(char, char.skills[pc], targets)
+        end
+      elseif (pc == 10) then
+        itemmove = inventorymenu("battle")
+        if (itemmove ~= -1) then
+          playertarget = itemtarget(ItemList[itemmove].ItemType, ItemList[itemmove].Target, char.targetnumber)
+          if (playertarget ~= "-1") then
+            if (playertarget == "100") then
+              targets = enemyparty
+            elseif (playertarget == "10") then
+              targets = party
+            else
+              targets = {targettable[playertarget]}
+            end
+            itemhandler(char, itemmove, targets)
+          end
         end
       elseif (pc == 99) then
         fleemove = tonumber(confirmflee())
