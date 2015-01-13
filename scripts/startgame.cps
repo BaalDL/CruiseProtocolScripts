@@ -24,7 +24,7 @@
     playerchoice = ask("무엇을 합니까?", "1", "2", "3", "4", "5", "-1")
     if playerchoice == "1" then
       enemyparty = initializeenemyparty(EnemyPartyTempletes["thugs1"])
-      battlehandler(enemyparty)
+      battlehandler(enemyparty, true)
     elseif playerchoice == "2" then
       save("savetemp.txt")
     elseif playerchoice == "3" then
