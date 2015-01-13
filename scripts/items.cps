@@ -3,20 +3,17 @@
   function useitem(touse)
     local itemdata = ItemList[touse]
     local targets
-    printl(itemdata.Name .. "(을)를 사용했다!")
-    if itemdata.ItemType == "Heal" then
-      local target = itemtarget("Heal", "AnAlly")
+    local target = itemtarget(itemdata.ItemType, itemdata.Target)
+    if (target ~= "-1") then
       if (target == "100") then
         targets = enemyparty
       elseif (target == "10") then
         targets = party
-      elseif (target ~= "-1") then
+      else
         targets = {targettable[target]}
       end
       itemhandler(char, touse, targets)
     end
-    printl(message)
-    message = ""
   end
 
   function itemtarget(type, target)
@@ -34,9 +31,7 @@
         if e[k].alive then table.insert(targets, tostring(e[k].targetnumber)) end
       end
       table.sort(targets)
-      if type == "Attack" then
-        selection = ask("누구를 공격합니까?", unpack(targets))
-      elseif type == "Harass" then
+      if type == "Attack" or type == "Harass" then
         selection = ask("누구를 목표로 삼습니까?", unpack(targets))
       end
     elseif target == "WholeEnemy" or
@@ -70,7 +65,7 @@
     return selection
   end
 
-  function itemhandler(char, item, itemtarget)
+  function itemhandler(char, item, itemtarget, battle)
     if not item then
       printl ("==NEED DEBUG== no item!")
       return
@@ -86,6 +81,12 @@
       for k, v in pairs(itemtarget) do
         applyheal(char, itemdata, itemtarget[k])
       end
+    elseif (itemdata.ItemType == "Support") then
+    elseif (itemdata.ItemType == "Attack") then
+      for k, v in pairs(itemtarget) do
+        inflictdamage(char, itemdata, itemtarget[k], battle)
+      end
+    elseif (itemdata.ItemType == "Harass") then
     end
     inventory[item] = inventory[item] - 1
     if (inventory[item] == 0) then
@@ -102,28 +103,168 @@
     Name = "빨간약",
     ItemType = "Heal",
     Target = "AnAlly",
-    Amount = 20,
-    Battle = true
+    FixedAmount = 20,
   }
   ItemList[102] = {
     Name = "연고",
     ItemType = "Heal",
     Target = "AnAlly",
-    Amount = 50,
-    Battle = true
+    FixedAmount = 50,
   }
   ItemList[103] = {
     Name = "고급 연고",
     ItemType = "Heal",
     Target = "AnAlly",
-    Amount = 100,
-    Battle = true
+    FixedAmount = 100,
   }
   ItemList[104] = {
     Name = "치유의 구슬",
     ItemType = "Heal",
     Target = "AnAlly",
-    Amount = math.huge,
-    Battle = true
+    FixedAmount = math.huge,
+  }
+  ItemList[201] = {
+    Name = "반조의 칼날",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Slash",
+    BattleOnly = true
+  }
+  ItemList[202] = {
+    Name = "반조의 주먹",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Strike",
+    BattleOnly = true
+  }
+  ItemList[203] = {
+    Name = "반조의 바늘",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Pierce",
+    BattleOnly = true
+  }
+  ItemList[204] = {
+    Name = "반조의 엄니",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Bite",
+    BattleOnly = true
+  }
+  ItemList[205] = {
+    Name = "반조의 화살",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Bullet",
+    BattleOnly = true
+  }
+  ItemList[206] = {
+    Name = "반조의 톱날",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Throwing",
+    BattleOnly = true
+  }
+  ItemList[207] = {
+    Name = "반조의 음파",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Burst",
+    BattleOnly = true
+  }
+  ItemList[208] = {
+    Name = "반조의 불꽃",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Fire",
+    BattleOnly = true
+  }
+  ItemList[209] = {
+    Name = "반조의 물결",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Water",
+    BattleOnly = true
+  }
+  ItemList[210] = {
+    Name = "반조의 한기",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Ice",
+    BattleOnly = true
+  }
+  ItemList[211] = {
+    Name = "반조의 생명",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Grass",
+    BattleOnly = true
+  }
+  ItemList[212] = {
+    Name = "반조의 바람",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Wind",
+    BattleOnly = true
+  }
+  ItemList[213] = {
+    Name = "반조의 전하",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Electric",
+    BattleOnly = true
+  }
+  ItemList[214] = {
+    Name = "반조의 대지",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Ground",
+    BattleOnly = true
+  }
+  ItemList[215] = {
+    Name = "반조의 회광",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Luminous",
+    BattleOnly = true
+  }
+  ItemList[216] = {
+    Name = "반조의 칠흑",
+    ItemType = "Attack",
+    Target = "AnEnemy",
+    DamageCalculationType = "FixedUnderType",
+    FixedAmount = 50,
+    AttackType = "Dark",
+    BattleOnly = true
   }
 #end

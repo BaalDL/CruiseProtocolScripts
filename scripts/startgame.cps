@@ -16,6 +16,7 @@
   inventory[102] = 5
   inventory[103] = 5
   inventory[104] = 5
+  inventory[201] = 3
   table.sort(inventory)
   party = partyhandler(currentpartymembers)
   local playerchoice

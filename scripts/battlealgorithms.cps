@@ -102,8 +102,9 @@
     else
       printl ("전투에서 도망쳤습니다....")
   	end
-      return result
-    end
+    currentbattle = nil
+    return result
+  end
 
   function battlefirstturn(battle)
     local dicepool = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2}
@@ -235,7 +236,7 @@
             else
               targets = {targettable[playertarget]}
             end
-            itemhandler(char, itemmove, targets)
+            itemhandler(char, itemmove, targets, battle)
           end
         end
       elseif (pc == 99) then
@@ -383,6 +384,10 @@
     local damage = 0
     if skill.DamageCalculationType == "Basic" then
       damage = math.ceil(skill.AttackParameter * actor[skill.AttackerParameter] / target[skill.TargetParameter] * target.defensiveFactor[skill.AttackType] / 100)
+    elseif skill.DamageCalculationType == "FixedUnderType" then
+      damage = math.ceil(skill.FixedAmount * target.defensiveFactor[skill.AttackType] / 100)
+    elseif skill.DamageCalculationType == "Fixed" then
+      damage = math.ceil(skill.FixedAmount)
     end
     return damage
   end
@@ -415,8 +420,8 @@
 
   function applyheal(actor, skill, target)
     local heal = 0
-    if skill.Amount then
-      heal = skill.Amount
+    if skill.FixedAmount then
+      heal = skill.FixedAmount
       message = message .. "\n" .. target.name .. "의 체력이 " .. heal .. " 회복되었다!"
       target.currHP = math.min(target.maxHP, target.currHP + heal)
     end

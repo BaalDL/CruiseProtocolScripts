@@ -78,25 +78,38 @@
     end
   end
 
-  function inventorymenu(type)
+  function inventorymenu(menutype)
     local endmenu, stringitemlist, itemtable, useditem
     while(endmenu ~= "-1") do
       itemtable = {}
       stringitemlist = ""
       useditem = -1
-      for k, v in pairs(inventory,nil) do
-        if not (type == "battle") or ItemList[k].Battle then
-          stringitemlist = stringitemlist .. "[" .. k .. "] " .. ItemList[k].Name .. " " .. inventory[k] .. "개 "
-          table.insert(itemtable, tostring(k))
+      
+      if not (menutype == "battle") then
+        for k, v in pairs(inventory,nil) do
+          if ItemList[k].BattleOnly then
+          else
+            stringitemlist = stringitemlist .. "[" .. k .. "] " .. ItemList[k].Name .. " " .. inventory[k] .. "개 "
+            table.insert(itemtable, tostring(k))
+          end
+        end
+      elseif (menutype == "battle") then
+        for k, v in pairs(inventory,nil) do
+          if ItemList[k].NonBattle then
+          else
+            stringitemlist = stringitemlist .. "[" .. k .. "] " .. ItemList[k].Name .. " " .. inventory[k] .. "개 "
+            table.insert(itemtable, tostring(k))
+          end
         end
       end
+
       printl (stringitemlist)
       printl ("[-1] 나가기")
       endmenu = ask("무엇을 하시겠습니까?", "-1", unpack(itemtable))
       if (endmenu ~= "-1") then
         printl ("[" .. endmenu .. "] " .. ItemList[tonumber(endmenu)].Name .. " 나머지 " .. inventory[tonumber(endmenu)] .. "개")
         useditem = ask("아이템을 사용하시겠습니까? [0] 예 [1] 아니오", "0", "1")
-        if (useditem == "0") and (type == "battle") then
+        if (useditem == "0") and (menutype == "battle") then
           return tonumber(endmenu)
         elseif (useditem == "0") then
           useitem(tonumber(endmenu))
