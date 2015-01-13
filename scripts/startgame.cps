@@ -221,6 +221,20 @@
     printl (blankstring)
   end
 
+  function pickrandomresult(favortable)
+    local wholecases = 0
+    for _, v in pairs(favortable) do
+      wholecases = wholecases + v
+    end
+    local value = math.random(wholecases)
+    for k, v in pairs(favortable) do
+      value = value - v
+      if (value <= 0) then
+        return k
+      end
+    end
+    return nil --오류
+  end
 
   //한 줄을 가득 지정한 문자열로 채운다.
   function printdelimiter(char)
