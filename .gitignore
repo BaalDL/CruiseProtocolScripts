@@ -1,3 +1,4 @@
 *.sublime*
 /CruiserConsole*.*
 /*.dll
+savetemp.txt
