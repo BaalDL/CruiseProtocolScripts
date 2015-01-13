@@ -87,6 +87,7 @@
     currentbattle.enemyparty = enemyparty
     currentbattle.fleeable = fleeable
     currentbattle.fleed = false
+    currentbattle.fleetry = 0
     currentbattle.advantage = false
   	initializebattle(currentbattle)
   	battlefirstturn(currentbattle)
@@ -238,9 +239,9 @@
           end
         end
       elseif (pc == 99) then
-        fleemove = tonumber(confirmflee())
+        fleemove = tonumber(confirmflee(char, party, enemyparty, battle))
         if (fleemove ~= 1) then
-          battle.fleed = fleehandler(char,battle.advantage)
+          battle.fleed = fleehandler(char,party, enemyparty, battle)
           if not battle.fleed then
             printl("도주에 실패했다!")
           end
@@ -462,21 +463,37 @@
     return targetlist[math.random(#targetlist)]
   end
 
-  function confirmflee()
+  function confirmflee(char, party, enemyparty, advantage)
     local selection
-    selection = ask("전투를 포기하고 도주하겠습니까? [0] 예 [1] 아니오", "0", "1")
+    local table = getfleetable(char, party, enemyparty, advantage)
+    local percentage = math.ceil(table[1] / (table[1]+table[2]) * 100)
+    selection = ask("전투를 포기하고 도주하겠습니까? (성공확률:" .. percentage .. "%) [0] 예 [1] 아니오", "0", "1")
     return selection
   end
 
-  function fleehandler(char, advantage)
-    local fleetable = {50, 50}
-    if advantage == "player" then
-      return true
-    elseif advantage == "enemy" then
+  function getfleetable(char, party, enemyparty, battle)
+    local fleetable = {(4+battle.fleetry)*char.physicalSpeed, 0}
+    for _, v in pairs(party) do
+      fleetable[1] = fleetable[1] + math.floor((v.physicalSpeed)/2)
+    end
+    for _, v in pairs(enemyparty) do
+      fleetable[2] = fleetable[2] + v.physicalSpeed
+    end
+    if (fleetable[1] <= 0) then fleetable[1] = 1 end
+    if (fleetable[2] <= 0) then fleetable[2] = 0 end
+
+    if battle.advantage == "player" then
+      fleetable[2] = 0
+    elseif battle.advantage == "enemy" then
       fleetable[1] = math.floor(fleetable[1] / 2)
       fleetable[2] = fleetable[2] * 2
     end
-    local result = pickrandomresult(fleetable)
+    return fleetable
+  end
+
+  function fleehandler(char, party, enemyparty, battle)
+    battle.fleetry = battle.fleetry + 1
+    local result = pickrandomresult(getfleetable(char, party, enemyparty, battle))
     if result == 1 then
       return true
     else
