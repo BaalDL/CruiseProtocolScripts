@@ -18,7 +18,7 @@
     if targets then skillhandler(self, SkillList[self.attackType], targets) end
     return SkillList[self.attackType]
   end
-  
+
   allpartymembers = {}
   currentpartymembers = {}
 
@@ -48,6 +48,7 @@
       SkillList["AllAttack_Fire1"],
       SkillList["SingleHeal_Basic1"]
     },
+    skillCharges = {},
     defensiveType = {
       Slash = "s",
       Strike = "s",
@@ -120,6 +121,7 @@
       SkillList["AllAttack_Throwing1"],
       SkillList["SingleHeal_Basic1"]
     },
+    skillCharges = {},
     defensiveType = {
       Slash = "s",
       Strike = "s",
@@ -192,6 +194,7 @@
       SkillList["AllAttack_Strike1"],
       SkillList["SingleHeal_Basic1"]
     },
+    skillCharges = {},
     defensiveType = {
       Slash = "s",
       Strike = "s",
