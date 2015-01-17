@@ -12,6 +12,13 @@
 
 #function partydata
 
+  function PartyDefaultAICommand(self, party, enemyparty)
+    targets = {}
+    targets = pickrandomtarget(party, 1)
+    if targets then skillhandler(self, SkillList[self.attackType], targets) end
+    return SkillList[self.attackType]
+  end
+  
   allpartymembers = {}
   currentpartymembers = {}
 
@@ -77,12 +84,7 @@
       Luminous = 0,
       Dark = 100
     },
-    AICommand = function(self, party, enemyparty)
-      targets = {}
-      targets = pickrandomtarget(party, 1)
-      if targets then skillhandler(self, SkillList[self.attackType], targets) end
-      return SkillList[self.attackType]
-    end,
+    AICommand = PartyDefaultAICommand,
     
     playerCommand = function(self, party, enemyparty)
     end,
@@ -154,12 +156,7 @@
       Luminous = 0,
       Dark = 100
     },
-    AICommand = function(self, party, enemyparty)
-      targets = {}
-      targets = pickrandomtarget(party, 1)
-      if targets then skillhandler(self, SkillList[self.attackType], targets) end
-      return SkillList[self.attackType]
-    end,
+    AICommand = PartyDefaultAICommand,
   
     playerCommand = function(self, party, enemyparty)
     end,
@@ -231,12 +228,7 @@
       Luminous = 0,
       Dark = 100
     },
-    AICommand = function(self, party, enemyparty)
-      targets = {}
-      targets = pickrandomtarget(party, 1)
-      if targets then skillhandler(self, SkillList[self.attackType], targets) end
-      return SkillList[self.attackType]
-    end,
+    AICommand = PartyDefaultAICommand,
     
     playerCommand = function(self, party, enemyparty)
     end,
