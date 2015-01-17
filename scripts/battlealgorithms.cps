@@ -107,18 +107,18 @@
   end
 
   function battlefirstturn(battle)
-    local dicepool = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 2, 2}
-    local result = dicepool[math.random(#dicepool)]
+    local table = {16, 2, 2}
+    local result = pickrandomresult(table)
     local p = battle.party
     local e = battle.enemyparty
-    if result == 1 then
+    if result == 2 then
       message = "적의 습격!"
       currentbattle.advantage = "enemy"
       for k, v in pairs(p) do
         p[k].turntime = p[k].turntime + math.random(5, 10)
       end
       sortcharacters(orderedCharacters)
-    elseif result == 2 then
+    elseif result == 3 then
       message = "적을 습격했다!"
       currentbattle.advantage = "party"
       for k, v in pairs(e) do
@@ -240,9 +240,10 @@
           end
         end
       elseif (pc == 99) then
-        fleemove = tonumber(confirmflee(char, party, enemyparty, battle))
+        local fleetable = getfleetable(char, party, enemyparty, battle)
+        fleemove = tonumber(confirmflee(fleetable))
         if (fleemove ~= 1) then
-          battle.fleed = fleehandler(char,party, enemyparty, battle)
+          battle.fleed = fleehandler(battle, fleetable)
           if not battle.fleed then
             printl("도주에 실패했다!")
           end
@@ -468,9 +469,8 @@
     return targetlist[math.random(#targetlist)]
   end
 
-  function confirmflee(char, party, enemyparty, advantage)
+  function confirmflee(table)
     local selection
-    local table = getfleetable(char, party, enemyparty, advantage)
     local percentage = math.ceil(table[1] / (table[1]+table[2]) * 100)
     selection = ask("전투를 포기하고 도주하겠습니까? (성공확률:" .. percentage .. "%) [0] 예 [1] 아니오", "0", "1")
     return selection
@@ -496,9 +496,9 @@
     return fleetable
   end
 
-  function fleehandler(char, party, enemyparty, battle)
+  function fleehandler(battle, table)
     battle.fleetry = battle.fleetry + 1
-    local result = pickrandomresult(getfleetable(char, party, enemyparty, battle))
+    local result = pickrandomresult(table)
     if result == 1 then
       return true
     else
