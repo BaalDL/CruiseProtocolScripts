@@ -184,8 +184,10 @@
     local playercommand, playersingletarget = false, singletarget
     local movelist = {"-1"}
     local moveliststring = ""
+    local movelistamount = ""
     local pc = 0
     local itemmove, fleemove
+
     while (not playercommand) do
       local targets
       itemmove = -2
@@ -194,18 +196,26 @@
   	    table.insert(movelist, "0")
   	    moveliststring = moveliststring .. "[0] 공격(" .. attackType.toString(char.attackType) .. ")\n"
   	  end
-  	  for i = 1, 8 do	
+  	  for i = 1, 8 do
   	    if char.skills[i] and not (char.skills[i].MoveType == "Passive") then
   	      table.insert(movelist, tostring(i))
-  	  	moveliststring = moveliststring .. "[" .. tostring(i) .. "] " .. char.skills[i].Name .. " (" 
-          .. ResourceType.toString(char.skills[i].ResourceType) .. ": " .. char.skills[i].ResourceAmount .. ") "
+  	  	  moveliststring = moveliststring .. "[" .. tostring(i) .. "] " .. char.skills[i].Name .. " (" 
+            .. ResourceType.toString(char.skills[i].ResourceType) .. ": "
+          if (char.ResourceType == char.skills[i].ResourceType) and (char.currResource >= char.skills[i].ResourceAmount) then
+            movelistamount = tostring(char.skills[i].ResourceAmount)
+          elseif (char.skills[i].ResourceType == "Charge" and char.skillCharges[i] > 0) then
+            movelistamount = tostring(char.skills[i].ResourceAmount)
+          else
+            movelistamount = "/fy" .. char.skills[i].ResourceAmount .. "/x"
+          end
+          moveliststring = moveliststring .. movelistamount .. ") "
   	    end
   	  end
       table.insert(movelist, "10")
-      print(moveliststring .. "\n[10] 아이템 ")
+      _print(moveliststring .. "\n[10] 아이템 ")
       if battle.fleeable then
         table.insert(movelist, "99")
-        print("[99] 도주 ")
+        _print("[99] 도주 ")
       end
       printl("[-1] 대기(취소)")
       playercommand = ask("무엇을 하시겠습니까?", unpack(movelist))
@@ -367,6 +377,10 @@
       end
     end
 
+    if skill.ResourceAmount then
+      costresource(char, skill)
+    end
+
     if skill.MoveType == "Attack" then  
       for k, v in pairs(targets) do
         if not checkavailable(char, skill, targets[k], battle) then break end
@@ -379,6 +393,36 @@
       end
   	end
 
+  end
+  
+  function costresource(char, skill)
+    local afteramount
+    afteramount = char.currResource - skill.ResourceAmount
+    if (skill.ResourceType == "Charge") then
+      local ok = false
+      for k, v in char.skills do
+        if (v == skill) and not ok then
+          char.skillCharges[k] = char.skillCharges[k] - 1
+          ok = true
+        end
+      end
+    elseif (char.ResourceType == skill.ResourceType) and (afteramount >= 0) then
+      char.currResource = afteramount
+    elseif ((char.ResourceType == skill.ResourceType) and (afteramount < 0)) or (char.ResourceType ~= skill.ResourceType) then
+      char.currResource = 0
+      if (skill.ResourceType == "Mana") then
+        message = message .. "\n[DEBUG] 마나 부족으로 인한 쿨다운 턴 부여 처리를 추가할 필요가 있습니다."
+      elseif (skill.ResourceType == "Ki") then
+        char.turntime = -afteramount
+        message = message .. "/n기력이 모자라 행동이 지체된다!"
+      elseif (skill.ResourceType == "Rage") then
+        local hpdamage = math.ceil(char.maxHP * skill.ResourceAmount / 100)
+        char.currHP = math.max(char.currHP - hpdamage, 1)
+        message = message .. "/n분노의 영향으로 HP가 소모된다!"
+      end
+
+    end
+    
   end
 
   function calculatedamage(actor, skill, target, battle)
