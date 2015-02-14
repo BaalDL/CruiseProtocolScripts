@@ -124,7 +124,7 @@
     FixedAmount = math.huge,
   }
   ItemList[201] = {
-    Name = "반조의 칼날",
+    Name = "명멸하는 칼날",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
@@ -133,7 +133,7 @@
     BattleOnly = true
   }
   ItemList[202] = {
-    Name = "반조의 주먹",
+    Name = "명멸하는 주먹",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
@@ -142,7 +142,7 @@
     BattleOnly = true
   }
   ItemList[203] = {
-    Name = "반조의 바늘",
+    Name = "명멸하는 바늘",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
@@ -151,7 +151,7 @@
     BattleOnly = true
   }
   ItemList[204] = {
-    Name = "반조의 엄니",
+    Name = "명멸하는 엄니",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
@@ -160,7 +160,7 @@
     BattleOnly = true
   }
   ItemList[205] = {
-    Name = "반조의 화살",
+    Name = "명멸하는 화살",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
@@ -169,7 +169,7 @@
     BattleOnly = true
   }
   ItemList[206] = {
-    Name = "반조의 톱날",
+    Name = "명멸하는 톱날",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
@@ -178,7 +178,7 @@
     BattleOnly = true
   }
   ItemList[207] = {
-    Name = "반조의 음파",
+    Name = "명멸하는 음파",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
@@ -187,7 +187,7 @@
     BattleOnly = true
   }
   ItemList[208] = {
-    Name = "반조의 불꽃",
+    Name = "명멸하는 불꽃",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
@@ -196,7 +196,7 @@
     BattleOnly = true
   }
   ItemList[209] = {
-    Name = "반조의 물결",
+    Name = "명멸하는 물결",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
@@ -205,7 +205,7 @@
     BattleOnly = true
   }
   ItemList[210] = {
-    Name = "반조의 한기",
+    Name = "명멸하는 한기",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
@@ -214,7 +214,7 @@
     BattleOnly = true
   }
   ItemList[211] = {
-    Name = "반조의 생명",
+    Name = "명멸하는 생명",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
@@ -223,7 +223,7 @@
     BattleOnly = true
   }
   ItemList[212] = {
-    Name = "반조의 바람",
+    Name = "명멸하는 바람",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
@@ -232,7 +232,7 @@
     BattleOnly = true
   }
   ItemList[213] = {
-    Name = "반조의 전하",
+    Name = "명멸하는 전하",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
@@ -241,7 +241,7 @@
     BattleOnly = true
   }
   ItemList[214] = {
-    Name = "반조의 대지",
+    Name = "명멸하는 대지",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
@@ -250,7 +250,7 @@
     BattleOnly = true
   }
   ItemList[215] = {
-    Name = "반조의 회광",
+    Name = "명멸하는 광채",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
@@ -259,7 +259,7 @@
     BattleOnly = true
   }
   ItemList[216] = {
-    Name = "반조의 칠흑",
+    Name = "명멸하는 칠흑",
     ItemType = "Attack",
     Target = "AnEnemy",
     DamageCalculationType = "FixedUnderType",
