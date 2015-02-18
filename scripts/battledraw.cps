@@ -105,7 +105,7 @@
 		moveto(t, l)
 		printdelimiter("=")
 		printmid("ENEMY")
-		local nameline, hpilne, mpline, statusline, defline1, defline2
+		local nameline, hpilne, mpline, orderline, defline1, defline2
 		local e = currentbattle.enemyparty
 		local p = currentbattle.party
 		for k = 1, 5 do
@@ -122,19 +122,19 @@
 				  mpline = ""
 				end
 				order = stringorder(e[k].turnorder)
-				local blanklen = EWIDTH - string.len(e[k].status or "정상") - string.len(order) - 2
-				statusline = e[k].status or "정상" .. string.rep(" ",blanklen) .. order
+				local blanklen = EWIDTH - string.len(order) - 2
+				orderline = string.rep(" ",blanklen) .. order
 				defline1 = defensivechar(e[k].defensiveType,e[k].defensiveFactor,EnemyDefenseInfo[e[k].templetes],false,true)
 				defline2 = defensivechar(e[k].defensiveType,e[k].defensiveFactor,EnemyDefenseInfo[e[k].templetes],false,false)
 			else
 				nameline = ""
 				hpline = ""
 				mpline = ""
-				statusline = ""
+				orderline = ""
 				defline1 = ""
 				defline2 = ""
 			end
-			printblock(EWIDTH, 6, (k < 5) and "right" or "enter", nameline, hpline, mpline, statusline, defline1, defline2)
+			printblock(EWIDTH, 6, (k < 5) and "right" or "enter", nameline, hpline, mpline, orderline, defline1, defline2)
 		end
 		printdelimiter("-")
 		for i = 1, arg.n do
@@ -155,15 +155,15 @@
 	        	  mpline = ""
 	      		end
 				order = stringorder(p[k].turnorder)
-				local blanklen = PWIDTH - string.len(p[k].status or "정상") - string.len(order) - 2
-				statusline = p[k].status or "정상" .. string.rep(" ",blanklen) .. order
+				local blanklen = PWIDTH - string.len(order) - 2
+				orderline = string.rep(" ",blanklen) .. order
 			else
 				nameline = ""
 				hpline = ""
 				mpline = ""
-				statusline = ""
+				orderline = ""
 			end
-			printblock(PWIDTH, 4, (k < 4) and "right" or "enter", nameline, hpline, mpline, statusline)
+			printblock(PWIDTH, 4, (k < 4) and "right" or "enter", nameline, hpline, mpline, orderline)
 		end
 		printmid("PARTY")
 		printdelimiter("=")
