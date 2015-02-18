@@ -58,12 +58,13 @@
   PWIDTH = windowwidth / MAXPARTY
   -- we assume EBARWIDTH, PBARWIDTH are odd numbers.
   EBARWIDTH = (EWIDTH - string.len("     HP [] "))
-  PBARWIDTH = (PWIDTH - string.len("     MP [] "))
+  PBARWIDTH = (PWIDTH - string.len("     魔 [] "))
 
 
   execute ("skilllist")
   execute ("enemylist")
   execute ("itemlist")
+  execute ("ephemerallist")
   execute ("partyheader")
   execute ("partydata")
   execute ("enemypartylist")
