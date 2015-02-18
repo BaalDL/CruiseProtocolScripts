@@ -93,7 +93,8 @@
     alive = true,
     currHP = 180,
     currResource = 100,
-    currSkillCharges = {}
+    currSkillCharges = {},
+    currEphemerals = {burn=1, paralyzed=2}
   }
 
   allpartymembers[2] = {
@@ -167,7 +168,8 @@
     alive = true,
     currHP = 150,
     currResource = 100,
-    currSkillCharges = {}
+    currSkillCharges = {},
+    currEphemerals = {stoned=3, sleep=5}
   }
 
   allpartymembers[3] = {
@@ -241,7 +243,8 @@
     alive = true,
     currHP = 200,
     currResource = 100,
-    currSkillCharges = {}
+    currSkillCharges = {},
+    currEphemerals = {frozen=2, blind=4, cursed=1}
   }
 
   currentpartymembers[1] = allpartymembers[1]

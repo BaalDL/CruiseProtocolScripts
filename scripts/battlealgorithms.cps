@@ -38,6 +38,7 @@
     end
 
     enemy.AICommand = EnemyTempletes[enemyT].AICommand
+    enemy.currEphemerals = {}
     return enemy
   end
 
