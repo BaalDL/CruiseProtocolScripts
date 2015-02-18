@@ -32,6 +32,7 @@
     maxResource = 100,
 
     ResourceType = "Mana",
+    maxSkillCharges = {},
     Race = "Human",
     attackType = "BasicAttack_Strike",
     physicalAttack = 27,
@@ -48,7 +49,6 @@
       SkillList["AllAttack_Fire1"],
       SkillList["SingleHeal_Basic1"]
     },
-    skillCharges = {},
     defensiveType = {
       Slash = "s",
       Strike = "s",
@@ -92,7 +92,8 @@
 
     alive = true,
     currHP = 180,
-    currResource = 100
+    currResource = 100,
+    currSkillCharges = {}
   }
 
   allpartymembers[2] = {
@@ -105,6 +106,7 @@
     maxResource = 100,
 
     ResourceType = "Ki",
+    maxSkillCharges = {},
     Race = "Human",
     attackType = "BasicAttack_Slash",
     physicalAttack = 24,
@@ -121,7 +123,6 @@
       SkillList["AllAttack_Throwing1"],
       SkillList["SingleHeal_Basic1"]
     },
-    skillCharges = {},
     defensiveType = {
       Slash = "s",
       Strike = "s",
@@ -165,7 +166,8 @@
     
     alive = true,
     currHP = 150,
-    currResource = 100
+    currResource = 100,
+    currSkillCharges = {}
   }
 
   allpartymembers[3] = {
@@ -178,6 +180,7 @@
     maxResource = 100,
 
     ResourceType = "Rage",
+    maxSkillCharges = {},
     Race = "Human",
     attackType = "BasicAttack_Slash",
     physicalAttack = 28,
@@ -194,7 +197,6 @@
       SkillList["AllAttack_Strike1"],
       SkillList["SingleHeal_Basic1"]
     },
-    skillCharges = {},
     defensiveType = {
       Slash = "s",
       Strike = "s",
@@ -238,7 +240,8 @@
 
     alive = true,
     currHP = 200,
-    currResource = 100
+    currResource = 100,
+    currSkillCharges = {}
   }
 
   currentpartymembers[1] = allpartymembers[1]
