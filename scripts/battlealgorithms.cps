@@ -129,7 +129,7 @@
     else
       message = "적의 출현!"
     end
-    draweachtime(message)
+    draweachtime(false, nil, message)
     printw( "" )
   end
 
@@ -143,14 +143,17 @@
     if orderedCharacters[1].controllable then
   	  message = message .. "\n" .. "행동을 선택해 주십시오."
   	  orderedCharacters[1].playerCommand(orderedCharacters[1], party, enemyparty)
+      draweachtime(false, nil, message)
   	elseif orderedCharacters[1].ally then
   	  message = message .. "\n" .. orderedCharacters[1].name .. "(은)는 행동할 수 없다…."
+      draweachtime(false, nil, message)
   	elseif orderedCharacters[1].alive then
   	  usedskill = orderedCharacters[1].AICommand(orderedCharacters[1], party, emenyparty)
+      draweachtime(true, orderedCharacters[1], message)
     else
       message = message .. "\n" .. orderedCharacters[1].name .. "(은)는 행동할 수 없다…."
+      draweachtime(false, nil, message)
   	end
-  	draweachtime(message)
   	message = ""
   	if orderedCharacters[1].controllable then
   	  usedskill = askplayer(orderedCharacters[1], party, enemyparty, battle)
@@ -159,22 +162,31 @@
       end
       if not usedskill then
         message = "아무 것도 하지 않았다."
+        countturn(orderedCharacters[1])
+        draweachtime(true, orderedCharacters[1], message)
   	    delay = math.floor((battleStopWatch / orderedCharacters[1].physicalSpeed) + math.random(15))
       else
-        draweachtime(message)
+        countturn(orderedCharacters[1])
+        draweachtime(true, orderedCharacters[1], message)
   	    delay = math.floor((battleStopWatch / orderedCharacters[1][usedskill.DelayType]) + math.random(5))
       end
     elseif orderedCharacters[1].ally then
+      countturn(orderedCharacters[1])
+      draweachtime(true, orderedCharacters[1], message)
   	  delay = math.floor((battleStopWatch / orderedCharacters[1].physicalSpeed) + math.random(15))
     else
       if usedskill then
+        countturn(orderedCharacters[1])
         delay = math.floor((battleStopWatch / orderedCharacters[1][usedskill.DelayType]) + math.random(5))
       else
+        countturn(orderedCharacters[1])
         delay = math.floor((battleStopWatch / orderedCharacters[1].physicalSpeed) + math.random(15))
       end
   	end
+
+    endofturn(orderedCharacters[1])
+
   	printw ("엔터키를 눌러 계속합니다.\n")
-  	
     
   	orderedCharacters[1].turntime = orderedCharacters[1].turntime + delay
   	sortcharacters(orderedCharacters)
@@ -512,6 +524,25 @@
     end
     local targetlist = combo(alivelist, math.min(amount, #alivelist))
     return targetlist[math.random(#targetlist)]
+  end
+
+  function countturn(char)
+    for k, v in pairs(char.currEphemerals) do
+      if char.currEphemerals[k] > 1 then
+        char.currEphemerals[k] = char.currEphemerals[k] - 1
+      elseif char.currEphemerals[k] == 1 then
+        char.currEphemerals[k] = 0
+        message = message .. "\n" .. ephemerallist[k].diminishMessage(char)
+      end
+    end
+  end
+
+  function endofturn(char)
+    for k, v in pairs(char.currEphemerals) do
+      if char.currEphemerals[k] == 0 then
+        char.currEphemerals[k] = nil
+      end
+    end
   end
 
   function confirmflee(table)

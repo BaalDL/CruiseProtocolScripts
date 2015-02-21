@@ -94,7 +94,7 @@
     currHP = 180,
     currResource = 100,
     currSkillCharges = {},
-    currEphemerals = {burn=1, paralyzed=2}
+    currEphemerals = {burn=1, paralyzed=1, cursed=-1}
   }
 
   allpartymembers[2] = {

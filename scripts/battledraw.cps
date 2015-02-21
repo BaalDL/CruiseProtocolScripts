@@ -33,7 +33,7 @@
     end
   end
 
-  function makeephemeralblock(char)
+  function makeephemeralblock(char, progress)
     if char then
       local ally = char.ally
       local WIDTH = EWIDTH
@@ -43,12 +43,37 @@
       else
         local lines = {}
         local line = ''
+        local lengthline = 0
         for k, v in pairs(char.currEphemerals) do
-          if #line + ephemerallist[k].dlength + #tostring(v) <= WIDTH then
-            line = line .. ephemerallist[k].display .. tostring(v)
+          if v > -1 then
+            if progress then
+              if lengthline + ephemerallist[k].dlength + #tostring(v+1) + 2 + #tostring(v) <= WIDTH then
+                line = line .. ephemerallist[k].display .. tostring(v+1) .. "→" .. tostring(v)
+                lengthline = lengthline + ephemerallist[k].dlength + #tostring(v+1) + 2 + #tostring(v)
+              else
+                table.insert(lines, line)
+                line = ephemerallist[k].display .. tostring(v+1) .. "→" .. tostring(v)
+                lengthline = ephemerallist[k].dlength + #tostring(v+1) + 2 + #tostring(v)
+              end
+            else
+              if lengthline + ephemerallist[k].dlength + #tostring(v) <= WIDTH then
+                line = line .. ephemerallist[k].display .. tostring(v)
+                lengthline = lengthline + ephemerallist[k].dlength + #tostring(v)
+              else
+                table.insert(lines, line)
+                line = ephemerallist[k].display .. tostring(v)
+                lengthline = ephemerallist[k].dlength + #tostring(v)
+              end
+            end
           else
-            table.insert(lines, line)
-            line = ephemerallist[k].display .. tostring(v)
+            if lengthline + ephemerallist[k].dlength <= WIDTH then
+              line = line .. ephemerallist[k].display
+              lengthline = lengthline + ephemerallist[k].dlength
+            else
+              table.insert(lines, line)
+              line = ephemerallist[k].display
+              lengthline = ephemerallist[k].dlength
+            end
           end
         end
         table.insert(lines, line)
@@ -121,7 +146,7 @@
   end
 
   --매번 화면을 그리는 함수. argument로 전투 메세지를 전달해야 한다.
-  function draweachtime(...)
+  function draweachtime(progress, char, ...)
     local t, l = getc()
     if (t >= bufferheight - windowheight - 1) then
       t = bufferheight - windowheight - 1
@@ -169,7 +194,7 @@
     end
     maxlines = 0
     for k = 1, 5 do
-      ephlines = makeephemeralblock(e[k])
+      ephlines = makeephemeralblock(e[k], progress and e[k] == char)
       if ephlines then
         maxlines = math.max(maxlines, #ephlines)
         eephimerals[k] = ephlines
@@ -215,7 +240,7 @@
     end
     maxlines = 0
     for k = 1, 4 do
-      ephlines = makeephemeralblock(p[k])
+      ephlines = makeephemeralblock(p[k], progress and p[k] == char)
       if ephlines then
         maxlines = math.max(maxlines, #ephlines)
         pephimerals[k] = ephlines
