@@ -164,23 +164,23 @@
         message = "아무 것도 하지 않았다."
         countturn(orderedCharacters[1])
         draweachtime(true, orderedCharacters[1], message)
-  	    delay = math.floor((battleStopWatch / orderedCharacters[1].physicalSpeed) + math.random(15))
+  	    delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], "physicalSpeed")) + math.random(15))
       else
         countturn(orderedCharacters[1])
         draweachtime(true, orderedCharacters[1], message)
-  	    delay = math.floor((battleStopWatch / orderedCharacters[1][usedskill.DelayType]) + math.random(5))
+  	    delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], usedskill.DelayType)) + math.random(5))
       end
     elseif orderedCharacters[1].ally then
       countturn(orderedCharacters[1])
       draweachtime(true, orderedCharacters[1], message)
-  	  delay = math.floor((battleStopWatch / orderedCharacters[1].physicalSpeed) + math.random(15))
+  	  delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], "physicalSpeed")) + math.random(15))
     else
       if usedskill then
         countturn(orderedCharacters[1])
-        delay = math.floor((battleStopWatch / orderedCharacters[1][usedskill.DelayType]) + math.random(5))
+        delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], usedskill.DelayType)) + math.random(5))
       else
         countturn(orderedCharacters[1])
-        delay = math.floor((battleStopWatch / orderedCharacters[1].physicalSpeed) + math.random(15))
+        delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], "physicalSpeed")) + math.random(15))
       end
   	end
 
@@ -438,10 +438,16 @@
     
   end
 
+  function getparam(char, param)
+    local mult = 1
+
+    return char[param] * mult
+  end
+
   function calculatedamage(actor, skill, target, battle)
     local damage = 0
     if skill.DamageCalculationType == "Basic" then
-      damage = math.ceil(skill.AttackParameter * actor[skill.AttackerParameter] / target[skill.TargetParameter] * target.defensiveFactor[skill.AttackType] / 100)
+      damage = math.ceil(skill.AttackParameter * getparam(actor, skill.AttackerParameter) / getparam(target, skill.TargetParameter) * target.defensiveFactor[skill.AttackType] / 100)
     elseif skill.DamageCalculationType == "FixedUnderType" then
       damage = math.ceil(skill.FixedAmount * target.defensiveFactor[skill.AttackType] / 100)
     elseif skill.DamageCalculationType == "Fixed" then
