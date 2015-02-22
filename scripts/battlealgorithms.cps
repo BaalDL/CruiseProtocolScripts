@@ -520,7 +520,7 @@
     target.alive = false
     target.status = "전투불능"
     if orderedCharacters[target.turnorder] then table.remove(orderedCharacters[target.turnorder]) end
-    -- 여기에 온갖 상태이상 초기화 등등을 집어넣는다.
+    target.currEphemerals = {}
     message = message .. "\n" .. target.name .. "(은)는 전투 불능이 되었다!" 
     if not target.ally then
       EnemyInfo[target.templetes] = true
