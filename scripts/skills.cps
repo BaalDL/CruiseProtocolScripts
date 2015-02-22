@@ -112,6 +112,7 @@
       TargetParameter="physicalDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
 	    Name = "공격(참격)"
     }
@@ -124,6 +125,7 @@
       TargetParameter="physicalDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
       Name = "공격(타격)"
     }
@@ -136,6 +138,7 @@
       TargetParameter="physicalDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
       Name = "공격(관통)"
     }
@@ -148,6 +151,7 @@
       TargetParameter="physicalDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
       Name = "공격(저작)"
     }
@@ -160,6 +164,7 @@
       TargetParameter="physicalDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
       Name = "공격(탄환)"
     }
@@ -172,6 +177,7 @@
       TargetParameter="physicalDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
       Name = "공격(투척)"
     }
@@ -184,6 +190,7 @@
       TargetParameter="physicalDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
       Name = "공격(충격)"
     }
@@ -196,6 +203,7 @@
       TargetParameter="specialDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
       Name = "공격(화염)"
     }
@@ -208,6 +216,7 @@
       TargetParameter="specialDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
       Name = "공격(류수)"
     }
@@ -220,6 +229,7 @@
       TargetParameter="specialDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
       Name = "공격(한빙)"
     }
@@ -232,6 +242,7 @@
       TargetParameter="specialDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
       Name = "공격(수목)"
     }
@@ -244,6 +255,7 @@
       TargetParameter="specialDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
       Name = "공격(질풍)"
     }
@@ -256,6 +268,7 @@
       TargetParameter="specialDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
       Name = "공격(뢰전)"
     }
@@ -268,6 +281,7 @@
       TargetParameter="specialDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
       Name = "공격(대지)"
     }
@@ -280,6 +294,7 @@
       TargetParameter="specialDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
       Name = "공격(광채)"
     }
@@ -292,6 +307,7 @@
       TargetParameter="specialDefense",
       DamageCalculationType="Basic",
       AfterDelay = 100,
+      Accuracy = 100,      
       DelayType = "physicalSpeed",
       Name = "공격(암흑)"
     }

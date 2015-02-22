@@ -397,7 +397,12 @@
     if skill.MoveType == "Attack" then  
       for k, v in pairs(targets) do
         if not checkavailable(char, skill, targets[k], battle) then break end
-        inflictdamage(char, skill, targets[k], battle)
+        if checkhit(char, skill, targets[k], battle) then
+          inflictdamage(char, skill, targets[k], battle)
+          printl("명중")
+        else
+          message = message .. "\n하지만 " .. targets[k].name .. "에게는 맞지 않았다!"
+        end
       end
     elseif skill.MoveType == "Heal" then
       for k, v in pairs(targets) do
@@ -408,6 +413,14 @@
 
   end
   
+  function checkhit(char, skill, target, battle)
+    if not skill.Accuracy then return true end
+    local random = math.random() * 100
+    local mult = 1
+
+    return random < skill.Accuracy * mult
+  end
+
   function costresource(char, skill)
     local afteramount
     afteramount = char.currResource - skill.ResourceAmount
