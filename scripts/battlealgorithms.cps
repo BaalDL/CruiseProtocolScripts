@@ -30,6 +30,8 @@
     for i = 1, 8 do
       enemy.skills[i] = EnemyTempletes[enemyT].skills[i]
     end
+    enemy.maxSkillCharges = EnemyTempletes[EnemyT].maxSkillCharges
+    enemy.currSkillCharges = enemy.maxSkillCharges
     enemy.defensiveType = shallowcopy(EnemyTempletes[enemyT].defensiveType)
     enemy.defensiveFactor = shallowcopy(EnemyTempletes[enemyT].defensiveFactor)
     enemy.info = EnemyInfo[enemy.templetes]
@@ -428,7 +430,7 @@
       local ok = false
       for k, v in char.skills do
         if (v == skill) and not ok then
-          char.skillCharges[k] = char.skillCharges[k] - 1
+          char.currSkillCharges[k] = char.currSkillCharges[k] - 1
           ok = true
         end
       end

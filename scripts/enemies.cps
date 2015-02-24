@@ -25,6 +25,7 @@
     skills = {
       SkillList["SingleAttack_Strike1"]
     },
+    maxSkillCharges = {},
     defensiveType = {
       Slash = "s",
       Strike = "s",
@@ -84,6 +85,7 @@
       SkillList["SingleAttack_Strike1"],
       SkillList["SingleAttack_Slash1"]
     },
+    maxSkillCharges = {},
     defensiveType = {
       Slash = "r",
       Strike = "s",
