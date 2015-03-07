@@ -47,7 +47,8 @@
       SkillList["SingleAttack_Water1"],
       SkillList["RandomAttack_Fire1"],
       SkillList["AllAttack_Fire1"],
-      SkillList["SingleHeal_Basic1"]
+      SkillList["SingleHeal_Basic1"],
+      SkillList["CollateralAttack_Slash"]
     },
     defensiveType = {
       Slash = "s",
@@ -94,7 +95,8 @@
     currHP = 180,
     currResource = 100,
     currSkillCharges = {},
-    currEphemerals = {burn=1, paralyzed=1, cursed=-1}
+    currEphemerals = {burn=1, paralyzed=1, cursed=-1},
+    newEphemerals = {}
   }
 
   allpartymembers[2] = {
@@ -122,7 +124,8 @@
       SkillList["SingleAttack_Ground1"],
       SkillList["RandomAttack_Bullet1"],
       SkillList["AllAttack_Throwing1"],
-      SkillList["SingleHeal_Basic1"]
+      SkillList["SingleHeal_Basic1"],
+      SkillList["CollateralAttack_Bite"]
     },
     defensiveType = {
       Slash = "s",
@@ -169,7 +172,8 @@
     currHP = 150,
     currResource = 100,
     currSkillCharges = {},
-    currEphemerals = {stoned=3, sleep=5}
+    currEphemerals = {stoned=3, sleep=5},
+    newEphemerals = {}
   }
 
   allpartymembers[3] = {
@@ -197,7 +201,8 @@
       SkillList["SingleAttack_Burst1"],
       SkillList["RandomAttack_Slash1"],
       SkillList["AllAttack_Strike1"],
-      SkillList["SingleHeal_Basic1"]
+      SkillList["SingleHeal_Basic1"],
+      SkillList["CollateralAttack_Bullet"]
     },
     defensiveType = {
       Slash = "s",
@@ -244,7 +249,8 @@
     currHP = 200,
     currResource = 100,
     currSkillCharges = {},
-    currEphemerals = {frozen=2, blind=4, cursed=1}
+    currEphemerals = {frozen=2, blind=4, cursed=1},
+    newEphemerals = {}
   }
 
   currentpartymembers[1] = allpartymembers[1]

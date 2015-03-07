@@ -30,7 +30,7 @@
     for i = 1, 8 do
       enemy.skills[i] = EnemyTempletes[enemyT].skills[i]
     end
-    enemy.maxSkillCharges = EnemyTempletes[EnemyT].maxSkillCharges
+    enemy.maxSkillCharges = EnemyTempletes[enemyT].maxSkillCharges
     enemy.currSkillCharges = enemy.maxSkillCharges
     enemy.defensiveType = shallowcopy(EnemyTempletes[enemyT].defensiveType)
     enemy.defensiveFactor = shallowcopy(EnemyTempletes[enemyT].defensiveFactor)
@@ -41,6 +41,7 @@
 
     enemy.AICommand = EnemyTempletes[enemyT].AICommand
     enemy.currEphemerals = {}
+    enemy.newEphemerals = {}
     return enemy
   end
 
@@ -197,9 +198,7 @@
   function askplayer(char, party, enemyparty, battle)
     local startaskt, startaskl = getc()
     local playercommand, playersingletarget = false, singletarget
-    local movelist = {"-1"}
-    local moveliststring = ""
-    local movelistamount = ""
+    local movelist = {}
     local pc = 0
     local itemmove, fleemove
 
@@ -207,32 +206,7 @@
       local targets
       itemmove = -2
       moveto(startaskt, startaskl)
-  	  if char.attackType then
-  	    table.insert(movelist, "0")
-  	    moveliststring = moveliststring .. "[0] 공격(" .. attackType.toString(char.attackType) .. ")\n"
-  	  end
-  	  for i = 1, 8 do
-  	    if char.skills[i] and not (char.skills[i].MoveType == "Passive") then
-  	      table.insert(movelist, tostring(i))
-  	  	  moveliststring = moveliststring .. "[" .. tostring(i) .. "] " .. char.skills[i].Name .. " (" 
-            .. ResourceType.toString(char.skills[i].ResourceType) .. ": "
-          if (char.ResourceType == char.skills[i].ResourceType) and (char.currResource >= char.skills[i].ResourceAmount) then
-            movelistamount = tostring(char.skills[i].ResourceAmount)
-          elseif (char.skills[i].ResourceType == "Charge" and char.skillCharges[i] > 0) then
-            movelistamount = tostring(char.skills[i].ResourceAmount)
-          else
-            movelistamount = "/fy" .. char.skills[i].ResourceAmount .. "/x"
-          end
-          moveliststring = moveliststring .. movelistamount .. ") "
-  	    end
-  	  end
-      table.insert(movelist, "10")
-      _print(moveliststring .. "\n[10] 아이템 ")
-      if battle.fleeable then
-        table.insert(movelist, "99")
-        _print("[99] 도주 ")
-      end
-      printl("[-1] 대기(취소)")
+      movelist = makemovelist(char, party, enemyparty, battle)
       playercommand = ask("무엇을 하시겠습니까?", unpack(movelist))
   	  pc = tonumber(playercommand)
     
@@ -247,7 +221,7 @@
           else
             targets = {targettable[playertarget]}
           end
-          skillhandler(char, char.skills[pc], targets)
+          skillhandler(char, char.skills[pc], targets, battle)
         end
       elseif (pc == 10) then
         itemmove = inventorymenu("battle")
@@ -270,7 +244,7 @@
         if (fleemove ~= 1) then
           battle.fleed = fleehandler(battle, fleetable)
           if not battle.fleed then
-            printl("도주에 실패했다!")
+            message = message .. "도주에 실패했다!"
           end
         end
   	  end
@@ -294,13 +268,52 @@
     return -1
   end
 
+  function makemovelist(char, party, enemyparty, battle)
+    local movelist = {}
+    local moveliststring = ""
+    local movelistamount = ""    
+    if char.attackType then
+      table.insert(movelist, "0")
+      moveliststring = moveliststring .. "[0] 공격(" .. attackType.toString(char.attackType) .. ")\n"
+    end
+    for i = 1, 8 do
+      if char.skills[i] and not (char.skills[i].MoveType == "Passive") then
+        moveliststring = moveliststring .. "[" .. tostring(i) .. "] " .. char.skills[i].Name .. " (" 
+          .. ResourceType.toString(char.skills[i].ResourceType) .. ": "
+        if (char.ResourceType == char.skills[i].ResourceType) and (char.currResource >= char.skills[i].ResourceAmount) then
+          table.insert(movelist, tostring(i))
+          movelistamount = tostring(char.skills[i].ResourceAmount)
+        elseif (char.skills[i].ResourceType == "Mana") and (char.currEphemerals["manadepletion"]) then
+          movelistamount = "/fR" .. char.skills[i].ResourceAmount .. "/x"
+        elseif (char.skills[i].ResourceType == "Charge" and char.skillCharges[i] > 0) then
+          table.insert(movelist, tostring(i))
+          movelistamount = tostring(char.skillsCharges[i])
+        else
+          table.insert(movelist, tostring(i))
+          movelistamount = "/fy" .. char.skills[i].ResourceAmount .. "/x"
+        end
+        moveliststring = moveliststring .. movelistamount .. ") "
+      end
+    end
+    table.insert(movelist, "10")
+    _print(moveliststring .. "\n[10] 아이템 ")
+    if battle.fleeable then
+      table.insert(movelist, "99")
+      _print("[99] 도주 ")
+    end
+    table.insert(movelist, "-1")
+    printl("[-1] 대기(취소)")
+    return movelist
+  end
+
   function lookuptarget(type, target, selfnum)
     local targets = {"-1"}
     local p = currentbattle.party
     local e = currentbattle.enemyparty
     local selection
 
-    if target == "AnEnemy" then
+    if target == "AnEnemy" or
+      target == "AdjacentEnemies" then
       for k, v in pairs(e) do
   	    if e[k].alive then table.insert(targets, tostring(e[k].targetnumber)) end
       end
@@ -358,6 +371,37 @@
     skill.Target == "AnAllyIncludingDead" or
     skill.Target == "WholeAllyIncludingDead" then
       targets = skilltarget
+    elseif skill.Target == "AdjacentEnemies" then
+      targets = skilltarget
+      local adjacentTargets = {}
+      for k, _ in pairs(skilltarget) do
+        local n = skilltarget[k].targetnumber
+        if n-1 >= 101 and targettable[tostring(n-1)] and targettable[tostring(n-1)].alive then
+          table.insert(adjacentTargets, tostring(n-1))
+        end
+        if n+1 <= 105 and targettable[tostring(n+1)] and targettable[tostring(n+1)].alive then
+          table.insert(adjacentTargets, tostring(n+1))
+        end
+      end
+      for _, v in pairs(adjacentTargets) do
+        table.insert(targets, targettable[v])
+      end
+    elseif skill.Target == "AdjacentAllies" then
+      targets = skilltarget
+      local adjacentTargets = {}
+      for k, _ in pairs(skilltarget) do
+        local n = skilltarget[k].targetnumber
+        print (n)
+        if n-1 >= 11 and targettable[tostring(n-1)] and targettable[tostring(n-1)].alive then
+          table.insert(adjacentTargets, tostring(n-1))
+        end
+        if n+1 <= 15 and targettable[tostring(n+1)] and targettable[tostring(n+1)].alive then
+          table.insert(adjacentTargets, tostring(n+1))
+        end
+      end
+      for _, v in pairs(adjacentTargets) do
+        table.insert(targets, targettable[v])
+      end
     elseif skill.Target == "WholeEnemy" or skill.Target == "WholeAlly" then
       for k, v in pairs(skilltarget) do
         if skilltarget[k].alive then table.insert(targets, skilltarget[k]) end
@@ -401,7 +445,6 @@
         if not checkavailable(char, skill, targets[k], battle) then break end
         if checkhit(char, skill, targets[k], battle) then
           inflictdamage(char, skill, targets[k], battle)
-          printl("명중")
         else
           message = message .. "\n하지만 " .. targets[k].name .. "에게는 맞지 않았다!"
         end
@@ -437,20 +480,21 @@
     elseif (char.ResourceType == skill.ResourceType) and (afteramount >= 0) then
       char.currResource = afteramount
     elseif ((char.ResourceType == skill.ResourceType) and (afteramount < 0)) or (char.ResourceType ~= skill.ResourceType) then
-      char.currResource = 0
+      if char.ResourceType == skill.ResourceType then char.currResource = 0 end
       if (skill.ResourceType == "Mana") then
-        message = message .. "\n[DEBUG] 마나 부족으로 인한 쿨다운 턴 부여 처리를 추가할 필요가 있습니다."
+        if (char.ResourceType ~= skill.ResourceType) then afteramount = -skill.ResourceAmount end
+        local depletionturn = math.floor((-2 * afteramount) / skill.ResourceAmount) + 1
+        applyephemeral("", SkillList["SystemManaDepletion"], char, depletionturn)
+        message = message .. "\n무리하게 마나를 끌어 써 " .. char.name .. " 주변의 마나가 시든다!\n" .. depletionturn .. "턴 동안 마나 사용 불가!"
       elseif (skill.ResourceType == "Ki") then
         char.turntime = -afteramount
-        message = message .. "/n기력이 모자라 행동이 지체된다!"
+        message = message .. "\n기력이 모자라 행동이 지체된다!"
       elseif (skill.ResourceType == "Rage") then
-        local hpdamage = math.ceil(char.maxHP * skill.ResourceAmount / 100)
+        local hpdamage = math.ceil(-char.maxHP * afteramount / 100)
         char.currHP = math.max(char.currHP - hpdamage, 1)
-        message = message .. "/n분노의 영향으로 HP가 소모된다!"
+        message = message .. "\n분노의 영향으로 HP가 소모된다!\n" .. char.name .. "에게 " .. hpdamage .."의 데미지!"
       end
-
-    end
-    
+    end   
   end
 
   function getparam(char, param)
@@ -506,6 +550,17 @@
     end
   end
 
+  function applyephemeral(actor, skill, target, ...)
+    for k, v in pairs(skill.ApplyEphemeral) do
+      if k == "manadepletion" then
+        target.currEphemerals[k] = arg[1]
+      else
+        target.currEphemerals[k] = math.random(skill.minEphemeralTurns, skill.maxEphemeralTurns)
+      end
+      target.newEphemerals[k] = true
+    end
+  end
+
   function checkavailable(actor, skill, target, battle)
     if not target.alive and skill.MoveType == "Attack" then
       message = message .. "\n" .. target.name .. "(은)는 이미 전투불능이다!"
@@ -549,7 +604,7 @@
 
   function countturn(char)
     for k, v in pairs(char.currEphemerals) do
-      if char.currEphemerals[k] > 1 then
+      if char.currEphemerals[k] > 1 and not char.newEphemerals[k] then
         char.currEphemerals[k] = char.currEphemerals[k] - 1
       elseif char.currEphemerals[k] == 1 then
         char.currEphemerals[k] = 0
@@ -560,6 +615,9 @@
 
   function endofturn(char)
     for k, v in pairs(char.currEphemerals) do
+      if char.newEphemerals[k] then
+        char.newEphemerals[k] = nil
+      end
       if char.currEphemerals[k] == 0 then
         char.currEphemerals[k] = nil
       end

@@ -58,4 +58,12 @@
     end
   }
 
+  ephemerallist["manadepletion"] = {
+    display = "/bk/fR魔/x",
+    dlength = 2,
+    diminishMessage = function(char)
+      return char.name .. "의 주변에 다시 마나가 감돈다!"
+    end
+  }
+
 #end

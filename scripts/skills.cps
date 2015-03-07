@@ -102,6 +102,20 @@
       Name = "아이템 사용"
     }
 
+    SkillList["Flee"] = {
+      MoveType="Flee",
+      AfterDelay = 200,
+      DelayType = "physicalSpeed",
+      Name = "도주"
+    }
+
+    SkillList["SystemManaDepletion"] = {
+      MoveType = "System",
+      ApplyEphemeral = {
+        manadepletion = -1
+      }
+    }
+
   // BasicAttacks
     SkillList["BasicAttack_Slash"] = {
       MoveType="Attack",
@@ -441,13 +455,20 @@
     SkillList["AllAttack_Ground1"] = {Name="모드 흔들", MoveType="Attack", Target="WholeEnemy", AttackType="Ground", AttackParameter=40, AttackerParameter="specialAttack", TargetParameter="specialDefense", DamageCalculationType="Basic", ResourceType="Mana", ResourceAmount=30, Accuracy=93, AfterDelay=180, DelayType="specialSpeed"}
     SkillList["AllAttack_Ground2"] = {Name="모드 흔들린", MoveType="Attack", Target="WholeEnemy", AttackType="Ground", AttackParameter=80, AttackerParameter="specialAttack", TargetParameter="specialDefense", DamageCalculationType="Basic", ResourceType="Mana", ResourceAmount=80, Accuracy=93, AfterDelay=210, DelayType="specialSpeed"}
     SkillList["AllAttack_Ground3"] = {Name="모드 흔들린다", MoveType="Attack", Target="WholeEnemy", AttackType="Ground", AttackParameter=120, AttackerParameter="specialAttack", TargetParameter="specialDefense", DamageCalculationType="Basic", ResourceType="Mana", ResourceAmount=150, Accuracy=93, AfterDelay=240, DelayType="specialSpeed"}
-    SkillList["CollateralAttack_Slash"] = {Name="범위 참격", MoveType="Attack", Target="AdjacentEnemies", AttackType="Slash", AttackParameter=90, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", ResourceType="Rage", ResourceAmount=12, Accuracy=98, AfterDelay=150, DelayType="physicalSpeed"}
-    SkillList["CollateralAttack_Strike"] = {Name="범위 타격", MoveType="Attack", Target="AdjacentEnemies", AttackType="Strike", AttackParameter=90, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", ResourceType="Rage", ResourceAmount=12, Accuracy=98, AfterDelay=150, DelayType="physicalSpeed"}
-    SkillList["CollateralAttack_Pierce"] = {Name="범위 관통", MoveType="Attack", Target="AdjacentEnemies", AttackType="Pierce", AttackParameter=90, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", ResourceType="Rage", ResourceAmount=12, Accuracy=98, AfterDelay=150, DelayType="physicalSpeed"}
-    SkillList["CollateralAttack_Bite"] = {Name="범위 저작", MoveType="Attack", Target="AdjacentEnemies", AttackType="Bite", AttackParameter=90, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", ResourceType="Rage", ResourceAmount=12, Accuracy=98, AfterDelay=150, DelayType="physicalSpeed"}
-    SkillList["CollateralAttack_Bullet"] = {Name="범위 사격", MoveType="Attack", Target="AdjacentEnemies", AttackType="Bullet", AttackParameter=90, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", ResourceType="Rage", ResourceAmount=12, Accuracy=98, AfterDelay=150, DelayType="physicalSpeed"}
-    SkillList["CollateralAttack_Throwing"] = {Name="범위 투척", MoveType="Attack", Target="AdjacentEnemies", AttackType="Throwing", AttackParameter=90, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", ResourceType="Rage", ResourceAmount=12, Accuracy=98, AfterDelay=150, DelayType="physicalSpeed"}
-    SkillList["CollateralAttack_Burst"] = {Name="범위 충격", MoveType="Attack", Target="AdjacentEnemies", AttackType="Burst", AttackParameter=90, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", ResourceType="Rage", ResourceAmount=12, Accuracy=98, AfterDelay=150, DelayType="physicalSpeed"}
+    SkillList["CollateralAttack_Slash"] = {Name="범위 참격", MoveType="Attack", Target="AdjacentEnemies", AttackType="Slash", AttackParameter=90, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=12, Accuracy=96, AfterDelay=150, DelayType="physicalSpeed"}
+    SkillList["CollateralAttack_Strike"] = {Name="범위 타격", MoveType="Attack", Target="AdjacentEnemies", AttackType="Strike", AttackParameter=90, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=12, Accuracy=96, AfterDelay=150, DelayType="physicalSpeed"}
+    SkillList["CollateralAttack_Pierce"] = {Name="범위 관통", MoveType="Attack", Target="AdjacentEnemies", AttackType="Pierce", AttackParameter=90, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=12, Accuracy=96, AfterDelay=150, DelayType="physicalSpeed"}
+    SkillList["CollateralAttack_Bite"] = {Name="범위 저작", MoveType="Attack", Target="AdjacentEnemies", AttackType="Bite", AttackParameter=90, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=12, Accuracy=96, AfterDelay=150, DelayType="physicalSpeed"}
+    SkillList["CollateralAttack_Bullet"] = {Name="범위 사격", MoveType="Attack", Target="AdjacentEnemies", AttackType="Bullet", AttackParameter=90, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=12, Accuracy=96, AfterDelay=150, DelayType="physicalSpeed"}
+    SkillList["CollateralAttack_Throwing"] = {Name="범위 투척", MoveType="Attack", Target="AdjacentEnemies", AttackType="Throwing", AttackParameter=90, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=12, Accuracy=96, AfterDelay=150, DelayType="physicalSpeed"}
+    SkillList["CollateralAttack_Burst"] = {Name="범위 충격", MoveType="Attack", Target="AdjacentEnemies", AttackType="Burst", AttackParameter=90, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=12, Accuracy=96, AfterDelay=150, DelayType="physicalSpeed"}
+    SkillList["EachAttack_Slash"] = {Name="전원 참격", MoveType="Attack", Target="WholeEnemy", AttackType="Slash", AttackParameter=85, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=20, Accuracy=93, AfterDelay=180, DelayType="physicalSpeed"}
+    SkillList["EachAttack_Strike"] = {Name="전원 타격", MoveType="Attack", Target="WholeEnemy", AttackType="Strike", AttackParameter=85, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=20, Accuracy=93, AfterDelay=180, DelayType="physicalSpeed"}
+    SkillList["EachAttack_Pierce"] = {Name="전원 관통", MoveType="Attack", Target="WholeEnemy", AttackType="Pierce", AttackParameter=85, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=20, Accuracy=93, AfterDelay=180, DelayType="physicalSpeed"}
+    SkillList["EachAttack_Bite"] = {Name="전원 저작", MoveType="Attack", Target="WholeEnemy", AttackType="Bite", AttackParameter=85, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=20, Accuracy=93, AfterDelay=180, DelayType="physicalSpeed"}
+    SkillList["EachAttack_Bullet"] = {Name="전원 사격", MoveType="Attack", Target="WholeEnemy", AttackType="Bullet", AttackParameter=85, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=20, Accuracy=93, AfterDelay=180, DelayType="physicalSpeed"}
+    SkillList["EachAttack_Throwing"] = {Name="전원 투척", MoveType="Attack", Target="WholeEnemy", AttackType="Throwing", AttackParameter=85, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=20, Accuracy=93, AfterDelay=180, DelayType="physicalSpeed"}
+    SkillList["EachAttack_Burst"] = {Name="전원 충격", MoveType="Attack", Target="WholeEnemy", AttackType="Burst", AttackParameter=85, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=20, Accuracy=93, AfterDelay=180, DelayType="physicalSpeed"}
 
     SkillList["SingleHeal_Basic1"] = {Name="나아", MoveType="Heal", Target="AnAlly", ResourceType="Mana", ResourceAmount=20, AfterDelay=120, DelayType="specialSpeed"}
     SkillList["SingleHeal_Basic2"] = {Name="나아간", MoveType="Heal", Target="AnAlly", ResourceType="Mana", ResourceAmount=60, AfterDelay=150, DelayType="specialSpeed"}
