@@ -7,7 +7,9 @@
     dlength = 2,
     diminishMessage = function(char)
       return char.name .. "의 화상이 사라졌다!"
-    end
+    end,
+    minDuration = 2,
+    maxDuration = 5
   }
 
   ephemerallist["frozen"] = {
@@ -15,15 +17,19 @@
     dlength = 2,
     diminishMessage = function(char)
       return char.name .. "의 동상이 사라졌다!"
-    end
-  }
+    end,
+    minDuration = 2,
+    maxDuration = 5
+    }
 
   ephemerallist["sleep"] = {
     display = "/bG/fBzZ/x",
     dlength = 2,
     diminishMessage = function(char)
       return char.name .. "(은)는 졸음에서 깨어났다!"
-    end
+    end,
+    minDuration = 2,
+    maxDuration = 5
   }
 
   ephemerallist["paralyzed"] = {
@@ -31,7 +37,9 @@
     dlength = 2,
     diminishMessage = function(char)
       return char.name .. "의 마비가 풀렸다!"
-    end
+    end,
+    minDuration = 2,
+    maxDuration = 5
   }
 
   ephemerallist["stoned"] = {
@@ -39,7 +47,9 @@
     dlength = 2,
     diminishMessage = function(char)
       return char.name .. "(이)가 석화에서 자유로워졌다!"
-    end
+    end,
+    minDuration = 2,
+    maxDuration = 5
   }
 
   ephemerallist["blind"] = {
@@ -47,7 +57,9 @@
     dlength = 2,
     diminishMessage = function(char)
       return char.name .. "의 실명이 나았다!"
-    end
+    end,
+    minDuration = 2,
+    maxDuration = 5
   }
 
   ephemerallist["cursed"] = {
@@ -55,7 +67,9 @@
     dlength = 2,
     diminishMessage = function(char)
       return char.name .. "의 저주가 풀렸다!"
-    end
+    end,
+    minDuration = 2,
+    maxDuration = 5
   }
 
   ephemerallist["manadepletion"] = {

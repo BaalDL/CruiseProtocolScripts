@@ -44,7 +44,7 @@
     skills = {
       [0] = SkillList["BasicAttack_Strike"],
       SkillList["SingleAttack_Fire1"],
-      SkillList["SingleAttack_Water1"],
+      SkillList["TwiceAttack_Slash"],
       SkillList["RandomAttack_Fire1"],
       SkillList["AllAttack_Fire1"],
       SkillList["SingleHeal_Basic1"],
@@ -122,7 +122,7 @@
       [0] = SkillList["BasicAttack_Slash"],
       SkillList["SingleAttack_Electric1"],
       SkillList["SingleAttack_Ground1"],
-      SkillList["RandomAttack_Bullet1"],
+      SkillList["TwiceAttack_Bite"],
       SkillList["AllAttack_Throwing1"],
       SkillList["SingleHeal_Basic1"],
       SkillList["CollateralAttack_Bite"]
@@ -198,7 +198,7 @@
     skills = {
       [0] = SkillList["BasicAttack_Strike"],
       SkillList["SingleAttack_Pierce1"],
-      SkillList["SingleAttack_Burst1"],
+      SkillList["TwiceAttack_Throwing"],
       SkillList["RandomAttack_Slash1"],
       SkillList["AllAttack_Strike1"],
       SkillList["SingleHeal_Basic1"],

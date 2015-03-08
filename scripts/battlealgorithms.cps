@@ -370,7 +370,16 @@
     skill.Target == "AnAlly" or
     skill.Target == "AnAllyIncludingDead" or
     skill.Target == "WholeAllyIncludingDead" then
-      targets = skilltarget
+      if not skill.minTarget then
+        targets = skilltarget
+      else
+        local numTarget = math.random(skill.minTarget, skill.maxTarget)
+        for k, _ in pairs(skilltarget) do
+          for i = 1, numTarget do
+            table.insert(targets, skilltarget[k])
+          end
+        end
+      end
     elseif skill.Target == "AdjacentEnemies" then
       targets = skilltarget
       local adjacentTargets = {}
@@ -480,9 +489,12 @@
     elseif (char.ResourceType == skill.ResourceType) and (afteramount >= 0) then
       char.currResource = afteramount
     elseif ((char.ResourceType == skill.ResourceType) and (afteramount < 0)) or (char.ResourceType ~= skill.ResourceType) then
-      if char.ResourceType == skill.ResourceType then char.currResource = 0 end
+      if char.ResourceType == skill.ResourceType then
+        char.currResource = 0
+      else 
+        afteramount = -skill.ResourceAmount
+      end
       if (skill.ResourceType == "Mana") then
-        if (char.ResourceType ~= skill.ResourceType) then afteramount = -skill.ResourceAmount end
         local depletionturn = math.floor((-2 * afteramount) / skill.ResourceAmount) + 1
         applyephemeral("", SkillList["SystemManaDepletion"], char, depletionturn)
         message = message .. "\n무리하게 마나를 끌어 써 " .. char.name .. " 주변의 마나가 시든다!\n" .. depletionturn .. "턴 동안 마나 사용 불가!"
@@ -555,7 +567,7 @@
       if k == "manadepletion" then
         target.currEphemerals[k] = arg[1]
       else
-        target.currEphemerals[k] = math.random(skill.minEphemeralTurns, skill.maxEphemeralTurns)
+        target.currEphemerals[k] = math.random(ephemerallist[k].minDuration, ephemerallist[k].maxDuration)
       end
       target.newEphemerals[k] = true
     end
