@@ -116,6 +116,20 @@
       }
     }
 
+    SkillList["SystemBurnDamage"] = {
+      MoveType = "System",
+      AttackType = "Fire",
+      DamageCalculationType="TargetMaxHPPercentageUnderType",
+      Percentage = 5
+    }
+
+    SkillList["SystemCurseDamage"] = {
+      MoveType = "System",
+      AttackType = "Dark",
+      DamageCalculationType="TargetMaxHPPercentageUnderType",
+      Percentage = 10
+    }
+
   // BasicAttacks
     SkillList["BasicAttack_Slash"] = {
       MoveType="Attack",

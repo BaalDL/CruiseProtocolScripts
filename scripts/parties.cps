@@ -95,7 +95,7 @@
     currHP = 180,
     currResource = 100,
     currSkillCharges = {},
-    currEphemerals = {burn=1, paralyzed=1, cursed=-1},
+    currEphemerals = {burn=2, paralyzed=1, cursed=1},
     newEphemerals = {}
   }
 

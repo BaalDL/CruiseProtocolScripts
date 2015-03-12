@@ -523,6 +523,8 @@
       damage = math.ceil(skill.FixedAmount * target.defensiveFactor[skill.AttackType] / 100)
     elseif skill.DamageCalculationType == "Fixed" then
       damage = math.ceil(skill.FixedAmount)
+    elseif skill.DamageCalculationType == "TargetMaxHPPercentageUnderType" then
+      damage = math.ceil(target.maxHP * skill.Percentage / 100 * target.defensiveFactor[skill.AttackType] / 100)
     end
     return damage
   end
@@ -537,10 +539,10 @@
       else
         characterdie(actor, skill, target, battle)
       end
-    elseif target.defensiveType[skill.AttackType] == "n" or (target.defensiveType[skill.AttackType] == "n" and reflected) then
+    elseif target.defensiveType[skill.AttackType] == "n" or (target.defensiveType[skill.AttackType] == "n" and reflected) or (target.defensiveType[skill.AttackType] == "r" and not actor) then
       damage = 0
       message = message .. "\n" .. "그러나 " .. target.name .. "에게는 효과가 없었다!"
-    elseif target.defensiveType[skill.AttackType] == "r" then
+    elseif target.defensiveType[skill.AttackType] == "r" and actor then
         damage = 0
         message = message .. "\n" .. "그러나 " .. target.name .. "(은)는 공격을 튕겨냈다!"
         inflictdamage(target, skill, actor, battle, true)
@@ -616,8 +618,13 @@
 
   function countturn(char)
     for k, v in pairs(char.currEphemerals) do
-      if char.currEphemerals[k] > 1 and not char.newEphemerals[k] then
-        char.currEphemerals[k] = char.currEphemerals[k] - 1
+      if ephemerallist[k].atcountturn then
+        ephemerallist[k].atcountturn(char, currentbattle)
+      end
+      if char.currEphemerals[k] > 1 then
+        if not char.newEphemerals[k] then
+          char.currEphemerals[k] = char.currEphemerals[k] - 1
+        end
       elseif char.currEphemerals[k] == 1 then
         char.currEphemerals[k] = 0
         message = message .. "\n" .. ephemerallist[k].diminishMessage(char)

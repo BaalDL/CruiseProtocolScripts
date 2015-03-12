@@ -8,6 +8,10 @@
     diminishMessage = function(char)
       return char.name .. "의 화상이 사라졌다!"
     end,
+    atcountturn = function(char, battle)
+      message = message .. "\n화상의 피해가 " .. char.name .. "(을)를 덮친다!"
+      inflictdamage(nil, SkillList["SystemBurnDamage"], char, battle, nil)
+    end,
     minDuration = 2,
     maxDuration = 5
   }
@@ -67,6 +71,10 @@
     dlength = 2,
     diminishMessage = function(char)
       return char.name .. "의 저주가 풀렸다!"
+    end,
+    atcountturn = function(char, battle)
+      message = message .. "\n저주가 " .. char.name .. "(을)를 덮친다!"
+      inflictdamage(nil, SkillList["SystemCurseDamage"], char, battle, nil)
     end,
     minDuration = 2,
     maxDuration = 5
