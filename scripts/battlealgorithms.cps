@@ -142,22 +142,13 @@
   	local usedskill
     progressturntime(orderedCharacters)
   	message = message .. orderedCharacters[1].name .. "의 턴입니다."
-  	orderedCharacters[1].controllable = orderedCharacters[1].ally and orderedCharacters[1].alive --조작을 불가능케 하는 상태이상등에 대한 처리가 추가되어야 함. 
+  	orderedCharacters[1].controllable = orderedCharacters[1].ally and orderedCharacters[1].alive and checkcontrollable(orderedCharacters[1]) 
     if orderedCharacters[1].controllable then
   	  message = message .. "\n" .. "행동을 선택해 주십시오."
   	  orderedCharacters[1].playerCommand(orderedCharacters[1], party, enemyparty)
       draweachtime(false, nil, message)
-  	elseif orderedCharacters[1].ally then
-  	  message = message .. "\n" .. orderedCharacters[1].name .. "(은)는 행동할 수 없다…."
-      draweachtime(false, nil, message)
-  	elseif orderedCharacters[1].alive then
-  	  usedskill = orderedCharacters[1].AICommand(orderedCharacters[1], party, emenyparty)
-      draweachtime(true, orderedCharacters[1], message)
-    else
-      message = message .. "\n" .. orderedCharacters[1].name .. "(은)는 행동할 수 없다…."
-      draweachtime(false, nil, message)
+      message = ""
   	end
-  	message = ""
   	if orderedCharacters[1].controllable then
   	  usedskill = askplayer(orderedCharacters[1], party, enemyparty, battle)
       if battle.fleed then
@@ -174,10 +165,16 @@
   	    delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], usedskill.DelayType)) + math.random(5))
       end
     elseif orderedCharacters[1].ally then
+      message = message .. "\n" .. orderedCharacters[1].name .. "(은)는 행동할 수 없다…."
       countturn(orderedCharacters[1])
       draweachtime(true, orderedCharacters[1], message)
   	  delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], "physicalSpeed")) + math.random(15))
+    elseif orderedCharacters[1].alive and checkcontrollable(orderedCharacters[1]) then
+      usedskill = orderedCharacters[1].AICommand(orderedCharacters[1], party, emenyparty)
+      draweachtime(true, orderedCharacters[1], message)
     else
+      message = message .. "\n" .. orderedCharacters[1].name .. "(은)는 행동할 수 없다…."
+      draweachtime(false, nil, message)
       if usedskill then
         countturn(orderedCharacters[1])
         delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], usedskill.DelayType)) + math.random(5))
@@ -193,6 +190,17 @@
     
   	orderedCharacters[1].turntime = orderedCharacters[1].turntime + delay
   	sortcharacters(orderedCharacters)
+  end
+
+  function checkcontrollable(char)
+    controllable = true
+    for k, v in pairs(char.currEphemerals) do
+      if ephemerallist[k].atcheckcontrollable then
+        controllable = ephemerallist[k].atcheckcontrollable(char, currentbattle)
+        if not controllable then return false end
+      end
+    end
+    return true
   end
 
   function askplayer(char, party, enemyparty, battle)
