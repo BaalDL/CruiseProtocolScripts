@@ -575,9 +575,9 @@
   function applyephemeral(actor, skill, target, ...)
     for k, v in pairs(skill.ApplyEphemeral) do
       if k == "manadepletion" then
-        target.currEphemerals[k] = arg[1]
+        target.currEphemerals[k] = {1, arg[1]}
       else
-        target.currEphemerals[k] = math.random(ephemerallist[k].minDuration, ephemerallist[k].maxDuration)
+        target.currEphemerals[k] = {1, math.random(ephemerallist[k].minDuration, ephemerallist[k].maxDuration)}
       end
       target.newEphemerals[k] = true
     end
@@ -629,12 +629,12 @@
       if ephemerallist[k].atcountturn then
         ephemerallist[k].atcountturn(char, currentbattle)
       end
-      if char.currEphemerals[k] > 1 then
+      if char.currEphemerals[k][2] > 1 then
         if not char.newEphemerals[k] then
-          char.currEphemerals[k] = char.currEphemerals[k] - 1
+          char.currEphemerals[k][2] = char.currEphemerals[k][2] - 1
         end
-      elseif char.currEphemerals[k] == 1 then
-        char.currEphemerals[k] = 0
+      elseif char.currEphemerals[k][2] == 1 then
+        char.currEphemerals[k][2] = 0
         message = message .. "\n" .. ephemerallist[k].diminishMessage(char)
       end
     end
@@ -645,7 +645,7 @@
       if char.newEphemerals[k] then
         char.newEphemerals[k] = nil
       end
-      if char.currEphemerals[k] == 0 then
+      if char.currEphemerals[k][2] == 0 then
         char.currEphemerals[k] = nil
       end
     end
