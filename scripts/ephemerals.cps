@@ -130,4 +130,150 @@
     end
   }
 
+  function ephemeraldisplaywithrank(string, rank)
+    local colorstring
+    local arrow
+    if 1 <= rank and rank <= 3 then
+      colorstring = "/bR/fw"
+      arrow = "△"
+    elseif 4 <= rank then
+      colorstring = "/br/fw"
+      arrow = "△"
+    elseif -3 <= rank and rank <= -1 then
+      colorstring = "/bB/fw"
+      arrow = "▽"
+    elseif rank <= -4 then
+      colorstring = "/bb/fw"
+      arrow = "▽"
+    end
+    return colorstring .. string .. arrow .. math.abs(rank)
+  end
+
+  ephemerallist["pAup"] = {}
+  ephemerallist["pAup"][1] = {display = ephemeraldisplaywithrank("攻", 1),dlength = 5,atgetparam = {param = "physicalAttack",amount = 1.5}}
+  ephemerallist["pAup"][2] = {display = ephemeraldisplaywithrank("攻", 2),dlength = 5,atgetparam = {param = "physicalAttack",amount = 2}}
+  ephemerallist["pAup"][3] = {display = ephemeraldisplaywithrank("攻", 3),dlength = 5,atgetparam = {param = "physicalAttack",amount = 2.5}}
+  ephemerallist["pAup"][4] = {display = ephemeraldisplaywithrank("攻", 4),dlength = 5,atgetparam = {param = "physicalAttack",amount = 3}}
+  ephemerallist["pAup"][5] = {display = ephemeraldisplaywithrank("攻", 5),dlength = 5,atgetparam = {param = "physicalAttack",amount = 3.5}}
+  ephemerallist["pAup"][6] = {display = ephemeraldisplaywithrank("攻", 6),dlength = 5,atgetparam = {param = "physicalAttack",amount = 4}}
+
+  ephemerallist["pAdn"] = {}
+  ephemerallist["pAdn"][1] = {display = ephemeraldisplaywithrank("攻", -1),dlength = 5,atgetparam = {param = "physicalAttack",amount = 0.66}}
+  ephemerallist["pAdn"][2] = {display = ephemeraldisplaywithrank("攻", -2),dlength = 5,atgetparam = {param = "physicalAttack",amount = 0.5}}
+  ephemerallist["pAdn"][3] = {display = ephemeraldisplaywithrank("攻", -3),dlength = 5,atgetparam = {param = "physicalAttack",amount = 0.4}}
+  ephemerallist["pAdn"][4] = {display = ephemeraldisplaywithrank("攻", -4),dlength = 5,atgetparam = {param = "physicalAttack",amount = 0.33}}
+  ephemerallist["pAdn"][5] = {display = ephemeraldisplaywithrank("攻", -5),dlength = 5,atgetparam = {param = "physicalAttack",amount = 0.29}}
+  ephemerallist["pAdn"][6] = {display = ephemeraldisplaywithrank("攻", -6),dlength = 5,atgetparam = {param = "physicalAttack",amount = 0.25}}
+
+  ephemerallist["pDup"] = {}
+  ephemerallist["pDup"][1] = {display = ephemeraldisplaywithrank("防", 1),dlength = 5,atgetparam = {param = "physicalDefense",amount = 1.5}}
+  ephemerallist["pDup"][2] = {display = ephemeraldisplaywithrank("防", 2),dlength = 5,atgetparam = {param = "physicalDefense",amount = 2}}
+  ephemerallist["pDup"][3] = {display = ephemeraldisplaywithrank("防", 3),dlength = 5,atgetparam = {param = "physicalDefense",amount = 2.5}}
+  ephemerallist["pDup"][4] = {display = ephemeraldisplaywithrank("防", 4),dlength = 5,atgetparam = {param = "physicalDefense",amount = 3}}
+  ephemerallist["pDup"][5] = {display = ephemeraldisplaywithrank("防", 5),dlength = 5,atgetparam = {param = "physicalDefense",amount = 3.5}}
+  ephemerallist["pDup"][6] = {display = ephemeraldisplaywithrank("防", 6),dlength = 5,atgetparam = {param = "physicalDefense",amount = 4}}
+
+  ephemerallist["pDdn"] = {}
+  ephemerallist["pDdn"][1] = {display = ephemeraldisplaywithrank("防", -1),dlength = 5,atgetparam = {param = "physicalDefense",amount = 0.66}}
+  ephemerallist["pDdn"][2] = {display = ephemeraldisplaywithrank("防", -2),dlength = 5,atgetparam = {param = "physicalDefense",amount = 0.5}}
+  ephemerallist["pDdn"][3] = {display = ephemeraldisplaywithrank("防", -3),dlength = 5,atgetparam = {param = "physicalDefense",amount = 0.4}}
+  ephemerallist["pDdn"][4] = {display = ephemeraldisplaywithrank("防", -4),dlength = 5,atgetparam = {param = "physicalDefense",amount = 0.33}}
+  ephemerallist["pDdn"][5] = {display = ephemeraldisplaywithrank("防", -5),dlength = 5,atgetparam = {param = "physicalDefense",amount = 0.29}}
+  ephemerallist["pDdn"][6] = {display = ephemeraldisplaywithrank("防", -6),dlength = 5,atgetparam = {param = "physicalDefense",amount = 0.25}}
+
+  ephemerallist["pSup"] = {}
+  ephemerallist["pSup"][1] = {display = ephemeraldisplaywithrank("敏", 1),dlength = 5,atgetparam = {param = "physicalSpeed",amount = 1.5}}
+  ephemerallist["pSup"][2] = {display = ephemeraldisplaywithrank("敏", 2),dlength = 5,atgetparam = {param = "physicalSpeed",amount = 2}}
+  ephemerallist["pSup"][3] = {display = ephemeraldisplaywithrank("敏", 3),dlength = 5,atgetparam = {param = "physicalSpeed",amount = 2.5}}
+  ephemerallist["pSup"][4] = {display = ephemeraldisplaywithrank("敏", 4),dlength = 5,atgetparam = {param = "physicalSpeed",amount = 3}}
+  ephemerallist["pSup"][5] = {display = ephemeraldisplaywithrank("敏", 5),dlength = 5,atgetparam = {param = "physicalSpeed",amount = 3.5}}
+  ephemerallist["pSup"][6] = {display = ephemeraldisplaywithrank("敏", 6),dlength = 5,atgetparam = {param = "physicalSpeed",amount = 4}}
+
+  ephemerallist["pSdn"] = {}
+  ephemerallist["pSdn"][1] = {display = ephemeraldisplaywithrank("敏", -1),dlength = 5,atgetparam = {param = "physicalSpeed",amount = 0.66}}
+  ephemerallist["pSdn"][2] = {display = ephemeraldisplaywithrank("敏", -2),dlength = 5,atgetparam = {param = "physicalSpeed",amount = 0.5}}
+  ephemerallist["pSdn"][3] = {display = ephemeraldisplaywithrank("敏", -3),dlength = 5,atgetparam = {param = "physicalSpeed",amount = 0.4}}
+  ephemerallist["pSdn"][4] = {display = ephemeraldisplaywithrank("敏", -4),dlength = 5,atgetparam = {param = "physicalSpeed",amount = 0.33}}
+  ephemerallist["pSdn"][5] = {display = ephemeraldisplaywithrank("敏", -5),dlength = 5,atgetparam = {param = "physicalSpeed",amount = 0.29}}
+  ephemerallist["pSdn"][6] = {display = ephemeraldisplaywithrank("敏", -6),dlength = 5,atgetparam = {param = "physicalSpeed",amount = 0.25}}
+
+  ephemerallist["sAup"] = {}
+  ephemerallist["sAup"][1] = {display = ephemeraldisplaywithrank("特", 1),dlength = 5,atgetparam = {param = "specialAttack",amount = 1.5}}
+  ephemerallist["sAup"][2] = {display = ephemeraldisplaywithrank("特", 2),dlength = 5,atgetparam = {param = "specialAttack",amount = 2}}
+  ephemerallist["sAup"][3] = {display = ephemeraldisplaywithrank("特", 3),dlength = 5,atgetparam = {param = "specialAttack",amount = 2.5}}
+  ephemerallist["sAup"][4] = {display = ephemeraldisplaywithrank("特", 4),dlength = 5,atgetparam = {param = "specialAttack",amount = 3}}
+  ephemerallist["sAup"][5] = {display = ephemeraldisplaywithrank("特", 5),dlength = 5,atgetparam = {param = "specialAttack",amount = 3.5}}
+  ephemerallist["sAup"][6] = {display = ephemeraldisplaywithrank("特", 6),dlength = 5,atgetparam = {param = "specialAttack",amount = 4}}
+
+  ephemerallist["sAdn"] = {}
+  ephemerallist["sAdn"][1] = {display = ephemeraldisplaywithrank("特", -1),dlength = 5,atgetparam = {param = "specialAttack",amount = 0.66}}
+  ephemerallist["sAdn"][2] = {display = ephemeraldisplaywithrank("特", -2),dlength = 5,atgetparam = {param = "specialAttack",amount = 0.5}}
+  ephemerallist["sAdn"][3] = {display = ephemeraldisplaywithrank("特", -3),dlength = 5,atgetparam = {param = "specialAttack",amount = 0.4}}
+  ephemerallist["sAdn"][4] = {display = ephemeraldisplaywithrank("特", -4),dlength = 5,atgetparam = {param = "specialAttack",amount = 0.33}}
+  ephemerallist["sAdn"][5] = {display = ephemeraldisplaywithrank("特", -5),dlength = 5,atgetparam = {param = "specialAttack",amount = 0.29}}
+  ephemerallist["sAdn"][6] = {display = ephemeraldisplaywithrank("特", -6),dlength = 5,atgetparam = {param = "specialAttack",amount = 0.25}}
+
+  ephemerallist["sDup"] = {}
+  ephemerallist["sDup"][1] = {display = ephemeraldisplaywithrank("護", 1),dlength = 5,atgetparam = {param = "specialDefense",amount = 1.5}}
+  ephemerallist["sDup"][2] = {display = ephemeraldisplaywithrank("護", 2),dlength = 5,atgetparam = {param = "specialDefense",amount = 2}}
+  ephemerallist["sDup"][3] = {display = ephemeraldisplaywithrank("護", 3),dlength = 5,atgetparam = {param = "specialDefense",amount = 2.5}}
+  ephemerallist["sDup"][4] = {display = ephemeraldisplaywithrank("護", 4),dlength = 5,atgetparam = {param = "specialDefense",amount = 3}}
+  ephemerallist["sDup"][5] = {display = ephemeraldisplaywithrank("護", 5),dlength = 5,atgetparam = {param = "specialDefense",amount = 3.5}}
+  ephemerallist["sDup"][6] = {display = ephemeraldisplaywithrank("護", 6),dlength = 5,atgetparam = {param = "specialDefense",amount = 4}}
+
+  ephemerallist["sDdn"] = {}
+  ephemerallist["sDdn"][1] = {display = ephemeraldisplaywithrank("護", -1),dlength = 5,atgetparam = {param = "specialDefense",amount = 0.66}}
+  ephemerallist["sDdn"][2] = {display = ephemeraldisplaywithrank("護", -2),dlength = 5,atgetparam = {param = "specialDefense",amount = 0.5}}
+  ephemerallist["sDdn"][3] = {display = ephemeraldisplaywithrank("護", -3),dlength = 5,atgetparam = {param = "specialDefense",amount = 0.4}}
+  ephemerallist["sDdn"][4] = {display = ephemeraldisplaywithrank("護", -4),dlength = 5,atgetparam = {param = "specialDefense",amount = 0.33}}
+  ephemerallist["sDdn"][5] = {display = ephemeraldisplaywithrank("護", -5),dlength = 5,atgetparam = {param = "specialDefense",amount = 0.29}}
+  ephemerallist["sDdn"][6] = {display = ephemeraldisplaywithrank("護", -6),dlength = 5,atgetparam = {param = "specialDefense",amount = 0.25}}
+
+  ephemerallist["sSup"] = {}
+  ephemerallist["sSup"][1] = {display = ephemeraldisplaywithrank("迅", 1),dlength = 5,atgetparam = {param = "specialSpeed",amount = 1.5}}
+  ephemerallist["sSup"][2] = {display = ephemeraldisplaywithrank("迅", 2),dlength = 5,atgetparam = {param = "specialSpeed",amount = 2}}
+  ephemerallist["sSup"][3] = {display = ephemeraldisplaywithrank("迅", 3),dlength = 5,atgetparam = {param = "specialSpeed",amount = 2.5}}
+  ephemerallist["sSup"][4] = {display = ephemeraldisplaywithrank("迅", 4),dlength = 5,atgetparam = {param = "specialSpeed",amount = 3}}
+  ephemerallist["sSup"][5] = {display = ephemeraldisplaywithrank("迅", 5),dlength = 5,atgetparam = {param = "specialSpeed",amount = 3.5}}
+  ephemerallist["sSup"][6] = {display = ephemeraldisplaywithrank("迅", 6),dlength = 5,atgetparam = {param = "specialSpeed",amount = 4}}
+
+  ephemerallist["sSdn"] = {}
+  ephemerallist["sSdn"][1] = {display = ephemeraldisplaywithrank("迅", -1),dlength = 5,atgetparam = {param = "specialSpeed",amount = 0.66}}
+  ephemerallist["sSdn"][2] = {display = ephemeraldisplaywithrank("迅", -2),dlength = 5,atgetparam = {param = "specialSpeed",amount = 0.5}}
+  ephemerallist["sSdn"][3] = {display = ephemeraldisplaywithrank("迅", -3),dlength = 5,atgetparam = {param = "specialSpeed",amount = 0.4}}
+  ephemerallist["sSdn"][4] = {display = ephemeraldisplaywithrank("迅", -4),dlength = 5,atgetparam = {param = "specialSpeed",amount = 0.33}}
+  ephemerallist["sSdn"][5] = {display = ephemeraldisplaywithrank("迅", -5),dlength = 5,atgetparam = {param = "specialSpeed",amount = 0.29}}
+  ephemerallist["sSdn"][6] = {display = ephemeraldisplaywithrank("迅", -6),dlength = 5,atgetparam = {param = "specialSpeed",amount = 0.25}}
+
+  ephemerallist["Acup"] = {}
+  ephemerallist["Acup"][1] = {display = ephemeraldisplaywithrank("命", 1),dlength = 5,atcheckhit = {param = "Accuracy",amount = 1.33}}
+  ephemerallist["Acup"][2] = {display = ephemeraldisplaywithrank("命", 2),dlength = 5,atcheckhit = {param = "Accuracy",amount = 1.66}}
+  ephemerallist["Acup"][3] = {display = ephemeraldisplaywithrank("命", 3),dlength = 5,atcheckhit = {param = "Accuracy",amount = 2}}
+  ephemerallist["Acup"][4] = {display = ephemeraldisplaywithrank("命", 4),dlength = 5,atcheckhit = {param = "Accuracy",amount = 2.33}}
+  ephemerallist["Acup"][5] = {display = ephemeraldisplaywithrank("命", 5),dlength = 5,atcheckhit = {param = "Accuracy",amount = 2.66}}
+  ephemerallist["Acup"][6] = {display = ephemeraldisplaywithrank("命", 6),dlength = 5,atcheckhit = {param = "Accuracy",amount = 3}}
+
+  ephemerallist["Acdn"] = {}
+  ephemerallist["Acdn"][1] = {display = ephemeraldisplaywithrank("命", -1),dlength = 5,atcheckhit = {param = "Accuracy",amount = 0.75}}
+  ephemerallist["Acdn"][2] = {display = ephemeraldisplaywithrank("命", -2),dlength = 5,atcheckhit = {param = "Accuracy",amount = 0.6}}
+  ephemerallist["Acdn"][3] = {display = ephemeraldisplaywithrank("命", -3),dlength = 5,atcheckhit = {param = "Accuracy",amount = 0.5}}
+  ephemerallist["Acdn"][4] = {display = ephemeraldisplaywithrank("命", -4),dlength = 5,atcheckhit = {param = "Accuracy",amount = 0.43}}
+  ephemerallist["Acdn"][5] = {display = ephemeraldisplaywithrank("命", -5),dlength = 5,atcheckhit = {param = "Accuracy",amount = 0.38}}
+  ephemerallist["Acdn"][6] = {display = ephemeraldisplaywithrank("命", -6),dlength = 5,atcheckhit = {param = "Accuracy",amount = 0.33}}
+
+  ephemerallist["Evup"] = {}
+  ephemerallist["Evup"][1] = {display = ephemeraldisplaywithrank("避", 1),dlength = 5,atcheckhit = {param = "Evasion",amount = 1.33}}
+  ephemerallist["Evup"][2] = {display = ephemeraldisplaywithrank("避", 2),dlength = 5,atcheckhit = {param = "Evasion",amount = 1.66}}
+  ephemerallist["Evup"][3] = {display = ephemeraldisplaywithrank("避", 3),dlength = 5,atcheckhit = {param = "Evasion",amount = 2}}
+  ephemerallist["Evup"][4] = {display = ephemeraldisplaywithrank("避", 4),dlength = 5,atcheckhit = {param = "Evasion",amount = 2.33}}
+  ephemerallist["Evup"][5] = {display = ephemeraldisplaywithrank("避", 5),dlength = 5,atcheckhit = {param = "Evasion",amount = 2.66}}
+  ephemerallist["Evup"][6] = {display = ephemeraldisplaywithrank("避", 6),dlength = 5,atcheckhit = {param = "Evasion",amount = 3}}
+
+  ephemerallist["Evdn"] = {}
+  ephemerallist["Evdn"][1] = {display = ephemeraldisplaywithrank("避", -1),dlength = 5,atcheckhit = {param = "Evasion",amount = 0.75}}
+  ephemerallist["Evdn"][2] = {display = ephemeraldisplaywithrank("避", -2),dlength = 5,atcheckhit = {param = "Evasion",amount = 0.6}}
+  ephemerallist["Evdn"][3] = {display = ephemeraldisplaywithrank("避", -3),dlength = 5,atcheckhit = {param = "Evasion",amount = 0.5}}
+  ephemerallist["Evdn"][4] = {display = ephemeraldisplaywithrank("避", -4),dlength = 5,atcheckhit = {param = "Evasion",amount = 0.43}}
+  ephemerallist["Evdn"][5] = {display = ephemeraldisplaywithrank("避", -5),dlength = 5,atcheckhit = {param = "Evasion",amount = 0.38}}
+  ephemerallist["Evdn"][6] = {display = ephemeraldisplaywithrank("避", -6),dlength = 5,atcheckhit = {param = "Evasion",amount = 0.33}}
 #end

@@ -479,7 +479,16 @@
     if not skill.Accuracy then return true end
     local random = math.random() * 100
     local mult = 1
-
+    for k, v in pairs(char.currEphemerals) do
+      if ephemerallist[k][v[1]].atcheckhit and "Accuracy" == ephemerallist[k][v[1]].atcheckhit.param then
+        mult = mult * ephemerallist[k][v[1]].atcheckhit.amount
+      end
+    end
+    for k, v in pairs(target.currEphemerals) do
+      if ephemerallist[k][v[1]].atcheckhit and "Evasion" == ephemerallist[k][v[1]].atcheckhit.param then
+        mult = mult * ephemerallist[k][v[1]].atcheckhit.amount
+      end
+    end
     return random < skill.Accuracy * mult
   end
 
@@ -519,7 +528,11 @@
 
   function getparam(char, param)
     local mult = 1
-
+    for k, v in pairs(char.currEphemerals) do
+      if ephemerallist[k][v[1]].atgetparam and param == ephemerallist[k][v[1]].atgetparam.param then
+        mult = mult * ephemerallist[k][v[1]].atgetparam.amount
+      end
+    end
     return char[param] * mult
   end
 
