@@ -2,8 +2,9 @@
 
   ephemerallist = {}
 
-  ephemerallist["burn"] = {
-  	display = "/bR/fY火/x",
+  ephemerallist["burn"] = {}
+  ephemerallist["burn"][1] = {
+    display = "/bR/fY火/x",
     dlength = 2,
     acquireMessage = function(char)
       return char.name .. "의 몸을 화염이 덮친다!"
@@ -19,7 +20,8 @@
     maxDuration = 5
   }
 
-  ephemerallist["frozen"] = {
+  ephemerallist["frozen"] = {}
+  ephemerallist["frozen"][1] = {
     display = "/bB/fW凍/x",
     dlength = 2,
     acquireMessage = function(char)
@@ -32,7 +34,8 @@
     maxDuration = 5
     }
 
-  ephemerallist["sleep"] = {
+  ephemerallist["sleep"] = {}
+  ephemerallist["sleep"][1] = {
     display = "/bG/fBzZ/x",
     dlength = 2,
     acquireMessage = function(char)
@@ -49,7 +52,8 @@
     maxDuration = 5
   }
 
-  ephemerallist["paralyzed"] = {
+  ephemerallist["paralyzed"] = {}
+  ephemerallist["paralyzed"][1] = {
     display = "/bY/fw痲/x",
     dlength = 2,
     acquireMessage = function(char)
@@ -63,15 +67,16 @@
         message = message .. "\n" .. char.name .. "(이)가 예상치 못하게 몸이 저려온다!"
         return false
       else
-      	message = message .. "\n" .. char.name .. "(은)는 간신히 몸을 가누었다!"
-      	return true
+        message = message .. "\n" .. char.name .. "(은)는 간신히 몸을 가누었다!"
+        return true
       end
     end,
     minDuration = 2,
     maxDuration = 5
   }
 
-  ephemerallist["stoned"] = {
+  ephemerallist["stoned"] = {}
+  ephemerallist["stoned"][1] = {
     display = "/bM/fY石/x",
     dlength = 2,
     acquireMessage = function(char)
@@ -84,7 +89,8 @@
     maxDuration = 5
   }
 
-  ephemerallist["blind"] = {
+  ephemerallist["blind"] = {}
+  ephemerallist["blind"][1] = {
     display = "/bw/fk盲/x",
     dlength = 2,
     acquireMessage = function(char)
@@ -97,7 +103,8 @@
     maxDuration = 5
   }
 
-  ephemerallist["cursed"] = {
+  ephemerallist["cursed"] = {}
+  ephemerallist["cursed"][1] = {
     display = "/bk/fw呪/x",
     dlength = 2,
     acquireMessage = function(char)
@@ -114,7 +121,8 @@
     maxDuration = 5
   }
 
-  ephemerallist["manadepletion"] = {
+  ephemerallist["manadepletion"] = {}
+  ephemerallist["manadepletion"][1] = {
     display = "/bk/fR魔/x",
     dlength = 2,
     diminishMessage = function(char)

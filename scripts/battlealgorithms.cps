@@ -195,8 +195,8 @@
   function checkcontrollable(char)
     controllable = true
     for k, v in pairs(char.currEphemerals) do
-      if ephemerallist[k].atcheckcontrollable then
-        controllable = ephemerallist[k].atcheckcontrollable(char, currentbattle)
+      if ephemerallist[k][v[1]].atcheckcontrollable then
+        controllable = ephemerallist[k][v[1]].atcheckcontrollable(char, currentbattle)
         if not controllable then return false end
       end
     end
@@ -577,7 +577,7 @@
       if k == "manadepletion" then
         target.currEphemerals[k] = {1, arg[1]}
       else
-        target.currEphemerals[k] = {1, math.random(ephemerallist[k].minDuration, ephemerallist[k].maxDuration)}
+        target.currEphemerals[k] = {1, math.random(ephemerallist[k][v[1]].minDuration, ephemerallist[k][v[1]].maxDuration)}
       end
       target.newEphemerals[k] = true
     end
@@ -626,8 +626,8 @@
 
   function countturn(char)
     for k, v in pairs(char.currEphemerals) do
-      if ephemerallist[k].atcountturn then
-        ephemerallist[k].atcountturn(char, currentbattle)
+      if ephemerallist[k][v[1]].atcountturn then
+        ephemerallist[k][v[1]].atcountturn(char, currentbattle)
       end
       if char.currEphemerals[k][2] > 1 then
         if not char.newEphemerals[k] then
@@ -635,7 +635,7 @@
         end
       elseif char.currEphemerals[k][2] == 1 then
         char.currEphemerals[k][2] = 0
-        message = message .. "\n" .. ephemerallist[k].diminishMessage(char)
+        message = message .. "\n" .. ephemerallist[k][v[1]].diminishMessage(char)
       end
     end
   end
