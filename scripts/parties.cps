@@ -48,7 +48,8 @@
       SkillList["RandomAttack_Fire1"],
       SkillList["AllAttack_Fire1"],
       SkillList["SingleHeal_Basic1"],
-      SkillList["CollateralAttack_Slash"]
+      SkillList["CollateralAttack_Slash"],
+      SkillList["Harass_GhostFire"]
     },
     defensiveType = {
       Slash = "s",
@@ -125,7 +126,8 @@
       SkillList["TwiceAttack_Bite"],
       SkillList["AllAttack_Throwing1"],
       SkillList["SingleHeal_Basic1"],
-      SkillList["CollateralAttack_Bite"]
+      SkillList["CollateralAttack_Bite"],
+      SkillList["Harass_GhostFire"]
     },
     defensiveType = {
       Slash = "s",
@@ -202,7 +204,8 @@
       SkillList["RandomAttack_Slash1"],
       SkillList["AllAttack_Strike1"],
       SkillList["SingleHeal_Basic1"],
-      SkillList["CollateralAttack_Bullet"]
+      SkillList["CollateralAttack_Bullet"],
+      SkillList["Harass_GhostFire"]
     },
     defensiveType = {
       Slash = "s",

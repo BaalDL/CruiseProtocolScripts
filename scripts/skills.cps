@@ -491,6 +491,8 @@
     SkillList["TwiceAttack_Throwing"] = {Name="이중 투척", MoveType="Attack", Target="AnEnemy", minTarget=2, maxTarget=2, AttackType="Throwing", AttackParameter=40, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=9, Accuracy=95, AfterDelay=150, DelayType="physicalSpeed"}
     SkillList["TwiceAttack_Burst"] = {Name="이중 충격", MoveType="Attack", Target="AnEnemy", minTarget=2, maxTarget=2, AttackType="Burst", AttackParameter=40, AttackerParameter="physicalAttack", TargetParameter="physicalDefense", DamageCalculationType="Basic", ResourceType="Rage", ResourceAmount=9, Accuracy=95, AfterDelay=150, DelayType="physicalSpeed"}
 
+    SkillList["Harass_GhostFire"] = {Name="도깨비불", MoveType="Harass", Target="AnEnemy", AttackType="Fire", ResourceType="Mana", ResourceAmount=20, Accuracy=80, AfterDelay=120, DelayType="specialSpeed", ApplyEphemeral={"standardburn"}}
+
     SkillList["SingleHeal_Basic1"] = {Name="나아", MoveType="Heal", Target="AnAlly", ResourceType="Mana", ResourceAmount=20, AfterDelay=120, DelayType="specialSpeed"}
     SkillList["SingleHeal_Basic2"] = {Name="나아간", MoveType="Heal", Target="AnAlly", ResourceType="Mana", ResourceAmount=60, AfterDelay=150, DelayType="specialSpeed"}
     SkillList["SingleHeal_Basic3"] = {Name="나아간다", MoveType="Heal", Target="AnAlly", ResourceType="Mana", ResourceAmount=120, AfterDelay=180, DelayType="specialSpeed"}
