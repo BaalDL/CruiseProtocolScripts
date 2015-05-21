@@ -462,6 +462,16 @@
         if not checkavailable(char, skill, targets[k], battle) then break end
         if checkhit(char, skill, targets[k], battle) then
           inflictdamage(char, skill, targets[k], battle)
+          if skill.ApplyEphemral then applyephemeral(char, skill, targets[k], battle) end
+        else
+          message = message .. "\n하지만 " .. targets[k].name .. "에게는 맞지 않았다!"
+        end
+      end
+    elseif skill.MoveType == "Harass" then
+      for k, v in pairs(targets) do
+        if not checkavailable(char, skill, targets[k], battle) then break end
+        if checkhit(char, skill, targets[k], battle) then
+          applyephemeral(char, skill, targets[k], battle)
         else
           message = message .. "\n하지만 " .. targets[k].name .. "에게는 맞지 않았다!"
         end
@@ -588,12 +598,23 @@
   function applyephemeral(actor, skill, target, ...)
     for k, v in pairs(skill.ApplyEphemeral) do
       if k == "manadepletion" then
-        target.currEphemerals[k] = {1, arg[1]}
+        target.currEphemerals["manadepletion"] = {1, arg[1]}
+        target.newEphemerals["manadepletion"] = true
       else
-        target.currEphemerals[k] = {1, math.random(ephemerallist[k][v[1]].minDuration, ephemerallist[k][v[1]].maxDuration)}
+        local ae = applyephemerallist[v]
+        if checkephemeral(actor, ae, target) then
+          target.currEphemerals[ae.ephemeral] = {ae.rank, math.random(ae.minDuration, ae.maxDuration)}
+          target.newEphemerals[ae.ephemeral] = true
+          message = message .. "\n" .. ephemerallist[ae.ephemeral][ae.rank].acquireMessage(target)
+        end
       end
-      target.newEphemerals[k] = true
     end
+  end
+
+  function checkephemeral(actor, applyephemeral, target)
+    if not applyephemeral.Probability then return true end
+    local random = math.random() * 100
+    return random < applyephemeral
   end
 
   function checkavailable(actor, skill, target, battle)

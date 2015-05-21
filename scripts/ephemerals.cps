@@ -15,9 +15,7 @@
     atcountturn = function(char, battle)
       message = message .. "\n화상의 피해가 " .. char.name .. "(을)를 덮친다!"
       inflictdamage(nil, SkillList["SystemBurnDamage"], char, battle, nil)
-    end,
-    minDuration = 2,
-    maxDuration = 5
+    end
   }
 
   ephemerallist["frozen"] = {}
@@ -29,10 +27,8 @@
     end,
     diminishMessage = function(char)
       return char.name .. "의 동상이 사라졌다!"
-    end,
-    minDuration = 2,
-    maxDuration = 5
-    }
+    end
+  }
 
   ephemerallist["sleep"] = {}
   ephemerallist["sleep"][1] = {
@@ -47,9 +43,7 @@
     atcheckcontrollable = function(char, battle)
       message = message .. "\n" .. char.name .. "(은)는 졸고 있다…."
       return false
-    end,
-    minDuration = 2,
-    maxDuration = 5
+    end
   }
 
   ephemerallist["paralyzed"] = {}
@@ -70,9 +64,7 @@
         message = message .. "\n" .. char.name .. "(은)는 간신히 몸을 가누었다!"
         return true
       end
-    end,
-    minDuration = 2,
-    maxDuration = 5
+    end
   }
 
   ephemerallist["stoned"] = {}
@@ -84,9 +76,7 @@
     end,
     diminishMessage = function(char)
       return char.name .. "(이)가 석화에서 자유로워졌다!"
-    end,
-    minDuration = 2,
-    maxDuration = 5
+    end
   }
 
   ephemerallist["blind"] = {}
@@ -98,9 +88,7 @@
     end,
     diminishMessage = function(char)
       return char.name .. "의 실명이 나았다!"
-    end,
-    minDuration = 2,
-    maxDuration = 5
+    end
   }
 
   ephemerallist["cursed"] = {}
@@ -116,9 +104,7 @@
     atcountturn = function(char, battle)
       message = message .. "\n저주가 " .. char.name .. "(을)를 덮친다!"
       inflictdamage(nil, SkillList["SystemCurseDamage"], char, battle, nil)
-    end,
-    minDuration = 2,
-    maxDuration = 5
+    end
   }
 
   ephemerallist["manadepletion"] = {}
@@ -276,4 +262,28 @@
   ephemerallist["Evdn"][4] = {display = ephemeraldisplaywithrank("避", -4),dlength = 5,atcheckhit = {param = "Evasion",amount = 0.43}}
   ephemerallist["Evdn"][5] = {display = ephemeraldisplaywithrank("避", -5),dlength = 5,atcheckhit = {param = "Evasion",amount = 0.38}}
   ephemerallist["Evdn"][6] = {display = ephemeraldisplaywithrank("避", -6),dlength = 5,atcheckhit = {param = "Evasion",amount = 0.33}}
+#end
+
+#function applyephemerallist
+  applyephemerallist = {}
+
+  applyephemerallist["manadepletion"] = {
+    ephemeral = "manadepletion"
+  }
+
+  applyephemerallist["standardburn"] = {
+    ephemeral = "burn",
+    rank = 1,
+    minDuration = 2,
+    maxDuration = 5
+  }
+
+  applyephemerallist["additionalburn"] = {
+    ephemeral = "burn",
+    rank = 1,
+    probability = 30,
+    minDuration = 1,
+    maxDuration = 3
+  }
+
 #end

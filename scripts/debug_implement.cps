@@ -65,6 +65,7 @@
   execute ("enemylist")
   execute ("itemlist")
   execute ("ephemerallist")
+  execute ("applyephemerallist")
   execute ("partyheader")
   execute ("partydata")
   execute ("enemypartylist")
