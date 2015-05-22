@@ -112,7 +112,7 @@
     SkillList["SystemManaDepletion"] = {
       MoveType = "System",
       ApplyEphemeral = {
-        manadepletion = -1
+        "manadepletion"
       }
     }
 

@@ -597,7 +597,7 @@
 
   function applyephemeral(actor, skill, target, ...)
     for k, v in pairs(skill.ApplyEphemeral) do
-      if k == "manadepletion" then
+      if v == "manadepletion" then
         target.currEphemerals["manadepletion"] = {1, arg[1]}
         target.newEphemerals["manadepletion"] = true
       else
