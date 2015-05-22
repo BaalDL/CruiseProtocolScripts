@@ -602,7 +602,7 @@
         target.newEphemerals["manadepletion"] = true
       else
         local ae = applyephemerallist[v]
-        if checkephemeral(actor, ae, target) then
+        if checkephemeral(actor, ae, target, skill) then
           target.currEphemerals[ae.ephemeral] = {ae.rank, math.random(ae.minDuration, ae.maxDuration)}
           target.newEphemerals[ae.ephemeral] = true
           message = message .. "\n" .. ephemerallist[ae.ephemeral][ae.rank].acquireMessage(target)
@@ -611,10 +611,15 @@
     end
   end
 
-  function checkephemeral(actor, applyephemeral, target)
-    if not applyephemeral.Probability then return true end
-    local random = math.random() * 100
-    return random < applyephemeral
+  function checkephemeral(actor, applyephemeral, target, skill)
+    if target.defensiveType[skill.AttackType] == "n" or target.defensiveType[skill.AttackType] == "r" then
+      message = message .. "\n" .. target.name .. "(은)는 " .. attackType.toString(skill.AttackType) .. "에 저항하여 " .. ephemerallist[applyephemeral.ephemeral][applyephemeral.rank].name .. "의 영향을 받지 않는다!"
+      return false
+    end
+    local p = applyephemeral.Probability or math.huge
+    local random = math.random()
+    local mult = target.defensiveFactor[skill.AttackType]
+    return random * mult < p
   end
 
   function checkavailable(actor, skill, target, battle)
