@@ -462,7 +462,7 @@
         if not checkavailable(char, skill, targets[k], battle) then break end
         if checkhit(char, skill, targets[k], battle) then
           inflictdamage(char, skill, targets[k], battle)
-          if skill.ApplyEphemral then applyephemeral(char, skill, targets[k], battle) end
+          if skill.ApplyEphemeral then applyephemeral(char, skill, targets[k], battle) end
         else
           message = message .. "\n하지만 " .. targets[k].name .. "에게는 맞지 않았다!"
         end
