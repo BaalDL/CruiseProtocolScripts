@@ -570,7 +570,7 @@
       else
         characterdie(actor, skill, target, battle)
       end
-    elseif target.defensiveType[skill.AttackType] == "n" or (target.defensiveType[skill.AttackType] == "n" and reflected) or (target.defensiveType[skill.AttackType] == "r" and not actor) then
+    elseif target.defensiveType[skill.AttackType] == "n" or (target.defensiveType[skill.AttackType] == "r" and reflected) or (target.defensiveType[skill.AttackType] == "r" and not actor) then
       damage = 0
       message = message .. "\n" .. "그러나 " .. target.name .. "에게는 효과가 없었다!"
     elseif target.defensiveType[skill.AttackType] == "r" and actor then
