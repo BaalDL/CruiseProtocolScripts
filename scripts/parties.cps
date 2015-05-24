@@ -96,7 +96,7 @@
     currHP = 180,
     currResource = 100,
     currSkillCharges = {},
-    currEphemerals = {burn={1,2}, paralyzed={1,1}, cursed={1,1}, pAup={1,-1}},
+    currEphemerals = {pAup={1,-1}},
     newEphemerals = {}
   }
 
@@ -174,7 +174,7 @@
     currHP = 150,
     currResource = 100,
     currSkillCharges = {},
-    currEphemerals = {stoned={1,3}, sleep={1,5}, pAup={6,-1}},
+    currEphemerals = {pAup={6,-1}},
     newEphemerals = {}
   }
 
@@ -252,7 +252,7 @@
     currHP = 200,
     currResource = 100,
     currSkillCharges = {},
-    currEphemerals = {frozen={1,2}, blind={1,4}, cursed={1,1}},
+    currEphemerals = {},
     newEphemerals = {}
   }
 

@@ -574,9 +574,14 @@
       damage = 0
       message = message .. "\n" .. "그러나 " .. target.name .. "에게는 효과가 없었다!"
     elseif target.defensiveType[skill.AttackType] == "r" and actor then
-        damage = 0
-        message = message .. "\n" .. "그러나 " .. target.name .. "(은)는 공격을 튕겨냈다!"
-        inflictdamage(target, skill, actor, battle, true)
+      damage = 0
+      message = message .. "\n" .. "그러나 " .. target.name .. "(은)는 공격을 튕겨냈다!"
+      inflictdamage(target, skill, actor, battle, true)
+    elseif target.defensiveType[skill.AttackType] == "a" then
+      damage = calculatedamage(actor, skill, target, battle)
+      printl(damage .. "아헤가오")
+      message = message .. "\n" .. "그러나 " .. target.name .. "(은)는 공격을 흡수했다!"
+      applyheal(actor, SkillList["SystemAbsorbHeal"], target, damage)
     end
     if not target.ally then
       EnemyDefenseInfo[target.templetes][skill.AttackType] = true
@@ -586,9 +591,13 @@
     end
   end
 
-  function applyheal(actor, skill, target)
+  function applyheal(actor, skill, target, ...)
     local heal = 0
-    if skill.FixedAmount then
+    if skill.HealByArgument then
+      heal = arg[1]
+      message = message .. "\n" .. target.name .. "의 체력이 " .. heal .. " 회복되었다!"
+      target.currHP = math.min(target.maxHP, target.currHP + heal)
+    elseif skill.FixedAmount then
       heal = skill.FixedAmount
       message = message .. "\n" .. target.name .. "의 체력이 " .. heal .. " 회복되었다!"
       target.currHP = math.min(target.maxHP, target.currHP + heal)

@@ -116,6 +116,11 @@
       }
     }
 
+    SkillList["SystemAbsorbHeal"] = {
+      MoveType = "System",
+      HealByArgument = true
+    }
+
     SkillList["SystemBurnDamage"] = {
       MoveType = "System",
       AttackType = "Fire",
