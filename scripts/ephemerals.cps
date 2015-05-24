@@ -140,7 +140,7 @@
       colorstring = "/bb/fw"
       arrow = "▽"
     end
-    return colorstring .. string .. arrow .. math.abs(rank)
+    return colorstring .. string .. arrow .. "/x" .. math.abs(rank)
   end
 
   ephemerallist["pAup"] = {}
