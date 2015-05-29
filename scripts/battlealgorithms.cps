@@ -621,7 +621,7 @@
   end
 
   function checkephemeral(actor, applyephemeral, target, skill)
-    if target.defensiveType[skill.AttackType] == "n" or target.defensiveType[skill.AttackType] == "r" then
+    if target.defensiveType[skill.AttackType] == "n" or target.defensiveType[skill.AttackType] == "r" or target.defensiveType[skill.AttackType] == "a" then
       message = message .. "\n" .. target.name .. "(은)는 " .. attackType.toString(skill.AttackType) .. "에 저항하여 " .. ephemerallist[applyephemeral.ephemeral][applyephemeral.rank].name .. "의 영향을 받지 않는다!"
       return false
     end
