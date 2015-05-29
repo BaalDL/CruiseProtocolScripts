@@ -123,6 +123,8 @@
         toreturn = "/fK/bk"
       elseif deftype[skilltype] == "r" then
         toreturn = "/fy/bb"
+      elseif deftype[skilltype] == "a" then
+        toreturn = "/fy/bg"
       end
       toreturn = toreturn .. attackType.toChar(skilltype) .. "/x"
     end
