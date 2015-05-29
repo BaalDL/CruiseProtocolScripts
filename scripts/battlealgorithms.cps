@@ -625,7 +625,7 @@
       message = message .. "\n" .. target.name .. "(은)는 " .. attackType.toString(skill.AttackType) .. "에 저항하여 " .. ephemerallist[applyephemeral.ephemeral][applyephemeral.rank].name .. "의 영향을 받지 않는다!"
       return false
     end
-    local p = applyephemeral.Probability or math.huge
+    local p = applyephemeral.probability or math.huge
     local random = math.random()
     local mult = target.defensiveFactor[skill.AttackType]
     return random * mult < p
