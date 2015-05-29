@@ -127,7 +127,7 @@
       SkillList["AllAttack_Throwing1"],
       SkillList["SingleHeal_Basic1"],
       SkillList["CollateralAttack_Bite"],
-      SkillList["Harass_GhostFire"]
+      SkillList["Harass_Freeze"]
     },
     defensiveType = {
       Slash = "s",
@@ -202,10 +202,10 @@
       SkillList["SingleAttack_Pierce1"],
       SkillList["TwiceAttack_Throwing"],
       SkillList["RandomAttack_Slash1"],
-      SkillList["AllAttack_Strike1"],
+      SkillList["AllAttack_Ice1"],
       SkillList["SingleHeal_Basic1"],
       SkillList["CollateralAttack_Bullet"],
-      SkillList["Harass_GhostFire"]
+      SkillList["Harass_SleepPowder"]
     },
     defensiveType = {
       Slash = "s",

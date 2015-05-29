@@ -275,23 +275,20 @@
 #function applyephemerallist
   applyephemerallist = {}
 
-  applyephemerallist["manadepletion"] = {
-    ephemeral = "manadepletion"
-  }
-
-  applyephemerallist["standardburn"] = {
-    ephemeral = "burn",
-    rank = 1,
-    minDuration = 2,
-    maxDuration = 5
-  }
-
-  applyephemerallist["additionalburn"] = {
-    ephemeral = "burn",
-    rank = 1,
-    probability = 30,
-    minDuration = 1,
-    maxDuration = 3
-  }
-
+  applyephemerallist["manadepletion"] = {ephemeral = "manadepletion"}
+  
+  applyephemerallist["standardburn"] = {ephemeral = "burn",rank = 1,minDuration = 2,maxDuration = 5}
+  applyephemerallist["additionalburn"] = {ephemeral = "burn",rank = 1,probability = 10,minDuration = 1,maxDuration = 3}
+  applyephemerallist["standardfrozen"] = {ephemeral = "frozen",rank = 1,minDuration = 2,maxDuration = 5}
+  applyephemerallist["additionalfrozen"] = {ephemeral = "frozen",rank = 1,probability = 10,minDuration = 1,maxDuration = 3}
+  applyephemerallist["standardsleep"] = {ephemeral = "sleep",rank = 1,minDuration = 2,maxDuration = 5}
+  applyephemerallist["additionalsleep"] = {ephemeral = "sleep",rank = 1,probability = 10,minDuration = 1,maxDuration = 3}
+  applyephemerallist["standardparalyzed"] = {ephemeral = "paralyzed",rank = 1,minDuration = 2,maxDuration = 5}
+  applyephemerallist["additionalparalyzed"] = {ephemeral = "paralyzed",rank = 1,probability = 10,minDuration = 1,maxDuration = 3}
+  applyephemerallist["standardstoned"] = {ephemeral = "stoned",rank = 1,minDuration = 2,maxDuration = 5}
+  applyephemerallist["additionalstoned"] = {ephemeral = "stoned",rank = 1,probability = 10,minDuration = 1,maxDuration = 3}
+  applyephemerallist["standardblind"] = {ephemeral = "blind",rank = 1,minDuration = 2,maxDuration = 5}
+  applyephemerallist["additionalblind"] = {ephemeral = "blind",rank = 1,probability = 10,minDuration = 1,maxDuration = 3}
+  applyephemerallist["standardcursed"] = {ephemeral = "cursed",rank = 1,minDuration = 2,maxDuration = 5}
+  applyephemerallist["additionalcursed"] = {ephemeral = "cursed",rank = 1,probability = 10,minDuration = 1,maxDuration = 3}
 #end
