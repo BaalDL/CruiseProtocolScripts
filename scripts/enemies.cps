@@ -62,7 +62,8 @@
       Luminous = 0,
       Dark = 100
     },
-    AICommand = randomlyattacktargetwithskills  
+    AICommand = randomlyattacktargetwithskills,
+    ephemeralImmunes = {"burn"}
   }
 
   EnemyTempletes["knifethug"] = {
@@ -122,7 +123,8 @@
       Luminous = 0,
       Dark = 100
     },
-    AICommand = randomlyattacktargetwithskills
+    AICommand = randomlyattacktargetwithskills,
+    ephemeralImmunes = {"sleep","stoned"}
   }
 
 

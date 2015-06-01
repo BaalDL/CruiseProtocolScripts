@@ -18,6 +18,10 @@
       inflictdamage(nil, SkillList["SystemBurnDamage"], char, battle, nil)
     end
   }
+  ephemerallist["burn"][-1] = {
+    display = "/bR/fY火無/x",
+    dlength = 4
+  }
 
   ephemerallist["frozen"] = {}
   ephemerallist["frozen"][1] = {
@@ -30,6 +34,10 @@
     diminishMessage = function(char)
       return char.name .. "의 동상이 사라졌다!"
     end
+  }
+  ephemerallist["frozen"][-1] = {
+    display = "/bB/fW凍無/x",
+    dlength = 4
   }
 
   ephemerallist["sleep"] = {}
@@ -48,6 +56,10 @@
       return false
     end
   }
+  ephemerallist["sleep"][-1] = {
+    display = "/bG/fBzZ無/x",
+    dlength = 4
+  }  
 
   ephemerallist["paralyzed"] = {}
   ephemerallist["paralyzed"][1] = {
@@ -70,6 +82,10 @@
       end
     end
   }
+  ephemerallist["paralyzed"][-1] = {
+    display = "/bY/fw痲無/x",
+    dlength = 4
+  }  
 
   ephemerallist["stoned"] = {}
   ephemerallist["stoned"][1] = {
@@ -83,6 +99,10 @@
       return char.name .. "(이)가 석화에서 자유로워졌다!"
     end
   }
+  ephemerallist["stoned"][-1] = {
+    display = "/bM/fY石無/x",
+    dlength = 4
+  }  
 
   ephemerallist["blind"] = {}
   ephemerallist["blind"][1] = {
@@ -96,6 +116,10 @@
       return char.name .. "의 실명이 나았다!"
     end
   }
+  ephemerallist["blind"][-1] = {
+    display = "/bw/fk盲無/x",
+    dlength = 4
+  }  
 
   ephemerallist["cursed"] = {}
   ephemerallist["cursed"][1] = {
@@ -113,6 +137,10 @@
       inflictdamage(nil, SkillList["SystemCurseDamage"], char, battle, nil)
     end
   }
+  ephemerallist["cursed"][-1] = {
+    display = "/bk/fw呪無/x",
+    dlength = 4
+  }  
 
   ephemerallist["manadepletion"] = {}
   ephemerallist["manadepletion"][1] = {
