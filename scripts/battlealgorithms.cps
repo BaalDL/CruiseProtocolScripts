@@ -615,9 +615,17 @@
       else
         local ae = applyephemerallist[v]
         if checkephemeral(actor, ae, target, skill) then
-          target.currEphemerals[ae.ephemeral] = {ae.rank, math.random(ae.minDuration, ae.maxDuration)}
-          target.newEphemerals[ae.ephemeral] = true
-          message = message .. "\n" .. ephemerallist[ae.ephemeral][ae.rank].acquireMessage(target)
+          if ae.incremental then
+
+          else
+            if not target.currEphemerals[ae.ephemeral] or target.currEphemerals[ae.ephemeral][1] <= ae.rank then
+              target.currEphemerals[ae.ephemeral] = {ae.rank, math.random(ae.minDuration, ae.maxDuration)}
+              target.newEphemerals[ae.ephemeral] = true
+            else
+              target.currEphemerals[ae.ephemeral][2] = math.random(ae.minDuration, ae.maxDuration)
+            end
+            message = message .. "\n" .. ephemerallist[ae.ephemeral][ae.rank].acquireMessage(target)
+          end
         end
       end
     end
