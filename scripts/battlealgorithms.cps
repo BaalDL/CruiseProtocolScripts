@@ -617,7 +617,26 @@
         local ae = applyephemerallist[v]
         if checkephemeral(actor, ae, target, skill) then
           if ae.incremental then
-
+            if target.nullEphemerals[ae.ephemeral] and ((target.currEphemerals[ae.ephemeral] and target.currEphemerals[ae.ephemeral][1] or 0) + ae.rank) * target.nullEphemerals[ae.ephemeral][1] > 0 then
+              target.currEphemerals[ae.ephemeral][1] = 0
+              message = message .. "\n" .. target.name .. "(은)는 " .. ephemerallist[ae.ephemeral][ae.rank].name .. "에 면역이다!"
+            elseif target.currEphemerals[ae.ephemeral] and (target.currEphemerals[ae.ephemeral][1] + ae.rank > ae.incremental.max) then
+              target.currEphemerals[ae.ephemeral][1] = ae.incremental.max
+              target.currEphemerals[ae.ephemeral][2] = math.random(ae.minDuration, ae.maxDuration)
+              message = message .. "\n" .. target.name .. "의 " .. ephemerallist[ae.ephemeral][ae.rank].name .. "(은)는 더 높아질 수 없다!"
+            elseif target.currEphemerals[ae.ephemeral] and (target.currEphemerals[ae.ephemeral][1] + ae.rank < ae.incremental.min) then
+              target.currEphemerals[ae.ephemeral][1] = ae.incremental.min
+              target.currEphemerals[ae.ephemeral][2] = math.random(ae.minDuration, ae.maxDuration)
+              message = message .. "\n" .. target.name .. "의 " .. ephemerallist[ae.ephemeral][ae.rank].name .. "(은)는 더 낮아질 수 없다!"
+            elseif not target.currEphemerals[ae.ephemeral] then
+              target.currEphemerals[ae.ephemeral] = {ae.rank, math.random(ae.minDuration, ae.maxDuration)}
+              target.newEphemerals[ae.ephemeral] = true
+              message = message .. "\n" .. ephemerallist[ae.ephemeral][ae.rank].acquireMessage(target)
+            else
+              target.currEphemerals[ae.ephemeral] = {target.currEphemerals[ae.ephemeral][1] + ae.rank, math.random(ae.minDuration, ae.maxDuration)}
+              target.newEphemerals[ae.ephemeral] = true
+              message = message .. "\n" .. ephemerallist[ae.ephemeral][ae.rank].acquireMessage(target)
+            end
           else
             if not target.currEphemerals[ae.ephemeral] or target.currEphemerals[ae.ephemeral][1] <= ae.rank then
               target.currEphemerals[ae.ephemeral] = {ae.rank, math.random(ae.minDuration, ae.maxDuration)}
