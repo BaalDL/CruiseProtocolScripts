@@ -651,7 +651,7 @@
     end
     local p = applyephemeral.probability or math.huge
     local random = math.random()
-    local mult = target.defensiveFactor[skill.AttackType]
+    local mult = skill.AttackType and target.defensiveFactor[skill.AttackType] or 1
     return random * mult < p
   end
 
