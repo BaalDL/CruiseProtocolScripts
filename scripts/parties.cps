@@ -97,7 +97,8 @@
     currResource = 100,
     currSkillCharges = {},
     currEphemerals = {pAup={1,-1}},
-    newEphemerals = {}
+    newEphemerals = {},
+    nullEphemerals = {}
   }
 
   allpartymembers[2] = {
@@ -175,7 +176,8 @@
     currResource = 100,
     currSkillCharges = {},
     currEphemerals = {pAup={6,-1}},
-    newEphemerals = {}
+    newEphemerals = {},
+    nullEphemerals = {}
   }
 
   allpartymembers[3] = {
@@ -253,7 +255,8 @@
     currResource = 100,
     currSkillCharges = {},
     currEphemerals = {},
-    newEphemerals = {}
+    newEphemerals = {},
+    nullEphemerals = {}
   }
 
   currentpartymembers[1] = allpartymembers[1]

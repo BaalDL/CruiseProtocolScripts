@@ -41,8 +41,9 @@
 
     enemy.AICommand = EnemyTempletes[enemyT].AICommand
     enemy.currEphemerals = {}
-    for _, v in pairs(EnemyTempletes[enemyT].ephemeralImmunes) do
-      enemy.currEphemerals[v] = {-1, -1}
+    enemy.nullEphemerals = {}
+    for k, _ in pairs(EnemyTempletes[enemyT].nullEphemerals) do
+      enemy.nullEphemerals[k] = EnemyTempletes[enemyT].nullEphemerals[k]
     end
     enemy.newEphemerals = {}
     return enemy
@@ -632,9 +633,17 @@
   end
 
   function checkephemeral(actor, applyephemeral, target, skill)
-    if (target.currEphemerals[applyephemeral.ephemeral] and target.currEphemerals[applyephemeral.ephemeral][1] == -1) then
-      message = message .. "\n" .. target.name .. "(은)는 " .. ephemerallist[applyephemeral.ephemeral][applyephemeral.rank].name .. "에 면역이다!"
-      return false
+    if (target.nullEphemerals[applyephemeral.ephemeral]) then
+      if target.nullEphemerals[applyephemeral.ephemeral][1] == 0 then
+        message = message .. "\n" .. target.name .. "(은)는 " .. ephemerallist[applyephemeral.ephemeral][applyephemeral.rank].name .. "에 면역이다!"
+        return false
+      elseif target.nullEphemerals[applyephemeral.ephemeral][1] == -1 and applyephemeral.rank < 0 then
+        message = message .. "\n" .. target.name .. "(은)는 " .. ephemerallist[applyephemeral.ephemeral][applyephemeral.rank].name .. "감소에 면역이다!"
+        return false
+      elseif target.nullEphemerals[applyephemeral.ephemeral][1] == 1 and applyephemeral.rank > 0 then
+        message = message .. "\n" .. target.name .. "(은)는 " .. ephemerallist[applyephemeral.ephemeral][applyephemeral.rank].name .. "증가에 면역이다!"
+        return false
+      end
     end
     if target.defensiveType[skill.AttackType] == "n" or target.defensiveType[skill.AttackType] == "r" or target.defensiveType[skill.AttackType] == "a" then
       message = message .. "\n" .. target.name .. "(은)는 " .. attackType.toString(skill.AttackType) .. "에 저항하여 " .. ephemerallist[applyephemeral.ephemeral][applyephemeral.rank].name .. "의 영향을 받지 않는다!"
