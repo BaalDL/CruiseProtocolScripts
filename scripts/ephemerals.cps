@@ -283,6 +283,57 @@
   ephemerallist["Evch"][-5] = {name = "회피율 감소", display = ephemeraldisplaywithrank("避", -5),dlength = 5,atcheckhit = {param = "Evasion",amount = 0.38},incremental={max=6,min=-6}}
   ephemerallist["Evch"][-6] = {name = "회피율 감소", display = ephemeraldisplaywithrank("避", -6),dlength = 5,atcheckhit = {param = "Evasion",amount = 0.33},incremental={max=6,min=-6}}
 
+  for i = 1, 6 do
+    ephemerallist["pAch"][i].acquireMessage = function(char)
+      return char.name .. "의 공격력이 증가했다!"
+    end
+    ephemerallist["pAch"][-i].acquireMessage = function(char)
+      return char.name .. "의 공격력이 감소했다!"
+    end
+    ephemerallist["pDch"][i].acquireMessage = function(char)
+      return char.name .. "의 방어력이 증가했다!"
+    end
+    ephemerallist["pDch"][-i].acquireMessage = function(char)
+      return char.name .. "의 방어력이 감소했다!"
+    end
+    ephemerallist["pSch"][i].acquireMessage = function(char)
+      return char.name .. "의 속도가 증가했다!"
+    end
+    ephemerallist["pSch"][-i].acquireMessage = function(char)
+      return char.name .. "의 속도가 감소했다!"
+    end
+    ephemerallist["sAch"][i].acquireMessage = function(char)
+      return char.name .. "의 특수공격력이 증가했다!"
+    end
+    ephemerallist["sAch"][-i].acquireMessage = function(char)
+      return char.name .. "의 특수공격력이 감소했다!"
+    end
+    ephemerallist["sDch"][i].acquireMessage = function(char)
+      return char.name .. "의 특수방어력이 증가했다!"
+    end
+    ephemerallist["sDch"][-i].acquireMessage = function(char)
+      return char.name .. "의 특수방어력이 감소했다!"
+    end
+    ephemerallist["sSch"][i].acquireMessage = function(char)
+      return char.name .. "의 특수속도가 증가했다!"
+    end
+    ephemerallist["sSch"][-i].acquireMessage = function(char)
+      return char.name .. "의 특수속도가 감소했다!"
+    end
+    ephemerallist["Acch"][i].acquireMessage = function(char)
+      return char.name .. "의 명중률이 증가했다!"
+    end
+    ephemerallist["Acch"][-i].acquireMessage = function(char)
+      return char.name .. "의 명중률이 감소했다!"
+    end
+    ephemerallist["Evch"][i].acquireMessage = function(char)
+      return char.name .. "의 회피율이 증가했다!"
+    end
+    ephemerallist["Evch"][-i].acquireMessage = function(char)
+      return char.name .. "의 회피율이 감소했다!"
+    end
+  end
+
 #end
 
 #function applyephemerallist
