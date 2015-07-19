@@ -96,7 +96,7 @@
     currHP = 180,
     currResource = 100,
     currSkillCharges = {},
-    currEphemerals = {pAup={1,-1}},
+    currEphemerals = {pAch={1,-1}},
     newEphemerals = {},
     nullEphemerals = {}
   }
@@ -175,7 +175,7 @@
     currHP = 150,
     currResource = 100,
     currSkillCharges = {},
-    currEphemerals = {pAup={6,-1}},
+    currEphemerals = {pAch={6,-1}},
     newEphemerals = {},
     nullEphemerals = {}
   }
