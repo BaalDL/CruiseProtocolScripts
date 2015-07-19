@@ -656,12 +656,6 @@
       if target.nullEphemerals[applyephemeral.ephemeral][1] == 0 then
         message = message .. "\n" .. target.name .. "(은)는 " .. ephemerallist[applyephemeral.ephemeral][applyephemeral.rank].name .. "에 면역이다!"
         return false
-      elseif target.nullEphemerals[applyephemeral.ephemeral][1] == -1 and applyephemeral.rank < 0 then
-        message = message .. "\n" .. target.name .. "(은)는 " .. ephemerallist[applyephemeral.ephemeral][applyephemeral.rank].name .. "감소에 면역이다!"
-        return false
-      elseif target.nullEphemerals[applyephemeral.ephemeral][1] == 1 and applyephemeral.rank > 0 then
-        message = message .. "\n" .. target.name .. "(은)는 " .. ephemerallist[applyephemeral.ephemeral][applyephemeral.rank].name .. "증가에 면역이다!"
-        return false
       end
     end
     if target.defensiveType[skill.AttackType] == "n" or target.defensiveType[skill.AttackType] == "r" or target.defensiveType[skill.AttackType] == "a" then
