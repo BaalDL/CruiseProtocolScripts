@@ -339,20 +339,54 @@
 #function applyephemerallist
   applyephemerallist = {}
 
-  applyephemerallist["manadepletion"] = {ephemeral = "manadepletion"}
+  applyephemerallist["manadepletion"]={ephemeral="manadepletion"}
   
-  applyephemerallist["standardburn"] = {ephemeral = "burn",rank = 1,minDuration = 2,maxDuration = 5}
-  applyephemerallist["additionalburn"] = {ephemeral = "burn",rank = 1,probability = 10,minDuration = 1,maxDuration = 3}
-  applyephemerallist["standardfrozen"] = {ephemeral = "frozen",rank = 1,minDuration = 2,maxDuration = 5}
-  applyephemerallist["additionalfrozen"] = {ephemeral = "frozen",rank = 1,probability = 10,minDuration = 1,maxDuration = 3}
-  applyephemerallist["standardsleep"] = {ephemeral = "sleep",rank = 1,minDuration = 2,maxDuration = 5}
-  applyephemerallist["additionalsleep"] = {ephemeral = "sleep",rank = 1,probability = 10,minDuration = 1,maxDuration = 3}
-  applyephemerallist["standardparalyzed"] = {ephemeral = "paralyzed",rank = 1,minDuration = 2,maxDuration = 5}
-  applyephemerallist["additionalparalyzed"] = {ephemeral = "paralyzed",rank = 1,probability = 10,minDuration = 1,maxDuration = 3}
-  applyephemerallist["standardstoned"] = {ephemeral = "stoned",rank = 1,minDuration = 2,maxDuration = 5}
-  applyephemerallist["additionalstoned"] = {ephemeral = "stoned",rank = 1,probability = 10,minDuration = 1,maxDuration = 3}
-  applyephemerallist["standardblind"] = {ephemeral = "blind",rank = 1,minDuration = 2,maxDuration = 5}
-  applyephemerallist["additionalblind"] = {ephemeral = "blind",rank = 1,probability = 10,minDuration = 1,maxDuration = 3}
-  applyephemerallist["standardcursed"] = {ephemeral = "cursed",rank = 1,minDuration = 2,maxDuration = 5}
-  applyephemerallist["additionalcursed"] = {ephemeral = "cursed",rank = 1,probability = 10,minDuration = 1,maxDuration = 3}
+  applyephemerallist["standardburn"]={ephemeral="burn",rank=1,minDuration=2,maxDuration=5}
+  applyephemerallist["additionalburn"]={ephemeral="burn",rank=1,probability=10,minDuration=1,maxDuration=3}
+  applyephemerallist["standardfrozen"]={ephemeral="frozen",rank=1,minDuration=2,maxDuration=5}
+  applyephemerallist["additionalfrozen"]={ephemeral="frozen",rank=1,probability=10,minDuration=1,maxDuration=3}
+  applyephemerallist["standardsleep"]={ephemeral="sleep",rank=1,minDuration=2,maxDuration=5}
+  applyephemerallist["additionalsleep"]={ephemeral="sleep",rank=1,probability=10,minDuration=1,maxDuration=3}
+  applyephemerallist["standardparalyzed"]={ephemeral="paralyzed",rank=1,minDuration=2,maxDuration=5}
+  applyephemerallist["additionalparalyzed"]={ephemeral="paralyzed",rank=1,probability=10,minDuration=1,maxDuration=3}
+  applyephemerallist["standardstoned"]={ephemeral="stoned",rank=1,minDuration=2,maxDuration=5}
+  applyephemerallist["additionalstoned"]={ephemeral="stoned",rank=1,probability=10,minDuration=1,maxDuration=3}
+  applyephemerallist["standardblind"]={ephemeral="blind",rank=1,minDuration=2,maxDuration=5}
+  applyephemerallist["additionalblind"]={ephemeral="blind",rank=1,probability=10,minDuration=1,maxDuration=3}
+  applyephemerallist["standardcursed"]={ephemeral="cursed",rank=1,minDuration=2,maxDuration=5}
+  applyephemerallist["additionalcursed"]={ephemeral="cursed",rank=1,probability=10,minDuration=1,maxDuration=3}
+
+  applyephemerallist["pAup1"]={ephemeral="pAch",rank=1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["pAup2"]={ephemeral="pAch",rank=2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["pAdn1"]={ephemeral="pAch",rank=-1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["pAdn2"]={ephemeral="pAch",rank=-2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["pDup1"]={ephemeral="pDch",rank=1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["pDup2"]={ephemeral="pDch",rank=2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["pDdn1"]={ephemeral="pDch",rank=-1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["pDdn2"]={ephemeral="pDch",rank=-2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["pSup1"]={ephemeral="pSch",rank=1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["pSup2"]={ephemeral="pSch",rank=2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["pSdn1"]={ephemeral="pSch",rank=-1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["pSdn2"]={ephemeral="pSch",rank=-2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["sAup1"]={ephemeral="sAch",rank=1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["sAup2"]={ephemeral="sAch",rank=2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["sAdn1"]={ephemeral="sAch",rank=-1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["sAdn2"]={ephemeral="sAch",rank=-2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["sDup1"]={ephemeral="sDch",rank=1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["sDup2"]={ephemeral="sDch",rank=2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["sDdn1"]={ephemeral="sDch",rank=-1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["sDdn2"]={ephemeral="sDch",rank=-2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["sSup1"]={ephemeral="sSch",rank=1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["sSup2"]={ephemeral="sSch",rank=2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["sSdn1"]={ephemeral="sSch",rank=-1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["sSdn2"]={ephemeral="sSch",rank=-2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["Acup1"]={ephemeral="Acch",rank=1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["Acup2"]={ephemeral="Acch",rank=2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["Acdn1"]={ephemeral="Acch",rank=-1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["Acdn2"]={ephemeral="Acch",rank=-2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["Evup1"]={ephemeral="Evch",rank=1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["Evup2"]={ephemeral="Evch",rank=2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["Evdn1"]={ephemeral="Evch",rank=-1,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+  applyephemerallist["Evdn2"]={ephemeral="Evch",rank=-2,minDuration=-1,maxDuration=-1,incremental={max=6,min=-6}}
+
 #end

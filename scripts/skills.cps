@@ -515,5 +515,17 @@
     SkillList["AllHeal_Basic2"] = {Name="가치 나아간", MoveType="Heal", Target="WholeAlly", ResourceType="Mana", ResourceAmount=120, AfterDelay=210, DelayType="specialSpeed"}
     SkillList["AllHeal_Basic3"] = {Name="가치 나아간다", MoveType="Heal", Target="WholeAlly", ResourceType="Mana", ResourceAmount=300, AfterDelay=240, DelayType="specialSpeed"}
 
+    SkillList["Harass_DropAttack"] = {Name="드랍 어택", MoveType="Harass", Target="AnEnemy", ResourceType="Mana", ResourceAmount=40, Accuracy=90, AfterDelay=120, DelayType="specialSpeed", ApplyEphemeral={"pAdn1", "sAdn1"}}
+    SkillList["Harass_DropDefense"] = {Name="드랍 디펜스", MoveType="Harass", Target="AnEnemy", ResourceType="Mana", ResourceAmount=40, Accuracy=90, AfterDelay=120, DelayType="specialSpeed", ApplyEphemeral={"pDdn1","sDdn1"}}
+    SkillList["Harass_DropPhysical"] = {Name="드랍 피지컬", MoveType="Harass", Target="AnEnemy", ResourceType="Mana", ResourceAmount=40, Accuracy=90, AfterDelay=120, DelayType="specialSpeed", ApplyEphemeral={"pAdn1", "pDdn1"}}
+    SkillList["Harass_DropSpecial"] = {Name="드랍 스페셜", MoveType="Harass", Target="AnEnemy", ResourceType="Mana", ResourceAmount=40, Accuracy=90, AfterDelay=120, DelayType="specialSpeed", ApplyEphemeral={"sAdn1", "sDdn1"}}
+    SkillList["Harass_DropSpeed"] = {Name="드랍 스피드", MoveType="Harass", Target="AnEnemy", ResourceType="Mana", ResourceAmount=40, Accuracy=90, AfterDelay=120, DelayType="specialSpeed", ApplyEphemeral={"pSdn1","sSdn1"}}
+    SkillList["Harass_Weaken"] = {Name="세지안타", MoveType="Harass", Target="WholeEnemy", ResourceType="Mana", ResourceAmount=60, Accuracy=90, AfterDelay=120, DelayType="specialSpeed", ApplyEphemeral={"pAdn1"}}
+    SkillList["Harass_Soften"] = {Name="굳지안타", MoveType="Harass", Target="WholeEnemy", ResourceType="Mana", ResourceAmount=60, Accuracy=90, AfterDelay=120, DelayType="specialSpeed", ApplyEphemeral={"pDdn1"}}
+    SkillList["Harass_Slow"] = {Name="날지안타", MoveType="Harass", Target="WholeEnemy", ResourceType="Mana", ResourceAmount=60, Accuracy=90, AfterDelay=120, DelayType="specialSpeed", ApplyEphemeral={"pSdn1"}}
+    SkillList["Harass_Dim"] = {Name="놀라지안타", MoveType="Harass", Target="WholeEnemy", ResourceType="Mana", ResourceAmount=60, Accuracy=90, AfterDelay=120, DelayType="specialSpeed", ApplyEphemeral={"sAdn1"}}
+    SkillList["Harass_Dissolve"] = {Name="두터지안타", MoveType="Harass", Target="WholeEnemy", ResourceType="Mana", ResourceAmount=60, Accuracy=90, AfterDelay=120, DelayType="specialSpeed", ApplyEphemeral={"sDdn1"}}
+    SkillList["Harass_Dull"] = {Name="빠르지안타", MoveType="Harass", Target="WholeEnemy", ResourceType="Mana", ResourceAmount=60, Accuracy=90, AfterDelay=120, DelayType="specialSpeed", ApplyEphemeral={"sSdn1"}}
+
   // Skills End
 #end
