@@ -154,7 +154,7 @@
       message = ""
   	end
   	if orderedCharacters[1].controllable then
-  	  usedskill = askplayer(orderedCharacters[1], party, enemyparty, battle)
+  	  usedskill = askplayerinbattle(orderedCharacters[1], party, enemyparty, battle)
       if battle.fleed then
         return
       end
@@ -207,7 +207,7 @@
     return true
   end
 
-  function askplayer(char, party, enemyparty, battle)
+  function askplayerinbattle(char, party, enemyparty, battle)
     local startaskt, startaskl = getc()
     local playercommand, playersingletarget = false, singletarget
     local movelist = {}
@@ -218,7 +218,7 @@
       local targets
       itemmove = -2
       moveto(startaskt, startaskl)
-      movelist = makemovelist(char, party, enemyparty, battle)
+      movelist = makemovelistinbattle(char, party, enemyparty, battle)
       playercommand = ask("무엇을 하시겠습니까?", unpack(movelist))
   	  pc = tonumber(playercommand)
     
@@ -280,7 +280,7 @@
     return -1
   end
 
-  function makemovelist(char, party, enemyparty, battle)
+  function makemovelistinbattle(char, party, enemyparty, battle)
     local movelist = {}
     local moveliststring = ""
     local movelistamount = ""    
