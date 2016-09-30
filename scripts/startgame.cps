@@ -34,7 +34,7 @@
     elseif playerchoice == "3" then
       execute ("firstdungeon")
     elseif playerchoice == "4" then
-      startgamebyenteringinitialposition("GangdonggucheongStation")
+      startgamebyenteringinitialposition("CheonhoStation")
     elseif playerchoice == "5" then
       load("savetemp.txt")
     elseif playerchoice == "6" then

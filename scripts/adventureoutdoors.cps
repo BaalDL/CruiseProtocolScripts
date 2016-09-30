@@ -62,14 +62,16 @@
   end
 
   function checkvisitedneighbors(location)
+    --[[
     for neighbor, _ in pairs(LocationsList[location].RouteTo) do
       if VisitedLocationsList[neighbor] then return true end
     end
     return false
+    ]]--
+    return true -- must implement algorithm to make neighbor dynamically <- is this possible?
   end
 
   function startgamebyenteringinitialposition(location)
-    VisitedLocationsList["CheonhoStation"] = true -- DEBUG!!
     runadventureloop("initial", location)
   end
 
@@ -82,6 +84,17 @@
       elseif nextturn == "standstill" then
         nextturn, target = askplayerinlocation()
       elseif nextturn == "walkto" then
+        local startpoint = player.location
+        local endpoint = "MongchontoseongStation" -- DEBUG
+        local polygon = makestrayablepolygon(LocationsList[startpoint], LocationsList[endpoint], 4, 1)
+        local excludeset = {}
+        excludeset[startpoint] = true
+        excludeset[endpoint] = true
+        local strayable = strayablelocations(polygon, excludeset, true)
+        printl(LocationsList[startpoint].Name .. "에서 " .. LocationsList[endpoint].Name .. "까지 이동합니다.")
+        for k, _ in pairs(strayable) do
+          printl(LocationsList[k].Name .. "에 접근이 가능합니다.") -- DEBUG: implement strayable check
+        end
         enterlocation(target)
         nextturn, target = askplayerinlocation()
       elseif nextturn == "gameend" then
