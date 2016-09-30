@@ -258,10 +258,6 @@
   	end
   end
 
-  function getdate(date)
-  	return _getYear(date), _getMonth(date), _getDay(date)
-  end
-
   --table.val_to_str, key_to_str, tostring 코드 출처: http://lua-users.org/wiki/TableUtils (누가 썼는지 정말 성은이 망극)
 
   function table.val_to_str ( v )
