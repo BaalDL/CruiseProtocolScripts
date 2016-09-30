@@ -720,6 +720,19 @@
     end
     return copy
   end
+
+  function DEBUGPRINT(anything, name)
+    if name then
+      name = name .. ": "
+    else
+      name = ""
+    end
+    if (type(anything) == "table") then
+      print(name .. table.tostring(anything))
+    else
+      print(name .. anything)
+    end
+  end
 #end
 
 #function configurebasicparameters
