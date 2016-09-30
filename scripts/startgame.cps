@@ -193,7 +193,7 @@
   	_draw(string, row, column)
   end
 
-  //현재 커서 위치로부터 일정 거리만큼 떨어진 위치에 string을 표시하고, 커서를 원래 위치로 돌린다.
+  --현재 커서 위치로부터 일정 거리만큼 떨어진 위치에 string을 표시하고, 커서를 원래 위치로 돌린다.
   function drawrelatively(string, down, right)
   	local row = getct()
   	local column = getcl()
@@ -242,12 +242,12 @@
     return nil --오류
   end
 
-  //한 줄을 가득 지정한 문자열로 채운다.
+  --한 줄을 가득 지정한 문자열로 채운다.
   function printdelimiter(char)
   printl ( string.rep(char, (windowwidth - 1)/string.len(char)))
   end
 
-  //지정한 문자열을 가운데 정렬로 표시한다.
+  --지정한 문자열을 가운데 정렬로 표시한다.
   function printmid(line)
   	moveh(0)
   	local length = string.len(line)
@@ -427,7 +427,7 @@
   	return goto
   end
 
-  // 세이브 파일에 입력할 변수들을 추가한다.
+  -- 세이브 파일에 입력할 변수들을 추가한다.
   function addsave(...)
   	for i = 1, arg.n do
   		tosave[arg[i]] = _G[arg[i]]
