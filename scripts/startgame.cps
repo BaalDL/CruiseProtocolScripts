@@ -7,20 +7,11 @@
   execute ("loadptypebattlefunctions")
   execute ("configurebasicparameters")
   execute ("loadbattledata")
+  execute ("playercharacterdata")
   execute ("dungeonsearchfunctions")
   execute ("adventureoutdoors")
   execute ("playmenu")
   activatesubmenu(1,2,3,4,5,6,7,8,9)
-  player = {}
-  addsave("player")
-  inventory = {}
-  addsave("inventory")
-  inventory[101] = 1
-  inventory[102] = 5
-  inventory[103] = 5
-  inventory[104] = 5
-  inventory[201] = 3
-  table.sort(inventory)
   party = partyhandler(currentpartymembers)
   local playerchoice
   while(playerchoice ~= "-1") do
