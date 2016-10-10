@@ -80,7 +80,7 @@
     local sdLat = math.sin((coor2[1] - coor1[1]) * d2r / 2)
     local sdLon = math.sin((coor2[2] - coor1[2]) * d2r / 2)
     local a = sdLat * sdLat + math.cos(coor1[1] * d2r) * math.cos(coor2[1] * d2r) * sdLon * sdLon
-    return 2 * math.atan(math.sqrt(a)/math.sqrt(1-a)) * radius * 1000
+    return math.ceil(2 * math.atan(math.sqrt(a)/math.sqrt(1-a)) * radius * 1000)
   end
 
   function makestrayablepolygon(startpoint, endpoint, type, astray)
