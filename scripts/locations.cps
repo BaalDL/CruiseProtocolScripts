@@ -34,7 +34,7 @@
     Type = "Metro",
     MetroType = "Underground",
     Coordinate = {37.517529, 127.112733}
-    }
+  }
 
   LocationsList["JamsilHighschool"] = {
     Name = "잠실고등학교",
@@ -148,5 +148,17 @@
     end
 
     return locations
+  end
+
+  function getjourney(player, startpoint, endpoint)
+    --player is global player.
+    --startpoint \isin LocationsList, endpoint \isin LocationsList.
+    local journey = {}
+    journey.startpoint = startpoint
+    journey.endpoint = endpoint
+    journey.distance = calculatedistanceinmeter(startpoint.Coordinate, endpoint.Coordinate)
+    journey.playerreach = player.joruneydistance
+    journey.turns = math.ceil(journey.distance / joruney.playerreach)
+    return joruney
   end
 #end
