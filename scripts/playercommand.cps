@@ -6,7 +6,6 @@
     end
     local startaskt, startaskl = getc()
     local state = command:initial()
-    --state = command:confirm()
     while (state ~= "terminal") do
       if (state == "initial" and command.resetpositiononinitial) then
         local endaskt = getc()
