@@ -53,6 +53,36 @@
   }
 #end
 
+#function adventureevents
+  AdventureEventsList = {}
+
+  AdventureEventsList["ThugsEncounter1"] = {
+    Type = "RandomEncounter",
+    EncounterList = {"thugs1", "thugs2"}
+  }
+
+  AdventureEventsList["SimpleItemGet1"] = {
+    Type = "RandomItemGet",
+    ItemList = {101, 102, 201, 202, 203, 204, 205, 206, 207}
+  }
+#end
+
+#function regions
+  RegionsList = {}
+
+  RegionsList["CommonOutside"] = {
+
+  }
+
+  for k, _ in pairs(LocationsList) do
+    if not LocationsList[k].IsInside then
+      if not LocationsList[k].IsInRegion then LocationsList[k].IsInRegion = {} end
+      table.insert(LocationsList[k].IsInRegion, "CommonOutside")
+    end 
+  end
+  
+#end
+
 #function passageshelper
   for k, _ in pairs(PassagesList) do
     for _, v in ipairs(PassagesList[k].Locations) do
@@ -152,13 +182,22 @@
 
   function getjourney(player, startpoint, endpoint)
     --player is global player.
-    --startpoint \isin LocationsList, endpoint \isin LocationsList.
+    --startpoint and endpoint must be strings, which are keys of LocationsList
     local journey = {}
     journey.startpoint = startpoint
     journey.endpoint = endpoint
-    journey.distance = calculatedistanceinmeter(startpoint.Coordinate, endpoint.Coordinate)
-    journey.playerreach = player.joruneydistance
-    journey.turns = math.ceil(journey.distance / joruney.playerreach)
-    return joruney
+    journey.distance = calculatedistanceinmeter(LocationsList[startpoint].Coordinate, LocationsList[endpoint].Coordinate)
+    journey.playerreach = player.journeydistance
+    journey.turns = math.ceil(journey.distance / journey.playerreach)
+    local polygon = makestrayablepolygon(LocationsList[startpoint], LocationsList[endpoint], 4, 1)
+    local excludeset = {}
+    excludeset[startpoint] = true
+    excludeset[endpoint] = true
+    local strayable = strayablelocations(polygon, excludeset, true)
+    printl(LocationsList[startpoint].Name .. "에서 " .. LocationsList[endpoint].Name .. "까지 이동합니다.")
+    for k, _ in pairs(strayable) do
+      printl(LocationsList[k].Name .. "에 접근이 가능합니다.") -- DEBUG: implement strayable check
+    end
+    return journey
   end
 #end

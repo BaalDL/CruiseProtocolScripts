@@ -5,6 +5,7 @@
   addsave("inventory")
 
   player.journeydistance = 200
+  player.minimumstrayrate = 0.5
   inventory[101] = 1
   inventory[102] = 5
   inventory[103] = 5

@@ -1,6 +1,8 @@
 #function adventureoutdoors
   execute("locations")
   execute("passages")
+  execute("adventureevents")
+  execute("regions")
   execute("passageshelper")
 
   function enterlocation(location)
@@ -86,15 +88,7 @@
       elseif nextturn == "walkto" then
         local startpoint = player.location
         local endpoint = "MongchontoseongStation" -- DEBUG
-        local polygon = makestrayablepolygon(LocationsList[startpoint], LocationsList[endpoint], 4, 1)
-        local excludeset = {}
-        excludeset[startpoint] = true
-        excludeset[endpoint] = true
-        local strayable = strayablelocations(polygon, excludeset, true)
-        printl(LocationsList[startpoint].Name .. "에서 " .. LocationsList[endpoint].Name .. "까지 이동합니다.")
-        for k, _ in pairs(strayable) do
-          printl(LocationsList[k].Name .. "에 접근이 가능합니다.") -- DEBUG: implement strayable check
-        end
+        local journey = getjourney(player, startpoint, endpoint)
         enterlocation(target)
         nextturn, target = askplayerinlocation()
       elseif nextturn == "gameend" then
