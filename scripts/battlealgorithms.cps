@@ -154,9 +154,19 @@
       message = ""
   	end
   	if orderedCharacters[1].controllable then
-  	  usedskill = askplayerinbattle(orderedCharacters[1], party, enemyparty, battle)
+  	  --usedskill = askplayerinbattle(orderedCharacters[1], party, enemyparty, battle)
+      local commands = playercommand(battlecharactercommand, orderedCharacters[1], party, enemyparty, battle)
       if battle.fleed then
         return
+      end
+      if (commands.move <= 8 and commands.move >= 0) then
+        usedskill = orderedCharacters[1].skills[commands.move]
+      elseif (commands.move == 10) then
+        usedskill = SkillList["UseItem"]
+      elseif (commands.move == 99) then
+        usedskill = SkillList["Flee"]
+      elseif (commands.move == -1) then
+        usedskill = nil
       end
       if not usedskill then
         message = "아무 것도 하지 않았다."
