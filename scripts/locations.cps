@@ -1,6 +1,7 @@
 #function locations
   
   LocationsList = {}
+  KnownLocationsList = {}
   VisitedLocationsList = {}
 
   LocationsList["CheonhoMarket"] = {

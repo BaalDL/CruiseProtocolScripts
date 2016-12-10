@@ -11,11 +11,19 @@
     depictcurrentlocation()
   end
 
+  function addknownlocation(location)
+    if LocationsList[location] then
+      KnownLocationsList[location] = true
+    else
+      printl("●● DEBUG: location은 LocationList에 존재하는 key여야 합니다. 형식은 string입니다. addknownlocation에 입력된 값: " .. location)
+    end
+  end
+
   function addvisitedlocation(location)
     if LocationsList[location] then
       VisitedLocationsList[location] = true
     else
-      printl("●● DEBUG: location은 LocationList에 존재하는 key여야 합니다. 형식은 string입니다. 입력된 값: " .. location)
+      printl("●● DEBUG: location은 LocationList에 존재하는 key여야 합니다. 형식은 string입니다. addvisitedlocation에 입력된 값: " .. location)
     end
   end
 
