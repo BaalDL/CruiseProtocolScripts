@@ -195,8 +195,12 @@
     excludeset[endpoint] = true
     local strayable = strayablelocations(polygon, excludeset, true)
     printl(LocationsList[startpoint].Name .. "에서 " .. LocationsList[endpoint].Name .. "까지 이동합니다.")
+    if not next(strayable) then
+      printl("접근 가능한 지역은 없습니다.")
+    else
     for k, _ in pairs(strayable) do
       printl(LocationsList[k].Name .. "에 접근이 가능합니다.") -- DEBUG: implement strayable check
+    end
     end
     return journey
   end
