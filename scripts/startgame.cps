@@ -40,105 +40,127 @@
 
   --플레이어의 입력을 받는 함수. (입력을 받을 변수) = ask("출력할 문장") 형식으로 쓴다. argument를 넣으면, argument들 이외의 입력을 무시한다.
   function ask(question, ...)
-  local acceptable = false
-  local askt, askl = getc()
+    local acceptable = false
+    local askt, askl = getc()
 
-  while(not acceptable) do
-    moveto(askt, askl)
-    if arg.n > 0 then
-      local string = question .. " (" .. arg[1]
-  	for i=2,arg.n do
-  	  string = string .. "/" .. arg[i]
-      end
-  	string = string .. ")"
-  	inputq(string, "ans")
-      for i=1,arg.n do
+    while(not acceptable) do
+      moveto(askt, askl)
+      if arg.n > 0 then
+        local string = question .. " (" .. arg[1]
+        for i=2,arg.n do
+          string = string .. "/" .. arg[i]
+        end
+        string = string .. ")"
+        inputq(string, "ans")
+        for i=1,arg.n do
           if (arg[i] == ans) or (tostring(arg[i]) == ans) then
-  	    acceptable = true
-  	  end
+            acceptable = true
+          end
+        end
+        if (not acceptable) then
+          local endt, endl = getc()
+          erase(askt, endt)
+        end
+      else
+        inputq(question, "ans")
+        acceptable = true
       end
-  	if (not acceptable) then
-  	  local endt, endl = getc()
-  	  erase(askt, endt)
-  	end
-    else
-      inputq(question, "ans")
-      acceptable = true
     end
+    return ans
   end
-  return ans
+
+  function getplayerchoice(question, choicetable)
+    local choices = {}
+    local choiceivpairs = {}
+    local questionnaire = ""
+    for k, v in pairs(choicetable) do
+      if (v.Key == "newline") then
+        questionnaire = questionnaire .. "\n"
+      else
+        questionnaire = questionnaire .. "[" .. tostring(v.Number) .. "] " .. v.Description .. " "
+        table.insert(choices, v.Number)
+        choiceivpairs[v.Number] = v.Key
+      end
+    end
+    print (questionnaire)
+    return choiceivpairs[tonumber(ask(question, unpack(choices)))]
+  end
+
+  function buildplayerchoice(instruction)
+    choicetable = {}
+    return choicetable
   end
 
   --특정한 장소에 들어갔을 때 표시되는 장소 표시용 함수. argument를 넣으면, 장소를 묘사하는 텍스트가 추가적으로 붙는다.
   function printplace(placename, ...)
-  	printl ("")
-  	_print ("~=~+~=~ ")
-  	_print (placename)
-  	printl (" ~=~+~=~")
-  	printlw ("")
-  	for i=1, arg.n do
-  		printlw (arg[i])
-  	end
+    printl ("")
+    _print ("~=~+~=~ ")
+    _print (placename)
+    printl (" ~=~+~=~")
+    printlw ("")
+    for i=1, arg.n do
+      printlw (arg[i])
+    end
   end
 
   function printcurrentdate(newline)
-  	if newline then
-  		printl ("")
-  	end
-  	local y, m, d = getdate(date)
-  	_print ("▦ " .. y .. "년 " .. m .. "월 " .. d .. "일 ")
-  	if newline then
-  		printl ("")
-  	end
+    if newline then
+      printl ("")
+    end
+    local y, m, d = getdate(date)
+    _print ("▦ " .. y .. "년 " .. m .. "월 " .. d .. "일 ")
+    if newline then
+      printl ("")
+    end
   end
 
   function printcurrenttime(addhour, addmin, newline)
-  	if newline then
-  		printl ("")
-  	end
-  	addhour = addhour or 0
-  	addmin = addmin or 0
-  	local h = 4 * phase + addhour
-  	local ap = ""
-  	local min = ""
-  	if (h <= 12) then
-  		ap = "㏂ "
-  	else
-  		ap = "㏘ "
-  		h = h - 12
-  	end
-  	if (addmin == 0) then
-  		min = "정각"
-  	else
-  		min = tostring(addmin) .. "분"
-  	end
-  	_print (ap .. h .. "시 " .. min )
-  	if newline then
-  		printl ("")
-  	end
+    if newline then
+      printl ("")
+    end
+    addhour = addhour or 0
+    addmin = addmin or 0
+    local h = 4 * phase + addhour
+    local ap = ""
+    local min = ""
+    if (h <= 12) then
+      ap = "㏂ "
+    else
+      ap = "㏘ "
+      h = h - 12
+    end
+    if (addmin == 0) then
+      min = "정각"
+    else
+      min = tostring(addmin) .. "분"
+    end
+    _print (ap .. h .. "시 " .. min )
+    if newline then
+      printl ("")
+    end
   end
 
   function printcurrentphase(newline)
-  	if newline then
-  		printl ("")
-  	end
-  	if phase == 0 then
-  		_print ("♡ 심야")
-  	elseif phase == 1 then
-  		_print ("☆ 새벽")
-  	elseif phase == 2 then
-  		_print ("♬ 아침")
-  	elseif phase == 3 then
-  		_print ("⊙ 낮")
-  	elseif phase == 4 then
-  		_print ("♨ 저녁")
-  	elseif phase == 5 then
-  		_print ("◐ 밤")
-  	else
-  	end
-  	if newline then
-  		printl ("")
-  	end
+    if newline then
+      printl ("")
+    end
+    if phase == 0 then
+      _print ("♡ 심야")
+    elseif phase == 1 then
+      _print ("☆ 새벽")
+    elseif phase == 2 then
+      _print ("♬ 아침")
+    elseif phase == 3 then
+      _print ("⊙ 낮")
+    elseif phase == 4 then
+      _print ("♨ 저녁")
+    elseif phase == 5 then
+      _print ("◐ 밤")
+    else
+    end
+    if newline then
+      printl ("")
+    end
   end
 
   --캐릭터의 대사를 띄워준다. argument에 말하게 될 대사를 넣을 수 있다. 플레이어의 입력을 기다리지 않는다.
@@ -176,24 +198,24 @@
 
   --지정한 위치에 string을 표시하고, 커서를 원래 위치로 돌린다. 위치를 입력하지 않으면 자기 자리에 출력하고 커서를 원래 자리로 돌려놓는다. 개행 지원 안함.
   function draw(string, row, column)
-  	if not row then
-  	  row = getct()
-  	end
-  	if not column then
-  	  column = getcl()
-  	end
-  	_draw(string, row, column)
+    if not row then
+      row = getct()
+    end
+    if not column then
+      column = getcl()
+    end
+    _draw(string, row, column)
   end
 
   --현재 커서 위치로부터 일정 거리만큼 떨어진 위치에 string을 표시하고, 커서를 원래 위치로 돌린다.
   function drawrelatively(string, down, right)
-  	local row = getct()
-  	local column = getcl()
-  	local i = 0
-  	for line in string:gmatch("[^\r\n]+") do
-  		draw(line, row+down+i, column+right)
-  		i = i + 1
-  	end
+    local row = getct()
+    local column = getcl()
+    local i = 0
+    for line in string:gmatch("[^\r\n]+") do
+      draw(line, row+down+i, column+right)
+      i = i + 1
+    end
   end
 
   --지정한 행에 string을 표시하고, 커서를 원래 위치로 돌린다. 행을 지정하지 않으면 자기 자리에 출력하고 커서를 원래 자리로 돌려놓는다.
@@ -241,13 +263,13 @@
 
   --지정한 문자열을 가운데 정렬로 표시한다.
   function printmid(line)
-  	moveh(0)
-  	local length = string.len(line)
-  	if length >= windowwidth - 1 then
-  		printl (line)
-  	else
-  		printl ( string.rep(' ', (windowwidth - length)/2) .. line )
-  	end
+    moveh(0)
+    local length = string.len(line)
+    if length >= windowwidth - 1 then
+      printl (line)
+    else
+      printl ( string.rep(' ', (windowwidth - length)/2) .. line )
+    end
   end
 
   --table.val_to_str, key_to_str, tostring 코드 출처: http://lua-users.org/wiki/TableUtils (누가 썼는지 정말 성은이 망극)
@@ -291,15 +313,15 @@
 
 
   function addplace(code, name)
-  	places[code] = name
+    places[code] = name
   end
 
   function enableplace(code)
-  	placeflag[code] = true
+    placeflag[code] = true
   end
 
   function disableplace(code)
-  	placeflag[code] = false
+    placeflag[code] = false
   end
 
 
@@ -386,40 +408,40 @@
   end
 
   function gotoplace(event, newplaces)
-  	printl (">> 어디로 갈까?")
-  	newplaces = newplaces or places
-  	local placelist = {}
-  	local newlineindicator = {1, 10, 100, 200, 300, 400, 500}
-  	local oldi = nil
-  	local delimiter = ""
-  	for i, v in orderedPairs( newplaces ) do
-  		if oldi then
-  			for j, w in pairs( newlineindicator ) do
-  				if (oldi < w ) and (i >= w) then
-  					delimiter = "\n"
-  				end
-  			end
-  		end
-  		_print (delimiter)
-  		_print ("[" .. tostring(i) .. "] " .. newplaces[i])
-  		table.insert(placelist, tostring(i))
-  		delimiter =  "\t"
-  		oldi = i
-  	end
-  	printl ("")
-  	if not event then
-  		printl ("[999] 이동 취소")
-  		table.insert(placelist, 999)
-  	end
-  	local goto = ask("번호를 입력해 주십시오.", unpack(placelist))			
-  	return goto
+    printl (">> 어디로 갈까?")
+    newplaces = newplaces or places
+    local placelist = {}
+    local newlineindicator = {1, 10, 100, 200, 300, 400, 500}
+    local oldi = nil
+    local delimiter = ""
+    for i, v in orderedPairs( newplaces ) do
+      if oldi then
+        for j, w in pairs( newlineindicator ) do
+          if (oldi < w ) and (i >= w) then
+            delimiter = "\n"
+          end
+        end
+      end
+      _print (delimiter)
+      _print ("[" .. tostring(i) .. "] " .. newplaces[i])
+      table.insert(placelist, tostring(i))
+      delimiter =  "\t"
+      oldi = i
+    end
+    printl ("")
+    if not event then
+      printl ("[999] 이동 취소")
+      table.insert(placelist, 999)
+    end
+    local goto = ask("번호를 입력해 주십시오.", unpack(placelist))      
+    return goto
   end
 
   -- 세이브 파일에 입력할 변수들을 추가한다.
   function addsave(...)
-  	for i = 1, arg.n do
-  		tosave[arg[i]] = _G[arg[i]]
-  	end
+    for i = 1, arg.n do
+      tosave[arg[i]] = _G[arg[i]]
+    end
   end
 
   function addreset(...)
@@ -429,23 +451,23 @@
   end
 
   function save(filename)
-  	local file = io.open(filename, "w")
-  	--세이브할 변수들의 이름을 아래에 넣는다.
-  	--[[for k, v in pairs(tosave) do
-  		if k then
-  			file:write(k .. "  = " .. table.val_to_str( _G[k] ).. "\n")
-  		end
-  	end]]
-  	file:write(DataDumper(tosave))
+    local file = io.open(filename, "w")
+    --세이브할 변수들의 이름을 아래에 넣는다.
+    --[[for k, v in pairs(tosave) do
+      if k then
+        file:write(k .. "  = " .. table.val_to_str( _G[k] ).. "\n")
+      end
+    end]]
+    file:write(DataDumper(tosave))
     file:close()    
   end
 
   function load(filename)
     local file = io.open(filename, "rb")
-  	if file then
+    if file then
       for k, v in pairs(toreset) do
-    		_G[k] = nil
-    	end
+        _G[k] = nil
+      end
       local loadedstring = file:read("*all")
       local loadedtables = loadstring(loadedstring)()
       for k, v in pairs(loadedtables) do
