@@ -32,26 +32,6 @@
     printplace(LocationsList[location].Name)
   end
 
-  function makemovelistinlocation()
-    local movelist = {}
-    local moveliststring = ""
-    local location = player.location
-    table.insert(movelist, "0")
-    moveliststring = moveliststring .. "[0] 살펴보기"
-    if LocationsList[location].IsInPassage then
-      table.insert(movelist, "1")
-      moveliststring = moveliststring .. " [1] 여정"
-    end
-    if checkvisitedneighbors(location) then
-      table.insert(movelist, "2")
-      moveliststring = moveliststring .. " [2] 직접 이동"
-    end
-    table.insert(movelist, "99")
-    moveliststring = moveliststring .. " [99] 게임 종료"
-    printl(moveliststring)
-    return movelist
-  end
-
   function checkvisitedneighbors(location)
     --[[
     for neighbor, _ in pairs(LocationsList[location].RouteTo) do
@@ -68,7 +48,7 @@
 
   function runadventureloop(initial, ...)
     local commands = {}
-        enterlocation(arg[1])
+    enterlocation(arg[1])
     commands.move = "arrival"
     while(true) do
       commands = playercommand(departurecommand, player)
@@ -109,24 +89,34 @@
   departurecommand.references = {"player"}
   departurecommand.returns = {"move", "destination"}
   departurecommand.commands = {}
-  departurecommand.resetpositiononinitial = true
+  departurecommand.resetpositiononinitial = false
 
   function departurecommand:initial()
     self.commands.move = "standstill"
     self.commands.destination = ""
-    local movelist = makemovelistinlocation()
-    local playercommand = ask("무엇을 하시겠습니까?", unpack(movelist))
 
-    if (playercommand == "0") then
-      printl(LocationsList[location].Description)
+    local departurechoicetable = {
+      {Number = 0, Key = "look", Description = "살펴보기"},
+      {Number = 1, Key = "journey", Description = "여정"},
+      {Number = 2, Key = "goto", Description = "직접 이동"},
+      {Number = 3, Key = "patrol", Description = "순찰"},
+      {Number = nil, Key = "newline"},
+      {Number = 99, Key = "gameend", Description = "게임 종료"},
+    }
+
+    local playercommand = getplayerchoice("무엇을 하시겠습니까?", departurechoicetable)
+    --local movelist = makemovelistinlocation()
+    --local playercommand = ask("무엇을 하시겠습니까?", unpack(movelist))
+    if (playercommand == "look") then
+      printl(LocationsList[self.references.player.location].Description)
       return "initial"
-    elseif (playercommand == "1") then
+    elseif (playercommand == "journey") then
       return "journey"
-    elseif (playercommand == "2") then
+    elseif (playercommand == "goto") then
       return "goto" -- NEED IMPLEMENTATION
-    elseif (playercommand == "3") then
+    elseif (playercommand == "patrol") then
       return "patrol" -- NEED IMPLEMENTATION
-    elseif (playercommand == "99") then
+    elseif (playercommand == "gameend") then
       self.commands.move = "gameend"
       return "terminal"
     end
@@ -150,5 +140,10 @@
   function departurecommand:goto()
     return "terminal"
   end
+
+  function departurecommand:patrol()
+    return "terminal"
+  end
+
 
 #end
