@@ -53,7 +53,7 @@
   	string = string .. ")"
   	inputq(string, "ans")
       for i=1,arg.n do
-        if arg[i] == ans then
+          if (arg[i] == ans) or (tostring(arg[i]) == ans) then
   	    acceptable = true
   	  end
       end
