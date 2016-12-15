@@ -407,6 +407,24 @@
     return newlist
   end
 
+  function randomlist(originall, samp)
+    local newlist
+    local l = {unpack(originall)}
+    newlist = {}
+    if not samp then 
+      samp = 0 
+    else
+      samp = #l - samp
+    end
+    while #l > samp do
+      local idx
+      idx = math.random(1, #l)
+      newlist[#newlist + 1] = l[idx]
+      table.remove(l, idx)
+    end
+    return newlist
+  end
+
   function gotoplace(event, newplaces)
     printl (">> 어디로 갈까?")
     newplaces = newplaces or places
