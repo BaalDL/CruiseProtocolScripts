@@ -752,7 +752,9 @@
   bufferheight = 300
   defaultforeground = 'w'
   defaultbackground = 'K'
+  local askt, askl = getc()
   _setwindowsize(windowwidth, windowheight)
   _setbuffersize(bufferwidth, bufferheight)
   _setdefaultcolor(defaultforeground, defaultbackground)
+  moveto(askt, askl)
 #end
