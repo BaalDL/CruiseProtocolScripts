@@ -72,6 +72,22 @@
     return ans
   end
 
+  function askstrict(question, delegate)
+    local acceptable = false
+    local askt, askl = getc()
+
+    while(not acceptable) do
+      moveto(askt, askl)
+      inputq(question, "ans")
+      acceptable = delegate(ans)
+      if (not acceptable) then
+        local endt, endl = getc()
+        erase(askt, endt)
+      end
+    end
+    return acceptable
+  end
+
   function getplayerchoice(question, choicetable)
     local choices = {}
     local choiceivpairs = {}
