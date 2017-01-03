@@ -33,7 +33,7 @@
     elseif playerchoice == "6" then
       campmenu()
     elseif playerchoice == "9" then
-      startinfiltration(16, 1, player)
+      startinfiltration(7, 1, player)
     end
   end
 
