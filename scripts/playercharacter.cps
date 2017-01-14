@@ -9,7 +9,7 @@
   player.journeypreference = {}
   player.journeypreference.maxturns = 1
   player.journeypreference.nothing = 2
-  player.journeypreference.rootable = 2
+  player.journeypreference.lootable = 2
   player.journeypreference.enemyencounter = 2
   player.journeypreference.npcencounter = 2
   player.journeypreference.randomevent = 2

@@ -87,7 +87,7 @@
     local favortable = {}
     local e = journey.events
     table.insert(favortable, e.nothing)
-    table.insert(favortable, e.rootable)
+    table.insert(favortable, e.lootable)
     table.insert(favortable, e.enemyencounter)
     table.insert(favortable, e.npcencounter)
     table.insert(favortable, e.randomencounter)

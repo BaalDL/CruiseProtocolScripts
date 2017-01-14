@@ -185,7 +185,7 @@
   function journeyfunctions.nothing(journey)
     printl ("아무 일도 일어나지 않음")
   end
-  function journeyfunctions.rootable(journey)
+  function journeyfunctions.lootable(journey)
     printl ("아이템 획득 기회")
   end
   function journeyfunctions.enemyencounter(journey)
@@ -202,7 +202,7 @@
   end
 
   journeyfunctions[1] = journeyfunctions.nothing
-  journeyfunctions[2] = journeyfunctions.rootable
+  journeyfunctions[2] = journeyfunctions.lootable
   journeyfunctions[3] = journeyfunctions.enemyencounter
   journeyfunctions[4] = journeyfunctions.npcencounter
   journeyfunctions[5] = journeyfunctions.randomencounter
@@ -221,7 +221,7 @@
     journey.maxturns = preference.maxturns * journey.turns
     journey.events = {}
     journey.events.nothing = preference.nothing * journey.turns
-    journey.events.rootable = preference.rootable * journey.turns
+    journey.events.lootable = preference.lootable * journey.turns
     journey.events.enemyencounter = preference.enemyencounter * journey.turns
     journey.events.npcencounter = preference.npcencounter * journey.turns
     journey.events.randomevent = preference.randomevent * journey.turns
