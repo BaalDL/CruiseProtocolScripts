@@ -6,6 +6,14 @@
 
   player.journeydistance = 200
   player.minimumstrayrate = 0.5
+  player.journeypreference = {}
+  player.journeypreference.maxturns = 1
+  player.journeypreference.nothing = 2
+  player.journeypreference.rootable = 2
+  player.journeypreference.enemyencounter = 2
+  player.journeypreference.npcencounter = 2
+  player.journeypreference.randomevent = 2
+  player.journeypreference.discover = 2
   inventory[101] = 1
   inventory[102] = 5
   inventory[103] = 5

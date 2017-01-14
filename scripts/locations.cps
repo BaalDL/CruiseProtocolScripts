@@ -181,7 +181,35 @@
     return locations
   end
 
-  function getjourney(player, startpoint, endpoint)
+  journeyfunctions = {}
+  function journeyfunctions.nothing(journey)
+    printl ("아무 일도 일어나지 않음")
+  end
+  function journeyfunctions.rootable(journey)
+    printl ("아이템 획득 기회")
+  end
+  function journeyfunctions.enemyencounter(journey)
+    printl ("적 조우")
+  end
+  function journeyfunctions.npcencounter(journey)
+    printl ("비적대 상대 조우")
+  end
+  function journeyfunctions.randomencounter(journey)
+    printl ("랜덤 이벤트")
+  end
+  function journeyfunctions.discover(journey)
+    printl ("장소 발견")
+  end
+
+  journeyfunctions[1] = journeyfunctions.nothing
+  journeyfunctions[2] = journeyfunctions.rootable
+  journeyfunctions[3] = journeyfunctions.enemyencounter
+  journeyfunctions[4] = journeyfunctions.npcencounter
+  journeyfunctions[5] = journeyfunctions.randomencounter
+  journeyfunctions[6] = journeyfunctions.discover
+
+
+  function getjourney(player, startpoint, endpoint, preference)
     --player is global player.
     --startpoint and endpoint must be strings, which are keys of LocationsList
     local journey = {}
@@ -190,18 +218,32 @@
     journey.distance = calculatedistanceinmeter(LocationsList[startpoint].Coordinate, LocationsList[endpoint].Coordinate)
     journey.playerreach = player.journeydistance
     journey.turns = math.ceil(journey.distance / journey.playerreach)
+    journey.maxturns = preference.maxturns * journey.turns
+    journey.events = {}
+    journey.events.nothing = preference.nothing * journey.turns
+    journey.events.rootable = preference.rootable * journey.turns
+    journey.events.enemyencounter = preference.enemyencounter * journey.turns
+    journey.events.npcencounter = preference.npcencounter * journey.turns
+    journey.events.randomevent = preference.randomevent * journey.turns
+    journey.events.discover = preference.discover * journey.turns
+    journey.events.discoverablelocations = {}
     local polygon = makestrayablepolygon(LocationsList[startpoint], LocationsList[endpoint], 4, 1)
     local excludeset = {}
     excludeset[startpoint] = true
     excludeset[endpoint] = true
     local strayable = strayablelocations(polygon, excludeset, true)
-    printl(LocationsList[startpoint].Name .. "에서 " .. LocationsList[endpoint].Name .. "까지 이동합니다.")
+    printl(LocationsList[startpoint].Name .. "에서 " .. LocationsList[endpoint].Name .. "까지 이동합니다. 턴 수: " .. journey.turns)
     if not next(strayable) then
       printl("접근 가능한 지역은 없습니다.")
     else
-    for k, _ in pairs(strayable) do
-      printl(LocationsList[k].Name .. "에 접근이 가능합니다.") -- DEBUG: implement strayable check
-    end
+      for k, _ in pairs(strayable) do
+        journey.events.discoverablelocations[k] = {}
+        journey.events.discoverablelocations[k].minturns = math.floor(calculatedistanceinmeter(LocationsList[startpoint].Coordinate, LocationsList[k].Coordinate) / journey.playerreach)
+        if (journey.events.discoverablelocations[k].minturns >= journey.turns) then
+          journey.events.discoverablelocations[k].minturns = journey.turns - 1
+        end
+        printl(LocationsList[k].Name .. "에 접근이 가능합니다. 최소 턴 수: " .. journey.events.discoverablelocations[k].minturns) -- DEBUG: implement strayable check
+      end
     end
     return journey
   end

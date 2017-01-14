@@ -56,13 +56,43 @@
       elseif commands.move == "standstill" then
       elseif commands.move == "journey" then
         local startpoint = player.location
-        local journey = getjourney(player, startpoint, commands.destination)
-        enterlocation(commands.destination)
+        local journey = getjourney(player, startpoint, commands.destination, player.journeypreference)
+        local journeyresult = runjourneyloop(journey)
+        enterlocation(journeyresult.endpoint)
       elseif commands.move == "gameend" then
         printl ("게임을 종료합니다.")
         break
       end
     end
+  end
+
+  function runjourneyloop(journey)
+    local journeyresult = {}
+    journeyresult.endpoint = journey.endpoint
+    local turn = 1
+    local favortable = buildjourneyfavortable(journey)
+    for turn = 1, journey.maxturns do
+      local turnevent = pickrandomresult(favortable)
+      favortable[turnevent] = favortable[turnevent] - 1
+      local result = journeyfunctions[turnevent](journey)
+      if result and result.abort then
+        journeyresult.endpoint = result.endpoint
+        break
+      end
+    end
+    return journeyresult
+  end
+
+  function buildjourneyfavortable(journey)
+    local favortable = {}
+    local e = journey.events
+    table.insert(favortable, e.nothing)
+    table.insert(favortable, e.rootable)
+    table.insert(favortable, e.enemyencounter)
+    table.insert(favortable, e.npcencounter)
+    table.insert(favortable, e.randomencounter)
+    table.insert(favortable, e.discover)
+    return favortable
   end
 
   function makejourneylist()
