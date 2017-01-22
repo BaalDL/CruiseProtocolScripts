@@ -14,6 +14,7 @@
   player.journeypreference.npcencounter = 2
   player.journeypreference.randomevent = 2
   player.journeypreference.discover = 2
+  player.journeypreference.confirm = false
   inventory[101] = 1
   inventory[102] = 5
   inventory[103] = 5

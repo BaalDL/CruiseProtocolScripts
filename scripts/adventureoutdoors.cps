@@ -68,15 +68,25 @@
 
   function runjourneyloop(journey)
     local journeyresult = {}
+    local journeyeddistance = 0
     journeyresult.endpoint = journey.endpoint
     local turn = 1
     local favortable = buildjourneyfavortable(journey)
     for turn = 1, journey.maxturns do
+      local turnchoice = playercommand(journeycommand, player, journey)
+      printl("/fK/bw□■□■□■□■□■□■□ 임시로 삽입된 구분자 □■□■□■□■□■□■□/x")
+      local turntable = buildturntable(favortable, turnchoice, journey)
       local turnevent = pickrandomresult(favortable)
       favortable[turnevent] = favortable[turnevent] - 1
       local result = journeyfunctions[turnevent](journey)
       if result and result.abort then
         journeyresult.endpoint = result.endpoint
+        break
+      end
+      journeyeddistance = journeyeddistance + turntable.journeyeddistance
+      printl("진행도: " .. journeyeddistance .. "/" .. journey.distance)
+      if journeyeddistance >= journey.distance then
+        printl("목적지에 도착했습니다!")
         break
       end
     end
@@ -93,6 +103,32 @@
     table.insert(favortable, e.randomevent)
     table.insert(favortable, e.discover)
     return favortable
+  end
+
+  function buildturntable(basefabortable, turnchoice, journey)
+    local turntable = {}
+    turntable.journeyeddistance = math.floor(journey.playerreach * (1 + math.random(1, 10)/100))
+    local choice = turnchoice.choice
+    for i, v in ipairs(basefabortable) do
+      turntable[i] = v
+    end
+    if choice == "usual" then
+      turntable[3] = math.ceil(1.5 * turntable[3])
+      turntable[4] = 2 * turntable[4]
+    elseif choice == "loot" then
+      turntable[2] = 2 * turntable[2]
+      turntable.journeyeddistance = math.floor(turntable.journeyeddistance * (0.5 + math.random(1, 10)/100))
+    elseif choice == "alert" then
+      turntable[3] = math.ceil(0.5 * turntable[3])
+      turntable.journeyeddistance = math.floor(turntable.journeyeddistance * (0.5 + math.random(1, 10)/100))
+    elseif choice == "explore" then
+      turntable[5] = 2 * turntable[5]
+      turntable[6] = 2 * turntable[6]
+    elseif choice == "hurry" then
+      turntable[3] = 2 * turntable[3]
+      turntable.journeyeddistance = 2 * turntable.journeyeddistance
+    end
+    return turntable
   end
 
   function makejourneylist()
@@ -175,5 +211,50 @@
     return "terminal"
   end
 
+  journeycommand = {}
+  journeycommand.references = {"player", "journey"}
+  journeycommand.returns = {"choice"}
+  journeycommand.commands = {}
+  journeycommand.resetpositiononinitial = false
 
+  function journeycommand:initial()
+    local journeycommandtable = {
+      {Number = 0, Key = "usual", Description = "평범하게 이동한다"},
+      {Number = 1, Key = "loot", Description = "수집하며 이동한다"},
+      {Number = 2, Key = "alert", Description = "경계하며 이동한다"},
+      {Number = 3, Key = "explore", Description = "탐험하며 이동한다"},
+      {Number = 4, Key = "hurry", Description = "서둘러 이동한다"},
+      {Number = nil, Key = "newline"},
+      {Number = 99, Key = "guide", Description = "설명"},
+    }
+
+    self.commands.choice = getplayerchoice("어떻게 이동하시겠습니까?", journeycommandtable)
+    if (self.commands.choice == "guide") then
+      return "guide"
+    elseif (self.references.player.journeypreference.confirm) then
+      return "confirm"
+    else
+      return "terminal"
+    end
+  end
+
+  function journeycommand:guide()
+    printlw([[| 설명
+      | [0] 평범하게 이동한다 - 특별히 경계하지 않고 진행합니다. 다른 /fr적대적/x, /fg비적대적/x 존재와 조우할 가능성이 높습니다.
+      | [1] 수집하며 이동한다 - /fy아이템/x을 찾으며 이동합니다. /fb진행도/x가 느리게 증가합니다.
+      | [2] 경계하며 이동한다 - /fr적대적/x인 존재에게 발각되지 않게 이동합니다. /fb진행도/x가 느리게 증가합니다.
+      | [3] 탐험하며 이동한다 - /fc새로운 장소/x가 있는지 신경쓰며 이동합니다. /fm이벤트/x가 발생할 가능성도 늘어납니다.
+      | [4] 서둘러 이동한다 - /fb진행도/x가 빠르게 증가하지만, /fr적대적/x인 존재에게 발각될 가능성도 증가합니다.
+      ]])
+    return "initial"
+  end
+
+  function journeycommand:confirm()
+    local ans = ask("계속 진행합니까? [0] 예 [1] 아니오", "0", "1")
+    if (ans == "0") then
+      return "terminal"
+    else
+      return "initial"
+    end
+  end
 #end
