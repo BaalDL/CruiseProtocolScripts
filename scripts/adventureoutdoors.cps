@@ -90,7 +90,7 @@
     table.insert(favortable, e.lootable)
     table.insert(favortable, e.enemyencounter)
     table.insert(favortable, e.npcencounter)
-    table.insert(favortable, e.randomencounter)
+    table.insert(favortable, e.randomevent)
     table.insert(favortable, e.discover)
     return favortable
   end
