@@ -1,8 +1,16 @@
 #function playercharacterdata
+  execute ("playerskills")
+
   player = {}
   addsave("player")
   inventory = {}
   addsave("inventory")
+  player.skills = {}
+  for _, v in ipairs(PlayerSkillHelper.GetSkillsByTag("Default")) do
+    player.skills[v] = true
+  end
+  player.skills["journeytype_loot"] = true
+
 
   player.journeydistance = 200
   player.minimumstrayrate = 0.5
