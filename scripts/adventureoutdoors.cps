@@ -74,7 +74,7 @@
     local favortable = buildjourneyfavortable(journey)
     for turn = 1, journey.maxturns do
       local turnchoice = playercommand(journeycommand, player, journey)
-      printl("/fK/bw□■□■□■□■□■□■□ 임시로 삽입된 구분자 □■□■□■□■□■□■□/x")
+      printl("/fK/bw□■□■□■□■□■□■□ " .. turn .. " 턴: " .. turnchoice.choicestring .. "□■□■□■□■□■□■□/x")
       local turntable = buildturntable(favortable, turnchoice, journey)
       local turnevent = pickrandomresult(favortable)
       favortable[turnevent] = favortable[turnevent] - 1
@@ -213,22 +213,15 @@
 
   journeycommand = {}
   journeycommand.references = {"player", "journey"}
-  journeycommand.returns = {"choice"}
+  journeycommand.returns = {"choice", "choicestring", "jct", "jd"}
   journeycommand.commands = {}
   journeycommand.resetpositiononinitial = false
 
   function journeycommand:initial()
-    local journeycommandtable = {
-      {Number = 0, Key = "usual", Description = "평범하게 이동한다"},
-      {Number = 1, Key = "loot", Description = "수집하며 이동한다"},
-      {Number = 2, Key = "alert", Description = "경계하며 이동한다"},
-      {Number = 3, Key = "explore", Description = "탐험하며 이동한다"},
-      {Number = 4, Key = "hurry", Description = "서둘러 이동한다"},
-      {Number = nil, Key = "newline"},
-      {Number = 99, Key = "guide", Description = "설명"},
-    }
+    self.commands.jct, self.commands.jd = buildjourneycommandtable(self.references.player)
 
-    self.commands.choice = getplayerchoice("어떻게 이동하시겠습니까?", journeycommandtable)
+    self.commands.choice = getplayerchoice("어떻게 이동하시겠습니까?", self.commands.jct)
+    self.commands.choicestring = self.commands.jd[self.commands.choice]
     if (self.commands.choice == "guide") then
       return "guide"
     elseif (self.references.player.journeypreference.confirm) then
@@ -239,13 +232,13 @@
   end
 
   function journeycommand:guide()
-    printlw([[| 설명
-      | [0] 평범하게 이동한다 - 특별히 경계하지 않고 진행합니다. 다른 /fr적대적/x, /fg비적대적/x 존재와 조우할 가능성이 높습니다.
-      | [1] 수집하며 이동한다 - /fy아이템/x을 찾으며 이동합니다. /fb진행도/x가 느리게 증가합니다.
-      | [2] 경계하며 이동한다 - /fr적대적/x인 존재에게 발각되지 않게 이동합니다. /fb진행도/x가 느리게 증가합니다.
-      | [3] 탐험하며 이동한다 - /fc새로운 장소/x가 있는지 신경쓰며 이동합니다. /fm이벤트/x가 발생할 가능성도 늘어납니다.
-      | [4] 서둘러 이동한다 - /fb진행도/x가 빠르게 증가하지만, /fr적대적/x인 존재에게 발각될 가능성도 증가합니다.
-      ]])
+    local guidetext = "| 설명"
+    for _, v in ipairs(self.commands.jct) do
+      if v.Guide then
+        guidetext = guidetext .. "\n| [" .. v.Number .. "] " .. v.Description .. " - " .. v.Guide
+      end
+    end
+    printlw(guidetext)
     return "initial"
   end
 
@@ -256,5 +249,19 @@
     else
       return "initial"
     end
+  end
+
+  function buildjourneycommandtable(player)
+    local commandtable = {}
+    local commanddict = {}
+    local skills = PlayerSkillHelper.GetUnlockedSkillsByTag("JourneyType")
+    for _, v in ipairs(skills) do
+      local jt = PlayerSkillList[v].JourneyType
+      commandtable[jt.DesignatedNo] = {Number = jt.DesignatedNo, Key = jt.Key, Description = jt.Desc, Guide = jt.Guide}
+      commanddict[jt.Key] = jt.Desc
+    end
+    table.insert(commandtable, {Number = nil, Key = "newline"})
+    table.insert(commandtable, {Number = 99, Key = "guide", Description = "설명"})
+    return commandtable, commanddict
   end
 #end
