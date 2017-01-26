@@ -54,20 +54,6 @@
   }
 #end
 
-#function adventureevents
-  AdventureEventsList = {}
-
-  AdventureEventsList["ThugsEncounter1"] = {
-    Type = "RandomEncounter",
-    EncounterList = {"thugs1", "thugs2"}
-  }
-
-  AdventureEventsList["SimpleItemGet1"] = {
-    Type = "RandomItemGet",
-    ItemList = {101, 102, 201, 202, 203, 204, 205, 206, 207}
-  }
-#end
-
 #function regions
   RegionsList = {}
 
