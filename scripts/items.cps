@@ -104,24 +104,28 @@
     ItemType = "Heal",
     Target = "AnAlly",
     FixedAmount = 20,
+    InventoryMax = 99,
   }
   ItemList[102] = {
     Name = "연고",
     ItemType = "Heal",
     Target = "AnAlly",
     FixedAmount = 50,
+    InventoryMax = 99,
   }
   ItemList[103] = {
     Name = "고급 연고",
     ItemType = "Heal",
     Target = "AnAlly",
     FixedAmount = 100,
+    InventoryMax = 99,
   }
   ItemList[104] = {
     Name = "치유의 구슬",
     ItemType = "Heal",
     Target = "AnAlly",
     FixedAmount = math.huge,
+    InventoryMax = 99,
   }
   ItemList[201] = {
     Name = "명멸하는 칼날",
@@ -130,7 +134,8 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Slash",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
   ItemList[202] = {
     Name = "명멸하는 주먹",
@@ -139,7 +144,8 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Strike",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
   ItemList[203] = {
     Name = "명멸하는 바늘",
@@ -148,7 +154,8 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Pierce",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
   ItemList[204] = {
     Name = "명멸하는 엄니",
@@ -157,7 +164,8 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Bite",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
   ItemList[205] = {
     Name = "명멸하는 화살",
@@ -166,7 +174,8 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Bullet",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
   ItemList[206] = {
     Name = "명멸하는 톱날",
@@ -175,7 +184,8 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Throwing",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
   ItemList[207] = {
     Name = "명멸하는 음파",
@@ -184,7 +194,8 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Burst",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
   ItemList[208] = {
     Name = "명멸하는 불꽃",
@@ -193,7 +204,8 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Fire",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
   ItemList[209] = {
     Name = "명멸하는 물결",
@@ -202,7 +214,8 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Water",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
   ItemList[210] = {
     Name = "명멸하는 한기",
@@ -211,7 +224,8 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Ice",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
   ItemList[211] = {
     Name = "명멸하는 생명",
@@ -220,7 +234,8 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Grass",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
   ItemList[212] = {
     Name = "명멸하는 바람",
@@ -229,7 +244,8 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Wind",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
   ItemList[213] = {
     Name = "명멸하는 전하",
@@ -238,7 +254,8 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Electric",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
   ItemList[214] = {
     Name = "명멸하는 대지",
@@ -247,7 +264,8 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Ground",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
   ItemList[215] = {
     Name = "명멸하는 광채",
@@ -256,7 +274,8 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Luminous",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
   ItemList[216] = {
     Name = "명멸하는 칠흑",
@@ -265,6 +284,7 @@
     DamageCalculationType = "FixedUnderType",
     FixedAmount = 50,
     AttackType = "Dark",
-    BattleOnly = true
+    BattleOnly = true,
+    InventoryMax = 99,
   }
 #end
