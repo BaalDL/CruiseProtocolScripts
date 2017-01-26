@@ -173,9 +173,11 @@
   end
   function journeyfunctions.lootable(journey)
     printl ("아이템 획득 기회")
+    AdventureEventHelper.EventHandler["Loot"](AdventureEventHelper.PickRandomEvent(AdventureEventHelper.GetEventsByTag("Loot")))
   end
   function journeyfunctions.enemyencounter(journey)
-    printl ("적 조우")
+    printlw ("적과 마주쳤다!")
+    AdventureEventHelper.EventHandler["EnemyEncounter"](AdventureEventHelper.PickRandomEvent(AdventureEventHelper.GetEventsByTag("EnemyEncounter")))
   end
   function journeyfunctions.npcencounter(journey)
     printl ("비적대 상대 조우")
