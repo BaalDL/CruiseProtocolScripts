@@ -14,6 +14,30 @@
       end
       itemhandler(char, touse, targets)
     end
+    removeitem(touse, 1)
+  end
+
+  function getitem(toget, amount)
+    if not amount then amount = 1 end
+    local itemdata = ItemList[toget]
+    if (not inventory[toget]) then
+      inventory[toget] = amount
+    elseif (inventory[toget] + amount >= itemdata.InventoryMax) then
+      inventory[toget] = InventoryMax
+    else
+      inventory[toget] = inventory[toget] + amount
+    end
+  end
+
+  function removeitem(toremove, amount)
+    if not amount then amount = 1 end
+    if (not inventory[toremove]) then
+    else
+      inventory[toremove] = inventory[toremove] - amount
+      if inventory[toremove] <= 0 then
+        inventory[toremove] = nil
+      end
+    end
   end
 
   function itemtarget(type, target)
