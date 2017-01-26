@@ -73,7 +73,13 @@
     local turn = 1
     local favortable = buildjourneyfavortable(journey)
     for turn = 1, journey.maxturns do
-      local turnchoice = playercommand(journeycommand, player, journey)
+      local turnchoice = {}
+      if (not player.journeypreference.autocommand) then
+        turnchoice = playercommand(journeycommand, player, journey)
+      else
+        turnchoice.choice = "usual"
+        turnchoice.choicestring = "자동 이동"
+      end
       printl("/fK/bw□■□■□■□■□■□■□ " .. turn .. " 턴: " .. turnchoice.choicestring .. "□■□■□■□■□■□■□/x")
       local turntable = buildturntable(favortable, turnchoice, journey)
       local turnevent = pickrandomresult(favortable)
