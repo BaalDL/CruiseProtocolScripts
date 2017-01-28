@@ -110,6 +110,9 @@
     else
       printl ("전투에서 도망쳤습니다....")
   	end
+    for k, v in pairs(currentbattle.party) do
+      v.currEphemerals = {}
+    end
     currentbattle = nil
     return result
   end
