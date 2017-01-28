@@ -60,9 +60,9 @@
 
     if (targetinput ~= "-1") then
       if (targetinput == "100") then
-        self.commands.targets = enemyparty
+        self.commands.targets = self.references.enemyparty
       elseif (targetinput == "10") then
-        self.commands.targets = party
+        self.commands.targets = self.references.party
       else
         self.commands.targets = {targettable[targetinput]}
       end

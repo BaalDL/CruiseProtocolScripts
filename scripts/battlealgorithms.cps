@@ -50,7 +50,7 @@
   end
 
   party = {}
-  enemyparty = {}
+  --enemyparty = {} --enemyparty is no more global
   targettable = {}
 
   function initializebattle(battle)
@@ -141,6 +141,8 @@
   end
 
   function battleeachturn(battle)
+    local party = battle.party
+    local enemyparty = battle.enemyparty
   	message = ""
   	local delay = 10
   	local usedskill
@@ -307,11 +309,11 @@
 
   function skillhandler(char, skill, skilltarget)
     message = message .. "\n" .. char.name .. "의 " .. skill.Name .. "!"
-    local opponents = enemyparty
-    local samesides = party
+    local opponents = currentbattle.enemyparty
+    local samesides = currentbattle.party
     if not char.ally then
-      opponents = party
-      samesides = enemyparty
+      opponents = currentbattle.party
+      samesides = currentbattle.enemyparty
     end
     local targets = {}
     if skill.Target == "AnEnemy" or
@@ -400,26 +402,26 @@
 
     if skill.MoveType == "Attack" then  
       for k, v in pairs(targets) do
-        if not checkavailable(char, skill, targets[k], battle) then break end
-        if checkhit(char, skill, targets[k], battle) then
-          inflictdamage(char, skill, targets[k], battle)
-          if skill.ApplyEphemeral then applyephemeral(char, skill, targets[k], battle) end
+        if not checkavailable(char, skill, targets[k], currentbattle) then break end
+        if checkhit(char, skill, targets[k], currentbattle) then
+          inflictdamage(char, skill, targets[k], currentbattle)
+          if skill.ApplyEphemeral then applyephemeral(char, skill, targets[k], currentbattle) end
         else
           message = message .. "\n하지만 " .. targets[k].name .. "에게는 맞지 않았다!"
         end
       end
     elseif skill.MoveType == "Harass" then
       for k, v in pairs(targets) do
-        if not checkavailable(char, skill, targets[k], battle) then break end
-        if checkhit(char, skill, targets[k], battle) then
-          applyephemeral(char, skill, targets[k], battle)
+        if not checkavailable(char, skill, targets[k], currentbattle) then break end
+        if checkhit(char, skill, targets[k], currentbattle) then
+          applyephemeral(char, skill, targets[k], currentbattle)
         else
           message = message .. "\n하지만 " .. targets[k].name .. "에게는 맞지 않았다!"
         end
       end
     elseif skill.MoveType == "Heal" then
       for k, v in pairs(targets) do
-        if not checkavailable(char, skill, targets[k], battle) then break end
+        if not checkavailable(char, skill, targets[k], currentbattle) then break end
         applyheal(char, skill, targets[k])
       end
   	end
@@ -502,6 +504,7 @@
   end
 
   function inflictdamage(actor, skill, target, battle, reflected)
+    local enemyparty = battle.enemyparty
     local damage
     if target.defensiveType[skill.AttackType] == "s" then
       damage = calculatedamage(actor, skill, target, battle)
@@ -620,6 +623,7 @@
     target.currHP = 0
     target.alive = false
     target.status = "전투불능"
+    local enemyparty = battle.enemyparty
     if orderedCharacters[target.turnorder] then table.remove(orderedCharacters[target.turnorder]) end
     target.currEphemerals = {}
     message = message .. "\n" .. target.name .. "(은)는 전투 불능이 되었다!" 

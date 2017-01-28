@@ -20,7 +20,7 @@
     printl ("[1] 전투 [2] 저장 [3] 탐사 [4] 탐험 [5] 로드 [6] 메뉴 [9] 침투 미니게임 [-1] 종료")
     playerchoice = ask("무엇을 합니까?", "1", "2", "3", "4", "5", "6", "9", "-1")
     if playerchoice == "1" then
-      enemyparty = initializeenemyparty(EnemyPartyTempletes["thugs1"])
+      local enemyparty = initializeenemyparty(EnemyPartyTempletes["thugs1"])
       battlehandler(enemyparty, true)
     elseif playerchoice == "2" then
       save("savetemp.txt")
