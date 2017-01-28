@@ -526,7 +526,6 @@
       inflictdamage(target, skill, actor, battle, true)
     elseif target.defensiveType[skill.AttackType] == "a" then
       damage = calculatedamage(actor, skill, target, battle)
-      printl(damage .. "아헤가오")
       message = message .. "\n" .. "그러나 " .. target.name .. "(은)는 공격을 흡수했다!"
       applyheal(actor, SkillList["SystemAbsorbHeal"], target, damage)
     end
