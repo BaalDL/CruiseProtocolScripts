@@ -24,6 +24,8 @@
   player.journeypreference.discover = 2
   player.journeypreference.confirm = false
   player.journeypreference.autocommand = true
+  player.battlepreference = {}
+  player.battlepreference.expandephemeral = true
   inventory[101] = 1
   inventory[102] = 5
   inventory[103] = 5

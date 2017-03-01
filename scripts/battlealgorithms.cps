@@ -257,6 +257,8 @@
       table.insert(movelist, "99")
       _print("[99] 도주 ")
     end
+    table.insert(movelist, "999")
+    _print("[999] 옵션 ")
     table.insert(movelist, "-1")
     printl("[-1] 대기(취소)")
     return movelist

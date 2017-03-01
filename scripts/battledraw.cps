@@ -235,7 +235,7 @@
     end
     maxlines = 0
     for k = 1, 5 do
-      ephlines = makeephemeralblock(e[k], progress and e[k] == char)
+      ephlines = makeephemeralblock(e[k], progress and e[k] == char, player.battlepreference.expandephemeral)
       if ephlines then
         maxlines = math.max(maxlines, #ephlines)
         eephimerals[k] = ephlines
@@ -281,7 +281,7 @@
     end
     maxlines = 0
     for k = 1, 4 do
-      ephlines = makeephemeralblock(p[k], progress and p[k] == char)
+      ephlines = makeephemeralblock(p[k], progress and p[k] == char, player.battlepreference.expandephemeral)
       if ephlines then
         maxlines = math.max(maxlines, #ephlines)
         pephimerals[k] = ephlines

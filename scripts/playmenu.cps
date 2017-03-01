@@ -123,8 +123,22 @@
     
   end
 
-  function optionmenu()
-
+  function optionmenu(menutype)
+    local endmenu
+    local jp = player.journeypreference
+    local bp = player.battlepreference
+    while (endmenu ~= "-1") do
+      if not (menutype == "battle") then
+      elseif (menutype == "battle") then
+        printl("[1] 상태이상 표시" .. (bp.expandephemeral and " 접기" or " 펼치기"))
+        printl("[-1] 나가기")
+        endmenu = ask("변경할 옵션을 선택하세요.", "1", "-1")
+        if (endmenu == "1") then
+          bp.expandephemeral = not bp.expandephemeral
+        end
+      end
+    end
+    return -1
   end
 
   function savemenu()

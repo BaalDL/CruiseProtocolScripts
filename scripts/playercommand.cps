@@ -18,7 +18,7 @@
   end
 
   battlecharactercommand = {}
-  battlecharactercommand.references = {"char", "party", "enemyparty", "battle"}
+  battlecharactercommand.references = {"char", "party", "enemyparty", "battle", "player"}
   battlecharactercommand.returns = {"move", "targetType", "targets", "itemmove", "fleemove"}
   battlecharactercommand.commands = {}
   battlecharactercommand.resetpositiononinitial = true
@@ -42,6 +42,8 @@
       return "decideitem"
     elseif self.commands.move == 99 then
       return "flee"
+    elseif self.commands.move == 999 then
+      return "configuration"
     elseif self.commands.move == -1 then
       return "terminal"
     else
@@ -92,6 +94,12 @@
     else
       return "decidetarget"
     end
+  end
+
+  function battlecharactercommand:configuration()
+    optionmenu("battle")
+    self.commands.refresh = true
+    return "initial"
   end
 
   function battlecharactercommand:flee()
