@@ -777,7 +777,7 @@
     if (type(anything) == "table") then
       print(name .. table.tostring(anything))
     else
-      print(name .. (anything or ""))
+      print(name .. (tostring(anything) or ""))
     end
   end
 #end
