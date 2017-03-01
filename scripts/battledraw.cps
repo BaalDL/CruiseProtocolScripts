@@ -33,7 +33,7 @@
     end
   end
 
-  function makeephemeralblock(char, progress)
+  function makeephemeralblock(char, progress, expand)
     if char then
       local ally = char.ally
       local WIDTH = EWIDTH
@@ -44,6 +44,7 @@
         local lines = {}
         local line = ''
         local lengthline = 0
+        if not expand then
         for k, v in pairs(char.currEphemerals) do
           if v[2] > -1 then
             if progress and char.newEphemerals[k] then
@@ -86,6 +87,35 @@
           end
         end
         table.insert(lines, line)
+        else
+          for k, v in pairs(char.currEphemerals) do
+            if v[2] > -1 then
+              if progress and char.newEphemerals[k] then
+                line = ephemerallist[k][v[1]].display .. " " .. ephemerallist[k][v[1]].compactdescription .. " 0→" .. tostring(v[2]) .. "턴"
+              elseif progress then
+                line = ephemerallist[k][v[1]].display .. " " .. ephemerallist[k][v[1]].compactdescription .. " " .. tostring(v[2]+1) .. "→" .. tostring(v[2]) .. "턴"
+              else
+                line = ephemerallist[k][v[1]].display .. " " .. ephemerallist[k][v[1]].compactdescription .. " " .. tostring(v[2]) .. "턴"
+              end
+            else
+              line = ephemerallist[k][v[1]].display .. " " .. ephemerallist[k][v[1]].compactdescription
+            end
+            if lengthwithouttag(line) > WIDTH then
+              line = ephemerallist[k][v[1]].display .. " " .. ephemerallist[k][v[1]].compactdescription
+              table.insert(lines, line)
+              if progress and char.newEphemerals[k] then
+                line = string.rep(" ", ephemerallist[k][v[1]].dlength + 1) .. " 0→" .. tostring(v[2]) .. "턴"
+              elseif progress then
+                line = string.rep(" ", ephemerallist[k][v[1]].dlength + 1) .. tostring(v[2]+1) .. "→" .. tostring(v[2]) .. "턴"
+              else
+                line = string.rep(" ", ephemerallist[k][v[1]].dlength + 1) .. tostring(v[2]) .. "턴"
+              end
+              table.insert(lines, line)
+            else
+              table.insert(lines, line)
+            end
+          end
+        end
         return lines
       end
     else
