@@ -147,6 +147,7 @@
     local party = battle.party
     local enemyparty = battle.enemyparty
   	message = ""
+    previousmessage = ""
   	local delay = 10
   	local usedskill
     progressturntime(orderedCharacters)
@@ -156,6 +157,7 @@
   	  message = message .. "\n" .. "행동을 선택해 주십시오."
   	  orderedCharacters[1].playerCommand(orderedCharacters[1], party, enemyparty)
       draweachtime(false, nil, message)
+      previousmessage = message
       message = ""
   	end
   	if orderedCharacters[1].controllable then

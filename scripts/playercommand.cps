@@ -29,6 +29,10 @@
     self.commands.targets = {}
     self.commands.itemmove = -2
     self.commands.fleemove = -1
+    if (self.commands.refresh) then
+      draweachtime(false, nil, previousmessage)
+      self.commands.refresh = nil
+    end
     local movelist = makemovelistinbattle(self.references.char, self.references.party, self.references.enemyparty, self.references.battle)
     self.commands.move = tonumber(ask("무엇을 하시겠습니까?", unpack(movelist)))
 
