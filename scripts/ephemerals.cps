@@ -7,6 +7,8 @@
     name = "화상",
     display = "/bR/fY火/x",
     dlength = 2,
+    description = "매 턴 최대 체력의 5% 화염 피해",
+    compactdescription = "매턴화염피해",
     acquireMessage = function(char)
       return char.name .. "의 몸을 화염이 덮친다!"
     end,
@@ -28,6 +30,8 @@
     name = "동상",
     display = "/bB/fW凍/x",
     dlength = 2,
+    description = "물리방어력 6단계 감소, 입는 타격 피해 증가",
+    compactdescription = "물리취약",
     acquireMessage = function(char)
       return char.name .. "의 몸 곳곳이 얼어붙는다!"
     end,
@@ -45,6 +49,8 @@
     name = "졸음",
     display = "/bG/fBzZ/x",
     dlength = 2,
+    description = "행동 불가, 피해 입을 시 회복",
+    compactdescription = "행동불가",
     acquireMessage = function(char)
       return char.name .. "의 의식이 멀어진다…."
     end,
@@ -66,6 +72,8 @@
     name = "마비",
     display = "/bY/fw痲/x",
     dlength = 2,
+    description = "30% 확률로 행동 불가",
+    compactdescription = "확률적 행동불가",
     acquireMessage = function(char)
       return char.name .. "의 몸 곳곳이 뻣뻣해진다!"
     end,
@@ -92,6 +100,8 @@
     name = "석화",
     display = "/bM/fY石/x",
     dlength = 2,
+    description = "물리속도 6단계 감소, 입는 타격 피해 증가",
+    compactdescription = "물리속도감소",
     acquireMessage = function(char)
       return char.name .. "의 몸 일부분이 굳는다!"
     end,
@@ -109,6 +119,8 @@
     name = "실명",
     display = "/bw/fk盲/x",
     dlength = 2,
+    description = "명증률 6단계 감소",
+    compactdescription = "명중률감소",
     acquireMessage = function(char)
       return char.name .. "의 눈 앞이 깜깜해진다!"
     end,
@@ -126,6 +138,8 @@
     name = "저주",
     display = "/bk/fw呪/x",
     dlength = 2,
+    description = "매 턴 최대 체력의 10% 암흑 피해",
+    compactdescription = "매턴암흑피해",
     acquireMessage = function(char)
       return char.name .. "(은)는 저주받았다!"
     end,
@@ -147,6 +161,8 @@
     name = "마나 고갈",
     display = "/bk/fR魔/x",
     dlength = 2,
+    description = "마나 자원 기술 사용 불가능",
+    compactdescription = "마나기술봉인",
     diminishMessage = function(char)
       return char.name .. "의 주변에 다시 마나가 감돈다!"
     end
@@ -170,6 +186,8 @@
     end
     return colorstring .. string .. arrow .. "/x" .. math.abs(rank)
   end
+
+  basicparameterephemerals = {pAch = "물리공격", pDch = "물리방어", pSch = "물리속도", sAch = "특수공격", sDch = "특수방어", sSch = "특수속도", Acch = "명중률", Evch = "회피율"}
 
   ephemerallist["pAch"] = {}
   ephemerallist["pAch"][1] = {name = "공격력 증가", display = ephemeraldisplaywithrank("攻", 1),dlength = 5,atgetparam = {param = "physicalAttack",amount = 1.5},incremental={max=6,min=-6}}
@@ -283,54 +301,23 @@
   ephemerallist["Evch"][-5] = {name = "회피율 감소", display = ephemeraldisplaywithrank("避", -5),dlength = 5,atcheckhit = {param = "Evasion",amount = 0.38},incremental={max=6,min=-6}}
   ephemerallist["Evch"][-6] = {name = "회피율 감소", display = ephemeraldisplaywithrank("避", -6),dlength = 5,atcheckhit = {param = "Evasion",amount = 0.33},incremental={max=6,min=-6}}
 
-  for i = 1, 6 do
-    ephemerallist["pAch"][i].acquireMessage = function(char)
-      return char.name .. "의 공격력이 증가했다!"
-    end
-    ephemerallist["pAch"][-i].acquireMessage = function(char)
-      return char.name .. "의 공격력이 감소했다!"
-    end
-    ephemerallist["pDch"][i].acquireMessage = function(char)
-      return char.name .. "의 방어력이 증가했다!"
-    end
-    ephemerallist["pDch"][-i].acquireMessage = function(char)
-      return char.name .. "의 방어력이 감소했다!"
-    end
-    ephemerallist["pSch"][i].acquireMessage = function(char)
-      return char.name .. "의 속도가 증가했다!"
-    end
-    ephemerallist["pSch"][-i].acquireMessage = function(char)
-      return char.name .. "의 속도가 감소했다!"
-    end
-    ephemerallist["sAch"][i].acquireMessage = function(char)
-      return char.name .. "의 특수공격력이 증가했다!"
-    end
-    ephemerallist["sAch"][-i].acquireMessage = function(char)
-      return char.name .. "의 특수공격력이 감소했다!"
-    end
-    ephemerallist["sDch"][i].acquireMessage = function(char)
-      return char.name .. "의 특수방어력이 증가했다!"
-    end
-    ephemerallist["sDch"][-i].acquireMessage = function(char)
-      return char.name .. "의 특수방어력이 감소했다!"
-    end
-    ephemerallist["sSch"][i].acquireMessage = function(char)
-      return char.name .. "의 특수속도가 증가했다!"
-    end
-    ephemerallist["sSch"][-i].acquireMessage = function(char)
-      return char.name .. "의 특수속도가 감소했다!"
-    end
-    ephemerallist["Acch"][i].acquireMessage = function(char)
-      return char.name .. "의 명중률이 증가했다!"
-    end
-    ephemerallist["Acch"][-i].acquireMessage = function(char)
-      return char.name .. "의 명중률이 감소했다!"
-    end
-    ephemerallist["Evch"][i].acquireMessage = function(char)
-      return char.name .. "의 회피율이 증가했다!"
-    end
-    ephemerallist["Evch"][-i].acquireMessage = function(char)
-      return char.name .. "의 회피율이 감소했다!"
+  for ekey, eval in pairs(basicparameterephemerals) do
+    for k, v in pairs(ephemerallist[ekey]) do
+      local p
+      local sign = ((k > 0) and "증가" or "감소")
+      if v.atgetparam then
+        p = v.atgetparam.amount
+      elseif v.atcheckhit then
+        p = v.atcheckhit.amount
+      else
+        DEBUGPRINT("Ephemeral " .. v.name .. " " .. k .. "has neither atgetparam and atcheckhit and this is not expected")
+        break
+      end
+      v.description = eval .. sign .. " " .. tostring(math.abs(p - 1) * 100) .. "%" 
+      v.compactdescription = v.description
+      v.acquireMessage = function(char)
+        return char.name .. "의 " .. eval .. "(이)가 " .. sign .. "했다!"
+      end
     end
   end
 
