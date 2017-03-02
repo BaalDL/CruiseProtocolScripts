@@ -12,6 +12,9 @@
   end
   player.skills["journeytype_loot"] = true
 
+  player.NPC = {}
+  player.NPC.info = {}
+  player.NPC.havemet = {}
 
   player.journeydistance = 200
   player.minimumstrayrate = 0.5

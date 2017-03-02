@@ -1,5 +1,7 @@
 #function locations
   
+  execute("locationnpcs")
+
   LocationsList = {}
   KnownLocationsList = {}
   VisitedLocationsList = {}
@@ -43,6 +45,7 @@
     Coordinate = {37.522652, 127.106187}
   }
 
+  RegisterNpcsToLocations()
 #end
 
 #function passages
