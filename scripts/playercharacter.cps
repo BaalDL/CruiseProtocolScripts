@@ -2,6 +2,7 @@
   execute ("playerskills")
 
   player = {}
+  player.Name = "주인강"
   addsave("player")
   inventory = {}
   addsave("inventory")
