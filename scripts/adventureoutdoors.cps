@@ -9,6 +9,7 @@
     addvisitedlocation(location)
     player.location = location
     depictcurrentlocation()
+    playercommand(locationcommand, player)
   end
 
   function addknownlocation(location)
@@ -155,6 +156,51 @@
     table.insert(journeylist, "-1")
     printl("[-1] 대기(취소)")
     return journeylist, additionallist
+  end
+
+  locationcommand = {}
+  locationcommand.references = {"player"}
+  locationcommand.returns = {"move"}
+  locationcommand.commands = {}
+  locationcommand.resetpositiononinitial = false
+
+  function locationcommand:initial()
+    self.commands.move = "departure"
+
+    local locationcommandtable = buildlocationtable(self.references.player)
+    local playercommand = getplayerchoice("무섯을 하시겠습니까?", locationcommandtable)
+    if (playercommand == "departure") then
+      return "terminal"
+    elseif (playercommand == "menu") then
+    else
+      meetnpc(playercommand)
+      return "initial"
+    end
+  end
+
+  function buildlocationtable(player)
+    local commandtable = {}
+    local p = player
+    local l = player.location
+    local count = 1
+    if LocationsList[l].Npcs then
+      for _, v in pairs(LocationsList[l].Npcs) do
+        local desc = ""
+        if p.NPC.havemet[v] then
+          desc = LocationNpcsList[v].CommandToMeet
+        elseif p.NPC.info[v] then
+          desc = LocationNpcsList[v].CommandToMeetInitial
+        else
+          desc = "？？？？？？"
+        end
+        table.insert(commandtable, {Number = count, Key = v, Description = desc})
+        count = count + 1
+      end
+    end
+    table.insert(commandtable, {Number = nil, Key = "newline"})
+    table.insert(commandtable, {Number = -1, Key = "departure", Description = "장소 떠나기"})
+    table.insert(commandtable, {Number = -9, Key = "menu", Description = "메뉴 열기"})
+    return commandtable
   end
 
   departurecommand = {}
