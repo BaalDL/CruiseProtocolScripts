@@ -80,16 +80,15 @@
         table.insert(lines, line)
         else
           for k, v in pairs(char.currEphemerals) do
+            line = ephemerallist[k][v[1]].display .. " " .. ephemerallist[k][v[1]].compactdescription
             if v[2] > -1 then
               if progress and char.newEphemerals[k] then
-                line = ephemerallist[k][v[1]].display .. " " .. ephemerallist[k][v[1]].compactdescription .. " 0→" .. tostring(v[2]) .. "턴"
+                line = line .. " 0→" .. tostring(v[2]) .. "턴"
               elseif progress then
-                line = ephemerallist[k][v[1]].display .. " " .. ephemerallist[k][v[1]].compactdescription .. " " .. tostring(v[2]+1) .. "→" .. tostring(v[2]) .. "턴"
+                line = line .. " " .. tostring(v[2]+1) .. "→" .. tostring(v[2]) .. "턴"
               else
-                line = ephemerallist[k][v[1]].display .. " " .. ephemerallist[k][v[1]].compactdescription .. " " .. tostring(v[2]) .. "턴"
+                line = line .. " " .. tostring(v[2]) .. "턴"
               end
-            else
-              line = ephemerallist[k][v[1]].display .. " " .. ephemerallist[k][v[1]].compactdescription
             end
             if lengthwithouttag(line) > WIDTH then
               line = ephemerallist[k][v[1]].display .. " " .. ephemerallist[k][v[1]].compactdescription
