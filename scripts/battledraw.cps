@@ -44,40 +44,40 @@
         local lines = {}
         local line = ''
         if not expand then
-        for k, v in pairs(char.currEphemerals) do
-          if v[2] > -1 then
-            if progress and char.newEphemerals[k] then
-                if lengthwithouttag(line .. ephemerallist[k][v[1]].display .. tostring(0) .. "→" .. tostring(v[2])) <= WIDTH then
-                line = line .. ephemerallist[k][v[1]].display .. tostring(0) .. "→" .. tostring(v[2])
+          for k, v in pairs(char.currEphemerals) do
+            if v[2] > -1 then
+              if progress and char.newEphemerals[k] then
+                  if lengthwithouttag(line .. ephemerallist[k][v[1]].display .. tostring(0) .. "→" .. tostring(v[2])) <= WIDTH then
+                  line = line .. ephemerallist[k][v[1]].display .. tostring(0) .. "→" .. tostring(v[2])
+                else
+                  table.insert(lines, line)
+                  line = ephemerallist[k][v[1]].display .. tostring(0) .. "→" .. tostring(v[2])
+                end
+              elseif progress then
+                  if lengthwithouttag(line .. ephemerallist[k][v[1]].display .. tostring(v[2]+1) .. "→" .. tostring(v[2])) <= WIDTH then
+                  line = line .. ephemerallist[k][v[1]].display .. tostring(v[2]+1) .. "→" .. tostring(v[2])
+                else
+                  table.insert(lines, line)
+                  line = ephemerallist[k][v[1]].display .. tostring(v[2]+1) .. "→" .. tostring(v[2])
+                end
               else
-                table.insert(lines, line)
-                line = ephemerallist[k][v[1]].display .. tostring(0) .. "→" .. tostring(v[2])
-              end
-            elseif progress then
-                if lengthwithouttag(line .. ephemerallist[k][v[1]].display .. tostring(v[2]+1) .. "→" .. tostring(v[2])) <= WIDTH then
-                line = line .. ephemerallist[k][v[1]].display .. tostring(v[2]+1) .. "→" .. tostring(v[2])
-              else
-                table.insert(lines, line)
-                line = ephemerallist[k][v[1]].display .. tostring(v[2]+1) .. "→" .. tostring(v[2])
+                  if lengthwithouttag(line .. ephemerallist[k][v[1]].display .. tostring(v[2])) <= WIDTH then
+                  line = line .. ephemerallist[k][v[1]].display .. tostring(v[2])
+                else
+                  table.insert(lines, line)
+                  line = ephemerallist[k][v[1]].display .. tostring(v[2])
+                end
               end
             else
-                if lengthwithouttag(line .. ephemerallist[k][v[1]].display .. tostring(v[2])) <= WIDTH then
-                line = line .. ephemerallist[k][v[1]].display .. tostring(v[2])
+                if lengthwithouttag(line .. ephemerallist[k][v[1]].display) <= WIDTH then
+                line = line .. ephemerallist[k][v[1]].display
               else
                 table.insert(lines, line)
-                line = ephemerallist[k][v[1]].display .. tostring(v[2])
+                line = ephemerallist[k][v[1]].display
               end
-            end
-          else
-              if lengthwithouttag(line .. ephemerallist[k][v[1]].display) <= WIDTH then
-              line = line .. ephemerallist[k][v[1]].display
-            else
-              table.insert(lines, line)
-              line = ephemerallist[k][v[1]].display
             end
           end
-        end
-        table.insert(lines, line)
+          table.insert(lines, line)
         else
           for k, v in pairs(char.currEphemerals) do
             line = ephemerallist[k][v[1]].display .. " " .. ephemerallist[k][v[1]].compactdescription
