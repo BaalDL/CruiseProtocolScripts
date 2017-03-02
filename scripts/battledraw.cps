@@ -113,15 +113,14 @@
     end
   end
 
-  function stringorder(order)
-    if (order == 0) then
+  function stringorder(order, progress)
+    local porder = order + (progress and 1 or 0)
+    if (porder == 0) then
       return "<NOW>"
-    else
-      if (order == 1) then
+    elseif (porder == 1) then
         return "<NEXT>"
       end
-    end
-    return "NEXT " .. order
+    return "NEXT " .. porder
   end
 
   function defensivecolor(skilltype, deftype, deffactor, info, ally)
