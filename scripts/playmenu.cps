@@ -131,10 +131,14 @@
       if not (menutype == "battle") then
       elseif (menutype == "battle") then
         printl("[1] 상태이상 표시" .. (bp.expandephemeral and " 접기" or " 펼치기"))
+        printl("[2] 상단 행동순서바 표시" .. (bp.draworderbar and "하지 않기" or "하기"))
         printl("[-1] 나가기")
-        endmenu = ask("변경할 옵션을 선택하세요.", "1", "-1")
+        endmenu = ask("변경할 옵션을 선택하세요.", "1", "2", "-1")
         if (endmenu == "1") then
           bp.expandephemeral = not bp.expandephemeral
+        end
+        if (endmenu == "2") then
+          bp.draworderbar = not bp.draworderbar
         end
       end
     end

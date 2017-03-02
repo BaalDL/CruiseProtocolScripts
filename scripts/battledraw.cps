@@ -113,13 +113,34 @@
     end
   end
 
+  function draworderbar(progress)
+    printdelimiter("=")
+    printmid("ORDER")
+    local line = ""
+    local delimiterlength = 0
+    if (progress) then
+      line = "<DONE> " .. recentCharacter.name .. " "
+    end
+    for i, v in ipairs(orderedCharacters) do
+      if (recentCharacter == v) then
+        delimiterlength = lengthwithouttag(line) - 5
+      end
+      local tag = orderedCharacters[i].ally and "/bb" or "/br"
+      line = line .. tag .. stringorder(orderedCharacters[i].turnorder, progress) .. " " .. orderedCharacters[i].name .. "/x "
+    end
+    printl(line)
+    if (progress) then
+      printl("|→" .. string.rep("-", delimiterlength) .. "→|")
+    end
+  end
+
   function stringorder(order, progress)
     local porder = order + (progress and 1 or 0)
     if (porder == 0) then
       return "<NOW>"
     elseif (porder == 1) then
-        return "<NEXT>"
-      end
+      return "<NEXT>"
+    end
     return "NEXT " .. porder
   end
 
@@ -186,6 +207,9 @@
       printdelimiter(" ")
     end
     moveto(t, l)
+    if (player.battlepreference.draworderbar) then
+      draworderbar(progress)
+    end
     printdelimiter("=")
     printmid("ENEMY")
     local nameline, hpilne, mpline, orderline, defline1, defline2
@@ -207,7 +231,7 @@
         else  
           mpline = ""
         end
-        order = stringorder(e[k].turnorder)
+        order = stringorder(e[k].turnorder, progress)
         local blanklen = EWIDTH - string.len(order) - 2
         orderline = string.rep(" ",blanklen) .. order
         defline1 = defensivechar(e[k].defensiveType,e[k].defensiveFactor,EnemyDefenseInfo[e[k].templetes],false,true)
@@ -257,7 +281,7 @@
         else
           mpline = ""
         end
-        order = stringorder(p[k].turnorder)
+        order = stringorder(p[k].turnorder, progress)
         local blanklen = PWIDTH - string.len(order) - 2
         orderline = string.rep(" ",blanklen) .. order
       else

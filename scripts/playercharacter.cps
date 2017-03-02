@@ -26,6 +26,7 @@
   player.journeypreference.autocommand = true
   player.battlepreference = {}
   player.battlepreference.expandephemeral = true
+  player.battlepreference.draworderbar = true
   inventory[101] = 1
   inventory[102] = 5
   inventory[103] = 5
