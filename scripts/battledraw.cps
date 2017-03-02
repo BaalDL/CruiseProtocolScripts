@@ -118,8 +118,8 @@
       return "<NOW>"
     else
       if (order == 1) then
-      return "<NEXT>"
-    end
+        return "<NEXT>"
+      end
     end
     return "NEXT " .. order
   end
