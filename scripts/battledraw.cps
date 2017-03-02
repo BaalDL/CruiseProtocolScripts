@@ -43,46 +43,37 @@
       else
         local lines = {}
         local line = ''
-        local lengthline = 0
         if not expand then
         for k, v in pairs(char.currEphemerals) do
           if v[2] > -1 then
             if progress and char.newEphemerals[k] then
-              if lengthline + ephemerallist[k][v[1]].dlength + #tostring(0) + 2 + #tostring(v[2]) <= WIDTH then
+                if lengthwithouttag(line .. ephemerallist[k][v[1]].display .. tostring(0) .. "→" .. tostring(v[2])) <= WIDTH then
                 line = line .. ephemerallist[k][v[1]].display .. tostring(0) .. "→" .. tostring(v[2])
-                lengthline = lengthline + ephemerallist[k][v[1]].dlength + #tostring(0) + 2 + #tostring(v[2])
               else
                 table.insert(lines, line)
                 line = ephemerallist[k][v[1]].display .. tostring(0) .. "→" .. tostring(v[2])
-                lengthline = ephemerallist[k][v[1]].dlength + #tostring(0) + 2 + #tostring(v[2])
               end
             elseif progress then
-              if lengthline + ephemerallist[k][v[1]].dlength + #tostring(v[2]+1) + 2 + #tostring(v[2]) <= WIDTH then
+                if lengthwithouttag(line .. ephemerallist[k][v[1]].display .. tostring(v[2]+1) .. "→" .. tostring(v[2])) <= WIDTH then
                 line = line .. ephemerallist[k][v[1]].display .. tostring(v[2]+1) .. "→" .. tostring(v[2])
-                lengthline = lengthline + ephemerallist[k][v[1]].dlength + #tostring(v[2]+1) + 2 + #tostring(v[2])
               else
                 table.insert(lines, line)
                 line = ephemerallist[k][v[1]].display .. tostring(v[2]+1) .. "→" .. tostring(v[2])
-                lengthline = ephemerallist[k][v[1]].dlength + #tostring(v[2]+1) + 2 + #tostring(v[2])
               end
             else
-              if lengthline + ephemerallist[k][v[1]].dlength + #tostring(v[2]) <= WIDTH then
+                if lengthwithouttag(line .. ephemerallist[k][v[1]].display .. tostring(v[2])) <= WIDTH then
                 line = line .. ephemerallist[k][v[1]].display .. tostring(v[2])
-                lengthline = lengthline + ephemerallist[k][v[1]].dlength + #tostring(v[2])
               else
                 table.insert(lines, line)
                 line = ephemerallist[k][v[1]].display .. tostring(v[2])
-                lengthline = ephemerallist[k][v[1]].dlength + #tostring(v[2])
               end
             end
           else
-            if lengthline + ephemerallist[k][v[1]].dlength <= WIDTH then
+              if lengthwithouttag(line .. ephemerallist[k][v[1]].display) <= WIDTH then
               line = line .. ephemerallist[k][v[1]].display
-              lengthline = lengthline + ephemerallist[k][v[1]].dlength
             else
               table.insert(lines, line)
               line = ephemerallist[k][v[1]].display
-              lengthline = ephemerallist[k][v[1]].dlength
             end
           end
         end
