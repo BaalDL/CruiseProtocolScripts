@@ -63,13 +63,13 @@
     targettable["100"] = battle.enemyparty
     for k, v in pairs(p) do
       p[k].turntime = math.floor((battleStopWatch / p[k].physicalSpeed) + math.random(10))
-  	  table.insert(orderedCharacters, p[k]) 
+      table.insert(orderedCharacters, p[k]) 
     end
     for k, v in pairs(e) do
       e[k].turntime = math.floor((battleStopWatch / e[k].physicalSpeed) + math.random(10))
-  	  table.insert(orderedCharacters, e[k])
-  	  e[k].targetnumber = 100 + k
-  	  targettable[tostring(100+k)] = e[k]
+      table.insert(orderedCharacters, e[k])
+      e[k].targetnumber = 100 + k
+      targettable[tostring(100+k)] = e[k]
     end
     sortcharacters(orderedCharacters)
   end
@@ -91,26 +91,26 @@
   end
 
   function battlehandler(enemyparty, fleeable)
-  	currentbattle = {}
-  	currentbattle.party = party
+    currentbattle = {}
+    currentbattle.party = party
     currentbattle.enemyparty = enemyparty
     currentbattle.fleeable = fleeable
     currentbattle.fleed = false
     currentbattle.fleetry = 0
     currentbattle.advantage = false
-  	initializebattle(currentbattle)
-  	battlefirstturn(currentbattle)
-  	while (not (checkbattleend(currentbattle.party, currentbattle.enemyparty) or currentbattle.fleed)) do
-  	  battleeachturn(currentbattle)
-  	end
+    initializebattle(currentbattle)
+    battlefirstturn(currentbattle)
+    while (not (checkbattleend(currentbattle.party, currentbattle.enemyparty) or currentbattle.fleed)) do
+      battleeachturn(currentbattle)
+    end
     local result = checkbattleend(currentbattle.party, currentbattle.enemyparty)
-  	if result == "defeat" then
-  	  printl ("전투에서 패배하였습니다.")
-  	elseif result == "victory" then
-  	  printl ("전투에서 승리하였습니다.")
+    if result == "defeat" then
+      printl ("전투에서 패배하였습니다.")
+    elseif result == "victory" then
+      printl ("전투에서 승리하였습니다.")
     else
       printl ("전투에서 도망쳤습니다....")
-  	end
+    end
     for k, v in pairs(currentbattle.party) do
       v.currEphemerals = {}
     end
@@ -147,22 +147,22 @@
   function battleeachturn(battle)
     local party = battle.party
     local enemyparty = battle.enemyparty
-  	message = ""
+    message = ""
     previousmessage = ""
-  	local delay = 10
-  	local usedskill
+    local delay = 10
+    local usedskill
     progressturntime(orderedCharacters)
-  	message = message .. orderedCharacters[1].name .. "의 턴입니다."
-  	orderedCharacters[1].controllable = orderedCharacters[1].ally and orderedCharacters[1].alive and checkcontrollable(orderedCharacters[1]) 
+    message = message .. orderedCharacters[1].name .. "의 턴입니다."
+    orderedCharacters[1].controllable = orderedCharacters[1].ally and orderedCharacters[1].alive and checkcontrollable(orderedCharacters[1]) 
     if orderedCharacters[1].controllable then
-  	  message = message .. "\n" .. "행동을 선택해 주십시오."
-  	  orderedCharacters[1].playerCommand(orderedCharacters[1], party, enemyparty)
+      message = message .. "\n" .. "행동을 선택해 주십시오."
+      orderedCharacters[1].playerCommand(orderedCharacters[1], party, enemyparty)
       draweachtime(false, nil, message)
       previousmessage = message
       message = ""
-  	end
-  	if orderedCharacters[1].controllable then
-  	  --usedskill = askplayerinbattle(orderedCharacters[1], party, enemyparty, battle)
+    end
+    if orderedCharacters[1].controllable then
+      --usedskill = askplayerinbattle(orderedCharacters[1], party, enemyparty, battle)
       local commands = playercommand(battlecharactercommand, orderedCharacters[1], party, enemyparty, battle)
       if battle.fleed then
         return
@@ -178,13 +178,13 @@
       end
       if not usedskill then
         message = "아무 것도 하지 않았다."
-  	    delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], "physicalSpeed")) + math.random(15))
+        delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], "physicalSpeed")) + math.random(15))
       else
-  	    delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], usedskill.DelayType)) + math.random(5))
+        delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], usedskill.DelayType)) + math.random(5))
       end
     elseif orderedCharacters[1].ally then
       message = message .. "\n" .. orderedCharacters[1].name .. "(은)는 행동할 수 없다…."
-  	  delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], "physicalSpeed")) + math.random(15))
+      delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], "physicalSpeed")) + math.random(15))
     elseif orderedCharacters[1].alive and checkcontrollable(orderedCharacters[1]) then
       usedskill = orderedCharacters[1].AICommand(orderedCharacters[1], party, emenyparty)
     else
@@ -194,7 +194,7 @@
       else
         delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], "physicalSpeed")) + math.random(15))
       end
-  	end
+    end
     countturn(orderedCharacters[1])
     recentCharacter = orderedCharacters[1]
     orderedCharacters[1].turntime = orderedCharacters[1].turntime + delay
@@ -203,7 +203,7 @@
     draweachtime(true, recentCharacter, message)
     endofturn(recentCharacter)
 
-  	printw ("엔터키를 눌러 계속합니다.\n")    
+    printw ("엔터키를 눌러 계속합니다.\n")    
   end
 
   function checkcontrollable(char)
@@ -266,7 +266,7 @@
     if target == "AnEnemy" or
       target == "AdjacentEnemies" then
       for k, v in pairs(e) do
-  	    if e[k].alive then table.insert(targets, tostring(e[k].targetnumber)) end
+        if e[k].alive then table.insert(targets, tostring(e[k].targetnumber)) end
       end
       table.sort(targets)
       if type == "Attack" then
@@ -424,7 +424,7 @@
         if not checkavailable(char, skill, targets[k], currentbattle) then break end
         applyheal(char, skill, targets[k])
       end
-  	end
+    end
 
   end
   
@@ -638,8 +638,8 @@
     local alivelist = {} 
     for k, _ in pairs(party) do
       if party[k].alive then
-  	    table.insert(alivelist,party[k])
-  	  end
+        table.insert(alivelist,party[k])
+      end
     end
     if next(alivelist) == nil then
     message = message .. "\n그러나 공격할 수 있는 대상이 없다!"
@@ -717,18 +717,120 @@
     local partyeliminated, enemypartyeliminated = true, true
     for k, _ in pairs(party) do
       if party[k].alive then
-  	  partyeliminated = false
+      partyeliminated = false
         break
-  	end
+    end
     end
     if partyeliminated then return "defeat" end
     for k, _ in pairs(enemyparty) do
       if enemyparty and enemyparty[k].alive then
-  	  enemypartyeliminated = false
+      enemypartyeliminated = false
         break
-  	end
+    end
     end
     if enemypartyeliminated then return "victory" end
     return false
+  end
+
+  battlecharactercommand = {}
+  battlecharactercommand.references = {"char", "party", "enemyparty", "battle", "player"}
+  battlecharactercommand.returns = {"move", "targetType", "targets", "itemmove", "fleemove"}
+  battlecharactercommand.commands = {}
+  battlecharactercommand.resetpositiononinitial = true
+
+  function battlecharactercommand:initial()
+    self.commands.move = -1
+    self.commands.targetType = ""
+    self.commands.targets = {}
+    self.commands.itemmove = -2
+    self.commands.fleemove = -1
+    if (self.commands.refresh) then
+      draweachtime(false, nil, previousmessage)
+      self.commands.refresh = nil
+    end
+    local movelist = makemovelistinbattle(self.references.char, self.references.party, self.references.enemyparty, self.references.battle)
+    self.commands.move = tonumber(ask("무엇을 하시겠습니까?", unpack(movelist)))
+
+    if self.commands.move <= 8 and self.commands.move >= 0 then
+      return "decidetarget"
+    elseif self.commands.move == 10 then
+      return "decideitem"
+    elseif self.commands.move == 99 then
+      return "flee"
+    elseif self.commands.move == 999 then
+      return "configuration"
+    elseif self.commands.move == -1 then
+      return "terminal"
+    else
+      return "initial"
+    end
+  end
+
+  function battlecharactercommand:decidetarget()
+    local movetype
+    if self.commands.move <= 8 and self.commands.move >= 0 then
+      movetype = self.references.char.skills[self.commands.move].MoveType
+      self.commands.targetType = self.references.char.skills[self.commands.move].Target
+    elseif self.commands.move == 10 then
+      movetype = ItemList[itemmove].ItemType
+      self.commands.targetType = ItemList[itemmove].Target
+    end
+    local selfnum = self.references.char.targetnumber
+
+    local targetinput = lookuptarget(movetype, self.commands.targetType, selfnum)
+
+    if (targetinput ~= "-1") then
+      if (targetinput == "100") then
+        self.commands.targets = self.references.enemyparty
+      elseif (targetinput == "10") then
+        self.commands.targets = self.references.party
+      else
+        self.commands.targets = {targettable[targetinput]}
+      end
+      if self.commands.move <= 8 and self.commands.move >= 0 then
+        skillhandler(self.references.char, self.references.char.skills[self.commands.move], self.commands.targets, self.references.battle)
+      elseif self.commands.move == 10 then
+        itemhandler(self.references.char, self.commands.itemmove, self.commands.targets, self.references.battle)
+      end
+    end
+
+    if targetinput == "-1" then
+      return "initial"
+    else
+      return "terminal"
+    end
+  end
+
+  function battlecharactercommand:decideitem()
+    self.commands.itemmove = inventorymenu("battle")
+
+    if self.commands.itemmove == -1 then
+      return "initial"
+    else
+      return "decidetarget"
+    end
+  end
+
+  function battlecharactercommand:configuration()
+    optionmenu("battle")
+    self.commands.refresh = true
+    return "initial"
+  end
+
+  function battlecharactercommand:flee()
+    local fleetable = getfleetable(self.references.char, self.references.party, self.references.enemyparty, self.references.battle)
+    self.commands.fleemove = tonumber(confirmflee(fleetable))
+    if (self.commands.fleemove ~= 1) then
+      self.references.battle.fleed = fleehandler(self.references.battle, fleetable)
+      if not self.references.battle.fleed then
+        message = message .. "도주에 실패했다!"
+      end
+    end
+
+    if self.commands.fleemove == 1 then
+      return "initial"
+    else
+      return "terminal"
+    end
   end
 #end
