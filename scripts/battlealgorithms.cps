@@ -52,6 +52,7 @@
   party = {}
   --enemyparty = {} --enemyparty is no more global
   targettable = {}
+  recentCharacter = {}
 
   function initializebattle(battle)
     local p = battle.party
@@ -177,40 +178,32 @@
       end
       if not usedskill then
         message = "아무 것도 하지 않았다."
-        countturn(orderedCharacters[1])
-        draweachtime(true, orderedCharacters[1], message)
   	    delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], "physicalSpeed")) + math.random(15))
       else
-        countturn(orderedCharacters[1])
-        draweachtime(true, orderedCharacters[1], message)
   	    delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], usedskill.DelayType)) + math.random(5))
       end
     elseif orderedCharacters[1].ally then
       message = message .. "\n" .. orderedCharacters[1].name .. "(은)는 행동할 수 없다…."
-      countturn(orderedCharacters[1])
-      draweachtime(true, orderedCharacters[1], message)
   	  delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], "physicalSpeed")) + math.random(15))
     elseif orderedCharacters[1].alive and checkcontrollable(orderedCharacters[1]) then
       usedskill = orderedCharacters[1].AICommand(orderedCharacters[1], party, emenyparty)
-      draweachtime(true, orderedCharacters[1], message)
     else
       message = message .. "\n" .. orderedCharacters[1].name .. "(은)는 행동할 수 없다…."
-      draweachtime(false, nil, message)
       if usedskill then
-        countturn(orderedCharacters[1])
         delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], usedskill.DelayType)) + math.random(5))
       else
-        countturn(orderedCharacters[1])
         delay = math.floor((battleStopWatch / getparam(orderedCharacters[1], "physicalSpeed")) + math.random(15))
       end
   	end
+    countturn(orderedCharacters[1])
+    recentCharacter = orderedCharacters[1]
+    orderedCharacters[1].turntime = orderedCharacters[1].turntime + delay
+    sortcharacters(orderedCharacters)
 
-    endofturn(orderedCharacters[1])
+    draweachtime(true, recentCharacter, message)
+    endofturn(recentCharacter)
 
-  	printw ("엔터키를 눌러 계속합니다.\n")
-    
-  	orderedCharacters[1].turntime = orderedCharacters[1].turntime + delay
-  	sortcharacters(orderedCharacters)
+  	printw ("엔터키를 눌러 계속합니다.\n")    
   end
 
   function checkcontrollable(char)
