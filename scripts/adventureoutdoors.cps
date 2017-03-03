@@ -185,14 +185,7 @@
     local count = 1
     if LocationsList[l].Npcs then
       for _, v in pairs(LocationsList[l].Npcs) do
-        local desc = ""
-        if p.NPC.havemet[v] then
-          desc = LocationNpcsList[v].CommandToMeet
-        elseif p.NPC.info[v] then
-          desc = LocationNpcsList[v].CommandToMeetInitial
-        else
-          desc = "？？？？？？"
-        end
+        local desc = LocationNpcsList[v].CommandToMeet[world.NPC[v].state]
         table.insert(commandtable, {Number = count, Key = v, Description = desc})
         count = count + 1
       end

@@ -3,6 +3,7 @@
   setwindowname (gamename)
   tosave = {}
   toreset = {}
+  world = {}
   execute ("loadgeneralfunctions")
   execute ("loadptypebattlefunctions")
   execute ("configurebasicparameters")
