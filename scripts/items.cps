@@ -56,7 +56,7 @@
       end
       table.sort(targets)
       if type == "Attack" or type == "Harass" then
-        selection = ask("누구를 목표로 삼습니까?", unpack(targets))
+        selection = ask("누구를 목표로 삼습니까?", table.unpack(targets))
       end
     elseif target == "WholeEnemy" or
       target == "RandomEnemies" or
@@ -69,7 +69,7 @@
       table.sort(targets)
       if type == "Heal" or
         type == "Support" then
-        selection = ask("누구를 목표로 삼습니까?", unpack(targets))
+        selection = ask("누구를 목표로 삼습니까?", table.unpack(targets))
       end
     elseif target == "AnAllyIncludingDead" then
       for k, v in pairs(p) do
@@ -78,7 +78,7 @@
       table.sort(targets)
       if type == "Heal" or
         type == "Support" then
-        selection = ask("누구를 목표로 삼습니까?", unpack(targets))
+        selection = ask("누구를 목표로 삼습니까?", table.unpack(targets))
       end
     elseif target == "WholeAlly" then
       selection = ask("아군 전체를 목표로 삼습니까?", "-1", "10")

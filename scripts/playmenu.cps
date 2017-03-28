@@ -32,7 +32,7 @@
   function campmenu()
     local playerchoice
     while(playerchoice ~= "-1") do
-      playerchoice = ask("조작할 메뉴를 선택해 주십시오", unpack(showavailablemenu()))
+      playerchoice = ask("조작할 메뉴를 선택해 주십시오", table.unpack(showavailablemenu()))
       if playerchoice == "1" then
         partymenu()
       elseif playerchoice == "2" then
@@ -107,7 +107,7 @@
 
       printl (stringitemlist)
       printl ("[-1] 나가기")
-      endmenu = ask("무엇을 하시겠습니까?", "-1", unpack(itemtable))
+      endmenu = ask("무엇을 하시겠습니까?", "-1", table.unpack(itemtable))
       if (endmenu ~= "-1") then
         printl ("[" .. endmenu .. "] " .. ItemList[tonumber(endmenu)].Name .. " 나머지 " .. inventory[tonumber(endmenu)] .. "개")
         useditem = ask("아이템을 사용하시겠습니까? [0] 예 [1] 아니오", "0", "1")

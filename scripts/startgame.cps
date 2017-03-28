@@ -105,7 +105,7 @@
       end
     end
     _print (questionnaire)
-    return choiceivpairs[tonumber(ask(question, unpack(choices)))]
+    return choiceivpairs[tonumber(ask(question, table.unpack(choices)))]
   end
 
   function buildplayerchoice(instruction)
@@ -435,7 +435,7 @@
 
   function randomlist(originall, samp)
     local newlist
-    local l = {unpack(originall)}
+    local l = {table.unpack(originall)}
     newlist = {}
     if not samp then 
       samp = 0 
@@ -477,7 +477,7 @@
       printl ("[999] 이동 취소")
       table.insert(placelist, 999)
     end
-    local destination = ask("번호를 입력해 주십시오.", unpack(placelist))      
+    local destination = ask("번호를 입력해 주십시오.", table.unpack(placelist))      
     return destination
   end
 

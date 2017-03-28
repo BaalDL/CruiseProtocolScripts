@@ -259,7 +259,7 @@
     if maxlines > 0 then
       for k = 1, 5 do
         if eephimerals[k] then
-          printblock(EWIDTH, maxlines, (k < 5) and "right" or "enter", unpack(eephimerals[k]))
+          printblock(EWIDTH, maxlines, (k < 5) and "right" or "enter", table.unpack(eephimerals[k]))
         else
           printblock(EWIDTH, maxlines, (k < 5) and "right" or "enter", "")
         end
@@ -305,7 +305,7 @@
     if maxlines > 0 then
       for k = 1, 4 do
         if pephimerals[k] then
-          printblock(PWIDTH, maxlines, (k < 4) and "right" or "enter", unpack(pephimerals[k]))
+          printblock(PWIDTH, maxlines, (k < 4) and "right" or "enter", table.unpack(pephimerals[k]))
         else
           printblock(PWIDTH, maxlines, (k < 4) and "right" or "enter", "")
         end

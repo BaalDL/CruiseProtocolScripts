@@ -15,12 +15,12 @@
         end
       elseif skill.Target == "PWREnemies" then
         local numTarget = math.random(skill.minTarget, skill.maxTarget)
-        local first, second = unpack(pickrandomtarget(opponents, 2))
+        local first, second = table.unpack(pickrandomtarget(opponents, 2))
         second = second or first
         table.insert(targets, first)
         table.insert(targets, second)
         for i = 3, numTarget do
-          if i <= numTarget then table.insert(targets, unpack(pickrandomtarget(opponents, 1))) end
+          if i <= numTarget then table.insert(targets, table.unpack(pickrandomtarget(opponents, 1))) end
         end
       elseif skill.Target == "Self" then
         table.insert(targets, self)

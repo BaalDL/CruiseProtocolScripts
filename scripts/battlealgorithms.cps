@@ -270,9 +270,9 @@
       end
       table.sort(targets)
       if type == "Attack" then
-        selection = ask("누구를 공격합니까?", unpack(targets))
+        selection = ask("누구를 공격합니까?", table.unpack(targets))
       elseif type == "Harass" then
-        selection = ask("누구를 목표로 삼습니까?", unpack(targets))
+        selection = ask("누구를 목표로 삼습니까?", table.unpack(targets))
       end
     elseif target == "WholeEnemy" or
       target == "RandomEnemies" or
@@ -285,7 +285,7 @@
       table.sort(targets)
       if type == "Heal" or
         type == "Support" then
-        selection = ask("누구를 목표로 삼습니까?", unpack(targets))
+        selection = ask("누구를 목표로 삼습니까?", table.unpack(targets))
       end
     elseif target == "AnAllyIncludingDead" then
       for k, v in pairs(p) do
@@ -294,7 +294,7 @@
       table.sort(targets)
       if type == "Heal" or
         type == "Support" then
-        selection = ask("누구를 목표로 삼습니까?", unpack(targets))
+        selection = ask("누구를 목표로 삼습니까?", table.unpack(targets))
       end
     elseif target == "WholeAlly" then
       selection = ask("아군 전체를 목표로 삼습니까?", "-1", "10")
@@ -378,21 +378,21 @@
       end    
     elseif skill.Target == "PWREnemies" then
       local numTarget = math.random(skill.minTarget, skill.maxTarget)
-      local first, second = unpack(pickrandomtarget(opponents, 2))
+      local first, second = table.unpack(pickrandomtarget(opponents, 2))
       second = second or first
       table.insert(targets, first)
       table.insert(targets, second)
       for i = 3, numTarget do
-        if i <= numTarget then table.insert(targets, unpack(pickrandomtarget(opponents, 1))) end
+        if i <= numTarget then table.insert(targets, table.unpack(pickrandomtarget(opponents, 1))) end
       end
     elseif skill.Target == "PWRAllies" then
       local numTarget = math.random(skill.minTarget, skill.maxTarget)
-      local first, second = unpack(pickrandomtarget(samesides, 2))
+      local first, second = table.unpack(pickrandomtarget(samesides, 2))
       second = second or first
       table.insert(targets, first)
       table.insert(targets, second)
       for i = 3, numTarget do
-        if i <= numTarget then table.insert(targets, unpack(pickrandomtarget(samesides, 1))) end
+        if i <= numTarget then table.insert(targets, table.unpack(pickrandomtarget(samesides, 1))) end
       end
     end
 
@@ -751,7 +751,7 @@
       self.commands.refresh = nil
     end
     local movelist = makemovelistinbattle(self.references.char, self.references.party, self.references.enemyparty, self.references.battle)
-    self.commands.move = tonumber(ask("무엇을 하시겠습니까?", unpack(movelist)))
+    self.commands.move = tonumber(ask("무엇을 하시겠습니까?", table.unpack(movelist)))
 
     if self.commands.move <= 8 and self.commands.move >= 0 then
       return "decidetarget"

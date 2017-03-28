@@ -218,7 +218,7 @@
 
     local playercommand = getplayerchoice("무엇을 하시겠습니까?", departurechoicetable)
     --local movelist = makemovelistinlocation()
-    --local playercommand = ask("무엇을 하시겠습니까?", unpack(movelist))
+    --local playercommand = ask("무엇을 하시겠습니까?", table.unpack(movelist))
     if (playercommand == "look") then
       printl(LocationsList[self.references.player.location].Description)
       return "initial"
@@ -238,7 +238,7 @@
     addknownlocation("MongchontoseongStation") -- DEBUG
     addknownlocation("JamsilHighschool") -- DEBUG
     local journeylist, additionallist = makejourneylist()
-    local playercommand = ask("어디를 향하시겠습니까?", unpack(journeylist))
+    local playercommand = ask("어디를 향하시겠습니까?", table.unpack(journeylist))
     if (playercommand == "-1") then
       return "initial"
     else
