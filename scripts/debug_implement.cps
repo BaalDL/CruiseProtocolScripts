@@ -83,7 +83,4 @@
   addreset("party")
   addreset("EnemyInfo")
   addreset("EnemyDefenseInfo")
-
-  addsave("money")
-  addsave("byss")
 #end
