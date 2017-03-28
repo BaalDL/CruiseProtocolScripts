@@ -88,7 +88,7 @@
       Dark = 100
     },
     AICommand = PartyDefaultAICommand,
-    
+
     alive = true,
     currHP = 180,
     currResource = 100,
@@ -165,7 +165,7 @@
       Dark = 100
     },
     AICommand = PartyDefaultAICommand,
-  
+    
     alive = true,
     currHP = 150,
     currResource = 100,
@@ -242,7 +242,7 @@
       Dark = 100
     },
     AICommand = PartyDefaultAICommand,
-    
+
     alive = true,
     currHP = 200,
     currResource = 100,
