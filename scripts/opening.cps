@@ -61,7 +61,7 @@ while not name do
 		gname = ""
 	end
 end
-addsave("name", "fname", "gname")
+--addsave("name", "fname", "gname")
 sayw ("남자 직원", "네, " .. name .. "학생이요... 잠시만 기다려주세요.",
 "어디보자... 네. 주민등록증 보여주세요. 네. 확인 됐습니다.",
 "서류는 인터넷으로 제출하셨고요, 확인 했습니… 어라?",
