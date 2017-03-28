@@ -482,45 +482,38 @@
   end
 
   -- 세이브 파일에 입력할 변수들을 추가한다.
-  function addsave(...)
-    for i, v in ipairs({...}) do
-      tosave[v] = _G[v]
-    end
+  function addsave(name)
+    table.insert(tosave, name)
   end
 
-  function addreset(...)
-    for i, v in ipairs({...}) do
-      toreset[v] = true
-    end
+  function addreset(name)
+    toreset[name] = true
   end
 
   function save(filename)
-    local file = io.open(filename, "w")
-    --세이브할 변수들의 이름을 아래에 넣는다.
-    --[[for k, v in pairs(tosave) do
-      if k then
-        file:write(k .. "  = " .. table.val_to_str( _G[k] ).. "\n")
+    local savetable = {}
+    for _, v in pairs(tosave) do
+      savetable[v] = _G[v]
+      DEBUGPRINT(_G[v])
       end
-    end]]
-    file:write(DataDumper(tosave))
-    file:close()    
+    table.save(savetable, filename)
   end
 
   function load(filename)
-    local file = io.open(filename, "rb")
-    if file then
-      for k, v in pairs(toreset) do
+    for k, _ in pairs(toreset) do
         _G[k] = nil
       end
-      local loadedstring = file:read("*all")
-      local loadedtables = loadstring(loadedstring)()
-      for k, v in pairs(loadedtables) do
+    local t = table.load(filename)
+    DEBUGPRINT(t)
+    for k, v in pairs(t) do
         _G[k] = v
+      DEBUGPRINT(v, k)
       end
-      file:close()
-    else
-      printl ("로드할 파일이 없습니다.")
+    afterload()
     end
+
+  function afterload()
+    partyhandler(currentpartymembers)
   end
 
   function savemenu(...)
@@ -531,7 +524,8 @@
 
   end
 
-  execute("datadumper")
+  --execute("datadumper")
+  execute("tablesaveload")
 
   function shallowcopy(orig)
     local orig_type = type(orig)
