@@ -44,20 +44,21 @@
 
   --플레이어의 입력을 받는 함수. (입력을 받을 변수) = ask("출력할 문장") 형식으로 쓴다. argument를 넣으면, argument들 이외의 입력을 무시한다.
   function ask(question, ...)
+    local args = {n=select('#',...),...}
     local acceptable = false
     local askt, askl = getc()
 
     while(not acceptable) do
       moveto(askt, askl)
-      if arg.n > 0 then
-        local string = question .. " (" .. arg[1]
-        for i=2,arg.n do
-          string = string .. "/" .. arg[i]
+      if args.n > 0 then
+        local string = question .. " (" .. args[1]
+        for i=2,args.n do
+          string = string .. "/" .. args[i]
         end
         string = string .. ")"
         inputq(string, "ans")
-        for i=1,arg.n do
-          if (arg[i] == ans) or (tostring(arg[i]) == ans) then
+        for i=1,args.n do
+          if (args[i] == ans) or (tostring(args[i]) == ans) then
             acceptable = true
           end
         end
@@ -113,13 +114,14 @@
 
   --특정한 장소에 들어갔을 때 표시되는 장소 표시용 함수. argument를 넣으면, 장소를 묘사하는 텍스트가 추가적으로 붙는다.
   function printplace(placename, ...)
+    local args = {n=select('#',...),...}
     printl ("")
     _print ("~=~+~=~ ")
     _print (placename)
     printl (" ~=~+~=~")
     printlw ("")
-    for i=1, arg.n do
-      printlw (arg[i])
+    for i=1, args.n do
+      printlw (args[i])
     end
   end
 
@@ -185,29 +187,32 @@
 
   --캐릭터의 대사를 띄워준다. argument에 말하게 될 대사를 넣을 수 있다. 플레이어의 입력을 기다리지 않는다.
   function say(actor, ...)
+    local args = {n=select('#',...),...}
   printl ("<" .. actor .. ">")
-  for i=1, arg.n do
-    printl ("|" .. arg[i])
+    for i=1, args.n do
+      printl ("|" .. args[i])
   end
   printl ("--------")
   end
 
   --캐릭터의 대사를 띄워준다. argument에 말하게 될 대사를 넣을 수 있다. 플레이어의 입력을 기다린다.
   function sayw(actor, ...)
+    local args = {n=select('#',...),...}
   printl ("<" .. actor .. ">")
-  for i=1, arg.n-1 do
-    printlw ("|" .. arg[i])
+    for i=1, args.n-1 do
+      printlw ("|" .. args[i])
   end
-  if arg.n > 0 then
-    printl ("|" .. arg[arg.n])
+    if args.n > 0 then
+      printl ("|" .. args[args.n])
   end
   printlw ("--------")
   end
 
   --여러 줄을 표시하되, 매번 기다린다.
   function printpara(...)
-  for i=1, arg.n do
-    printlw (arg[i])
+    local args = {n=select('#',...),...}
+    for i=1, args.n do
+      printlw (args[i])
   end
   end
 
@@ -477,14 +482,14 @@
 
   -- 세이브 파일에 입력할 변수들을 추가한다.
   function addsave(...)
-    for i = 1, arg.n do
-      tosave[arg[i]] = _G[arg[i]]
+    for i, v in ipairs({...}) do
+      tosave[v] = _G[v]
     end
   end
 
   function addreset(...)
-    for i = 1, arg.n do
-      toreset[arg[i]] = true
+    for i, v in ipairs({...}) do
+      toreset[v] = true
     end
   end
 

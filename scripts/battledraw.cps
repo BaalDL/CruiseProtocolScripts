@@ -2,9 +2,10 @@
 
   --정해진 크기의 블럭을 출력한다. 출력할 블럭은 argument에 행 단위로 집어넣는다. next는 "right"나 "down", "enter"를 받아서 width 내지 height에 입력한 만큼 커서 위치를 바꾼다.
   function printblock(width, height, next, ...)
-    for i = 1, arg.n do
-      if arg[i] then
-        draw (arg[i], getct() - 1 + i)
+    local args = {n=select('#',...),...}
+    for i = 1, args.n do
+      if args[i] then
+        draw (args[i], getct() - 1 + i)
       end
     end
     if next == "right" then
@@ -198,6 +199,7 @@
 
   --매번 화면을 그리는 함수. argument로 전투 메세지를 전달해야 한다.
   function draweachtime(progress, char, ...)
+    local args = {n=select('#',...),...}
     local t, l = getc()
     if (t >= bufferheight - windowheight - 1) then
       t = bufferheight - windowheight - 1
@@ -264,8 +266,8 @@
       end
     end
     printdelimiter("-")
-    for i = 1, arg.n do
-    printl (arg[i])
+    for i = 1, args.n do
+    printl (args[i])
     end
     printdelimiter("-")
     for k = 1, 4 do

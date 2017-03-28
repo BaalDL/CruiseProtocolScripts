@@ -48,8 +48,9 @@
   end
 
   function runadventureloop(initial, ...)
+    local args = {n=select('#',...),...}
     local commands = {}
-    enterlocation(arg[1])
+    enterlocation(args[1])
     commands.move = "arrival"
     while(true) do
       commands = playercommand(departurecommand, player)

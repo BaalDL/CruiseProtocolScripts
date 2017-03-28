@@ -535,9 +535,10 @@
   end
 
   function applyheal(actor, skill, target, ...)
+    local args = {n=select('#',...),...}
     local heal = 0
     if skill.HealByArgument then
-      heal = arg[1]
+      heal = args[1]
       message = message .. "\n" .. target.name .. "의 체력이 " .. heal .. " 회복되었다!"
       target.currHP = math.min(target.maxHP, target.currHP + heal)
     elseif skill.FixedAmount then
@@ -548,9 +549,10 @@
   end
 
   function applyephemeral(actor, skill, target, ...)
+    local args = {n=select('#',...),...}
     for k, v in pairs(skill.ApplyEphemeral) do
       if v == "manadepletion" then
-        target.currEphemerals["manadepletion"] = {1, arg[1]}
+        target.currEphemerals["manadepletion"] = {1, args[1]}
         target.newEphemerals["manadepletion"] = true
       else
         local ae = applyephemerallist[v]

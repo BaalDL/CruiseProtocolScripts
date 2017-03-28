@@ -1,8 +1,9 @@
 #function playercommand
   function playercommand(command, ...)
+    local args = {n=select('#',...),...}
     local choices = command.commands
     for i, v in ipairs(command.references) do
-      command.references[v] = arg[i]
+      command.references[v] = args[i]
     end
     local startaskt, startaskl = getc()
     local state = command:initial()

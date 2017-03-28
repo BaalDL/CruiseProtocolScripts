@@ -12,13 +12,15 @@
 }
   menuactive = {}
   function activatesubmenu(...)
-    for i = 1, arg.n do
+    local args = {n=select('#',...),...}
+    for i = 1, args.n do
       menuactive[i] = true
     end
   end
 
   function inactivatesubmenu(...)
-    for i = 1, arg.n do
+    local args = {n=select('#',...),...}
+    for i = 1, args.n do
       menuactive[i] = false
     end
   end
