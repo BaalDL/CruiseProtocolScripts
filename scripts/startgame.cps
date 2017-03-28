@@ -471,8 +471,8 @@
       printl ("[999] 이동 취소")
       table.insert(placelist, 999)
     end
-    local goto = ask("번호를 입력해 주십시오.", unpack(placelist))      
-    return goto
+    local destination = ask("번호를 입력해 주십시오.", unpack(placelist))      
+    return destination
   end
 
   -- 세이브 파일에 입력할 변수들을 추가한다.

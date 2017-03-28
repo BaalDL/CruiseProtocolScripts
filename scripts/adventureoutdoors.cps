@@ -209,7 +209,7 @@
     local departurechoicetable = {
       {Number = 0, Key = "look", Description = "살펴보기"},
       {Number = 1, Key = "journey", Description = "여정"},
-      {Number = 2, Key = "goto", Description = "직접 이동"},
+      {Number = 2, Key = "direct", Description = "직접 이동"},
       {Number = 3, Key = "patrol", Description = "순찰"},
       {Number = nil, Key = "newline"},
       {Number = 99, Key = "gameend", Description = "게임 종료"},
@@ -223,8 +223,8 @@
       return "initial"
     elseif (playercommand == "journey") then
       return "journey"
-    elseif (playercommand == "goto") then
-      return "goto" -- NEED IMPLEMENTATION
+    elseif (playercommand == "direct") then
+      return "direct" -- NEED IMPLEMENTATION
     elseif (playercommand == "patrol") then
       return "patrol" -- NEED IMPLEMENTATION
     elseif (playercommand == "gameend") then
@@ -248,7 +248,7 @@
     end
   end
 
-  function departurecommand:goto()
+  function departurecommand:direct()
     return "terminal"
   end
 
