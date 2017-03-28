@@ -90,9 +90,6 @@
     },
     AICommand = PartyDefaultAICommand,
     
-    playerCommand = function(self, party, enemyparty)
-    end,
-
     alive = true,
     currHP = 180,
     currResource = 100,
@@ -170,9 +167,6 @@
     },
     AICommand = PartyDefaultAICommand,
   
-    playerCommand = function(self, party, enemyparty)
-    end,
-    
     alive = true,
     currHP = 150,
     currResource = 100,
@@ -250,9 +244,6 @@
     },
     AICommand = PartyDefaultAICommand,
     
-    playerCommand = function(self, party, enemyparty)
-    end,
-
     alive = true,
     currHP = 200,
     currResource = 100,

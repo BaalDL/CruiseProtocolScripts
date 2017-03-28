@@ -156,13 +156,11 @@
     orderedCharacters[1].controllable = orderedCharacters[1].ally and orderedCharacters[1].alive and checkcontrollable(orderedCharacters[1]) 
     if orderedCharacters[1].controllable then
       message = message .. "\n" .. "행동을 선택해 주십시오."
-      orderedCharacters[1].playerCommand(orderedCharacters[1], party, enemyparty)
       draweachtime(false, nil, message)
       previousmessage = message
       message = ""
     end
     if orderedCharacters[1].controllable then
-      --usedskill = askplayerinbattle(orderedCharacters[1], party, enemyparty, battle)
       local commands = playercommand(battlecharactercommand, orderedCharacters[1], party, enemyparty, battle)
       if battle.fleed then
         return
@@ -719,16 +717,16 @@
     local partyeliminated, enemypartyeliminated = true, true
     for k, _ in pairs(party) do
       if party[k].alive then
-      partyeliminated = false
+        partyeliminated = false
         break
-    end
+      end
     end
     if partyeliminated then return "defeat" end
     for k, _ in pairs(enemyparty) do
       if enemyparty and enemyparty[k].alive then
-      enemypartyeliminated = false
+        enemypartyeliminated = false
         break
-    end
+      end
     end
     if enemypartyeliminated then return "victory" end
     return false
