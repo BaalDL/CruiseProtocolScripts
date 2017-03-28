@@ -55,7 +55,8 @@
     while(true) do
       commands = playercommand(departurecommand, player)
       if commands.move == "arrival" then
-      elseif commands.move == "standstill" then
+      elseif commands.move == "enter" then
+        enterlocation(player.location)
       elseif commands.move == "journey" then
         local startpoint = player.location
         local journey = getjourney(player, startpoint, commands.destination, player.journeypreference)
@@ -169,10 +170,11 @@
     self.commands.move = "departure"
 
     local locationcommandtable = buildlocationtable(self.references.player)
-    local playercommand = getplayerchoice("무섯을 하시겠습니까?", locationcommandtable)
+    local playercommand = getplayerchoice("무엇을 하시겠습니까?", locationcommandtable)
     if (playercommand == "departure") then
       return "terminal"
     elseif (playercommand == "menu") then
+      return "initial"
     else
       meetnpc(playercommand)
       return "initial"
@@ -209,9 +211,10 @@
 
     local departurechoicetable = {
       {Number = 0, Key = "look", Description = "살펴보기"},
-      {Number = 1, Key = "journey", Description = "여정"},
-      {Number = 2, Key = "direct", Description = "직접 이동"},
-      {Number = 3, Key = "patrol", Description = "순찰"},
+      {Number = 1, Key = "enter", Description = "현재 지역으로 진입"},
+      {Number = 2, Key = "journey", Description = "여정"},
+      {Number = 3, Key = "direct", Description = "빠른 이동"},
+      {Number = 4, Key = "patrol", Description = "순찰"},
       {Number = nil, Key = "newline"},
       {Number = 99, Key = "gameend", Description = "게임 종료"},
     }
@@ -222,6 +225,8 @@
     if (playercommand == "look") then
       printl(LocationsList[self.references.player.location].Description)
       return "initial"
+    elseif (playercommand == "enter") then
+      return "enter"
     elseif (playercommand == "journey") then
       return "journey"
     elseif (playercommand == "direct") then
@@ -231,6 +236,17 @@
     elseif (playercommand == "gameend") then
       self.commands.move = "gameend"
       return "terminal"
+    end
+  end
+
+  function departurecommand:enter()
+    local ans = ask(LocationsList[self.references.player.location].Name .. "(으)로 들어갑니까? [0] 예 [1] 아니오", "0", "1")
+    if (ans == "0") then
+      self.commands.move = "enter"
+      printl(LocationsList[self.references.player.location].Name .. "(으)로 진입합니다.")
+      return "terminal"
+    else
+      return "initial"
     end
   end
 
