@@ -42,7 +42,7 @@
 
   function itemtarget(type, target)
     local targets = {"-1"}
-    local p = partyhandler(currentpartymembers)
+    local p = party
     local e
     if currentbattle then
       p = currentbattle.party

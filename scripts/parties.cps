@@ -6,7 +6,6 @@
       party[k].targetnumber = 10 + k
       targettable[tostring(10+k)] = party[k]
     end
-    return party
   end
 #end
 
