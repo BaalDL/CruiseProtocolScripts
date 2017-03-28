@@ -559,6 +559,14 @@
       _print(name .. (tostring(anything) or ""))
     end
   end
+
+  function lengthwithouttag(str)
+    local strwithouttag = string.gsub(str, '/b.', '')
+    strwithouttag = string.gsub(strwithouttag, '/f.', '')
+    strwithouttag = string.gsub(strwithouttag, '/x', '')
+    strwithouttag = string.gsub(strwithouttag, '/X', '')
+    return string.len(strwithouttag)
+  end
 #end
 
 #function configurebasicparameters

@@ -316,10 +316,4 @@
     _setwindowposition(t, 0)
   end
 
-  function lengthwithouttag(str)
-    local strwithouttag = string.gsub(str, '/b.', '')
-    local strwithouttag = string.gsub(strwithouttag, '/f.', '')
-    local strwithouttag = string.gsub(strwithouttag, '/x', '')
-    return string.len(strwithouttag)
-  end
 #end
