@@ -103,7 +103,7 @@
         choiceivpairs[v.Number] = v.Key
       end
     end
-    print (questionnaire)
+    _print (questionnaire)
     return choiceivpairs[tonumber(ask(question, unpack(choices)))]
   end
 
@@ -553,9 +553,9 @@
       name = ""
     end
     if (type(anything) == "table") then
-      print(name .. table.tostring(anything))
+      _print(name .. table.tostring(anything))
     else
-      print(name .. (tostring(anything) or ""))
+      _print(name .. (tostring(anything) or ""))
     end
   end
 #end

@@ -351,7 +351,7 @@
       local adjacentTargets = {}
       for k, _ in pairs(skilltarget) do
         local n = skilltarget[k].targetnumber
-        print (n)
+        _print (n)
         if n-1 >= 11 and targettable[tostring(n-1)] and targettable[tostring(n-1)].alive then
           table.insert(adjacentTargets, tostring(n-1))
         end

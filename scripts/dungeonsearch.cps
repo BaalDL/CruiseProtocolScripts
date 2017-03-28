@@ -34,13 +34,13 @@
       mapdraw[#mapdraw+1] = "\n"
     end
     mapdraw[(mapdata.playervertical-1)*(mapdata.width+1)+mapdata.playerhorizontal] = "主"
-    print(table.concat(mapdraw))
-    --print(wholedungeon.zonetext[mapdata.zonemap[(mapdata.playervertical-1)*mapdata.width+mapdata.playerhorizontal]])
+    _print(table.concat(mapdraw))
+    --_print(wholedungeon.zonetext[mapdata.zonemap[(mapdata.playervertical-1)*mapdata.width+mapdata.playerhorizontal]])
     drawrelatively(mapdata.zonemap[(mapdata.playervertical-1)*mapdata.width+mapdata.playerhorizontal], -21, 41)
     if wholedungeon.zonetext[mapdata.zonemap[(mapdata.playervertical-1)*mapdata.width+mapdata.playerhorizontal]] then
       drawrelatively(wholedungeon.zonetext[mapdata.zonemap[(mapdata.playervertical-1)*mapdata.width+mapdata.playerhorizontal]], -20, 41)
     end
-    print("")
+    _print("")
     return currentfloor, wholedungeon
   end
 
