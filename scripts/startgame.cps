@@ -4,7 +4,7 @@
   tosave = {}
   toreset = {}
   world = {}
-  execute ("loadgeneralfunctions")
+  execute ("loadgeneralfunctions")  
   execute ("loadptypebattlefunctions")
   execute ("configurebasicparameters")
   execute ("loadbattledata")
@@ -18,9 +18,10 @@
   party = partyhandler(currentpartymembers)
   local playerchoice
   while(playerchoice ~= "-1") do
-    printl ("[1] 전투 [2] 저장 [3] 탐사 [4] 탐험 [5] 로드 [6] 메뉴 [9] 침투 미니게임 [-1] 종료")
+    printl ("[1] 전투 [2] 저장 [3] 탐사 [4] 탐험 [5] 로드 [6] 메뉴 [9] 침투 미니게임 [-1] 종료 ")
     playerchoice = ask("무엇을 합니까?", "1", "2", "3", "4", "5", "6", "9", "-1")
     if playerchoice == "1" then
+      party = partyhandler(currentpartymembers)
       local enemyparty = initializeenemyparty(EnemyPartyTempletes["thugs1"])
       battlehandler(enemyparty, true)
     elseif playerchoice == "2" then
@@ -188,24 +189,24 @@
   --캐릭터의 대사를 띄워준다. argument에 말하게 될 대사를 넣을 수 있다. 플레이어의 입력을 기다리지 않는다.
   function say(actor, ...)
     local args = {n=select('#',...),...}
-  printl ("<" .. actor .. ">")
+    printl ("<" .. actor .. ">")
     for i=1, args.n do
       printl ("|" .. args[i])
-  end
-  printl ("--------")
+    end
+    printl ("--------")
   end
 
   --캐릭터의 대사를 띄워준다. argument에 말하게 될 대사를 넣을 수 있다. 플레이어의 입력을 기다린다.
   function sayw(actor, ...)
     local args = {n=select('#',...),...}
-  printl ("<" .. actor .. ">")
+    printl ("<" .. actor .. ">")
     for i=1, args.n-1 do
       printlw ("|" .. args[i])
-  end
+    end
     if args.n > 0 then
       printl ("|" .. args[args.n])
-  end
-  printlw ("--------")
+    end
+    printlw ("--------")
   end
 
   --여러 줄을 표시하되, 매번 기다린다.
@@ -213,12 +214,12 @@
     local args = {n=select('#',...),...}
     for i=1, args.n do
       printlw (args[i])
-  end
+    end
   end
 
   --커서의 현재 위치를 받는다. 위에서의 위치(top 내지 row), 왼쪽에서의 위치(left내지 column)를 각각 반환.
   function getc(...)
-  return getct(), getcl()
+    return getct(), getcl()
   end
 
   --지정한 위치에 string을 표시하고, 커서를 원래 위치로 돌린다. 위치를 입력하지 않으면 자기 자리에 출력하고 커서를 원래 자리로 돌려놓는다. 개행 지원 안함.

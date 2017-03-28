@@ -75,6 +75,7 @@
   
   addsave("allpartymembers")
   addsave("currentpartymembers")
+  addsave("party")
   addsave("EnemyInfo")
   addsave("EnemyDefenseInfo")
   addreset("allpartymembers")
