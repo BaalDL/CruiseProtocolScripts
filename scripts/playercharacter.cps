@@ -15,6 +15,8 @@
   player.skills = {}
   player.skillpoint = 0
   player.maxskillpoint = 100
+  player.flags = {}
+  
   for _, v in ipairs(PlayerSkillHelper.GetSkillsByTag("Default")) do
     player.skills[v] = true
   end
