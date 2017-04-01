@@ -14,7 +14,7 @@
   execute ("infiltration")
   execute ("playmenu")
   execute ("playercommand")
-  execute ("playerspeak")
+  execute ("npcdialogue")
   activatesubmenu(1,2,3,4,5,6,7,8,9)
   partyhandler(currentpartymembers)
   local playerchoice
@@ -35,7 +35,8 @@
     elseif playerchoice == "6" then
       campmenu()
     elseif playerchoice == "8" then
-      playerspeak(testinquery, player)
+      startdialogue("Doctor1", "Explanation")
+      --playerspeak(testinquery, player)
     elseif playerchoice == "9" then
       startinfiltration(7, 1, player)
     end
