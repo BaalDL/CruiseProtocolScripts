@@ -44,7 +44,7 @@
     if inquery[countertable[answer]].consequence then
       inquery[countertable[answer]].consequence()
     end
-    return answer
+    return countertable[answer]
   end
 
   function speechcheck(checktype, compare, value)
