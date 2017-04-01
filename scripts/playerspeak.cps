@@ -7,17 +7,32 @@
     local startaskt, startaskl = getc()
     local answertable = {}
     local answerstringtable = {}
+    local counter = 1
+    local countertable = {}
     for i, v in ipairs(inquery) do
-      if v.alwayspossible then
-        table.insert(answertable, i)
-        answerstringtable[i] = "[" .. i .. "] " .. inquery[i].answer
-      else 
-        local onlypossible, text = v.onlypossible()
-        if onlypossible then
-          table.insert(answertable, i)
-          answerstringtable[i] = "[" .. i .. "] " .. text .. inquery[i].answer
-        else
-          answerstringtable[i] = "/fk[" .. i .. "]/x " .. text .. "/fk" .. inquery[i].answer .. "/x"
+      if (v.onlyshow == nil) then
+        if (v.onlypossible == nil) then
+          table.insert(answertable, counter)
+          answerstringtable[counter] = "[" .. counter .. "] " .. inquery[i].answer
+          countertable[counter] = i
+        else 
+          local onlypossible, text = v.onlypossible()
+          if onlypossible then
+            table.insert(answertable, counter)
+            answerstringtable[counter] = "[" .. counter .. "] " .. text .. inquery[i].answer
+            countertable[counter] = i
+          else
+            answerstringtable[counter] = "/fk[" .. counter .. "]/x " .. text .. "/fk" .. inquery[i].answer .. "/x"
+          end
+        end
+        counter = counter + 1
+      else
+        local onlyshow = v.onlyshow()
+        if onlyshow then
+          table.insert(answertable, counter)
+          answerstringtable[counter] = "[" .. counter .. "] " .. inquery[i].answer
+          countertable[counter] = i
+          counter = counter + 1
         end
       end
     end
@@ -26,8 +41,8 @@
       printl(v)
     end
     local answer = tonumber(ask("...", table.unpack(answertable)))
-    if inquery[answer].consequence then
-      inquery[answer].consequence()
+    if inquery[countertable[answer]].consequence then
+      inquery[countertable[answer]].consequence()
     end
     return answer
   end
@@ -52,12 +67,17 @@
   testinquery.references = {"player"}
 
   testinquery[1] = {}
-  testinquery[1].answer = "평범한 학생이었습니다."
-  testinquery[1].alwayspossible = true
-  testinquery[1].consequence = function() player.addskillpoint(5); player.addmoney(100000) end
+  testinquery[1].answer = "그것보다, 당신은 누구죠?"
+  testinquery[1].onlyshow = function() return player.flags["enoughcuriosity"] end
 
   testinquery[2] = {}
-  testinquery[2].answer = "돈을 좀 휘두르고 다녔죠."
-  testinquery[2].onlypossible = function() return speechcheck("playermoney", "geq", 10000) end
+  testinquery[2].answer = "평범한 학생이었습니다."
+  testinquery[2].consequence = function() player.flags["enoughcuriosity"] = true end
+
+  testinquery[3] = {}
+  testinquery[3].answer = "돈을 좀 휘두르고 다녔죠."
+  testinquery[3].onlypossible = function() return speechcheck("playermoney", "geq", 10000) end
+
+
 
 #end
