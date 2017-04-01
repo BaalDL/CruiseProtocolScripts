@@ -1,8 +1,10 @@
 #function playerspeak
   function playerspeak(inquery, ...)
     local args = {n=select('#',...),...}
-    for i, v in ipairs(inquery.references) do
-      inquery.references[v] = args[i]
+    if (next(inquery.reference) ~= nil) then
+      for i, v in ipairs(inquery.references) do
+        inquery.references[v] = args[i]
+      end
     end
     local startaskt, startaskl = getc()
     local answertable = {}
