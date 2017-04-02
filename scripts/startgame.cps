@@ -4,6 +4,7 @@
   tosave = {}
   toreset = {}
   world = {}
+  world.dungeon = {}
   execute ("loadgeneralfunctions")  
   execute ("loadptypebattlefunctions")
   execute ("configurebasicparameters")
@@ -27,7 +28,7 @@
     elseif playerchoice == "2" then
       save("savetemp.txt")
     elseif playerchoice == "3" then
-      execute ("firstdungeon")
+      enterdungeon("firstdungeon", "０")
     elseif playerchoice == "4" then
       startgamebyenteringinitialposition("CheonhoStation")
     elseif playerchoice == "5" then
