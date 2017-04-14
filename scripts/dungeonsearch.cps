@@ -11,6 +11,8 @@
           if (k == "wall") then mapdraw[#mapdraw+1] = "＃"
           elseif (k == "blank") then mapdraw[#mapdraw+1] = "　"
           elseif (k == "door") then mapdraw[#mapdraw+1] = "門"
+          elseif (k == "transparent") then mapdraw[#mapdraw+1] = "▥"
+          elseif (k == "nofloor") then mapdraw[#mapdraw+1] = "凶"
           else
             k = wholedungeon[mapdata[(i-1)*mapdata.width+j]].dungeonobjecttype
             if (k == "steponevent") then mapdraw[#mapdraw+1] = "　"
@@ -23,9 +25,13 @@
             elseif (k == "hiddenpassage") then mapdraw[#mapdraw+1] = "＃"
             elseif (k == "openpassage") then mapdraw[#mapdraw+1] = "口"
             elseif (k == "entry") then mapdraw[#mapdraw+1] = "入"
+            elseif (k == "exit") then mapdraw[#mapdraw+1] = "出"
+            elseif (k == "start") then mapdraw[#mapdraw+1] = "　"
             elseif (k == "wall") then mapdraw[#mapdraw+1] = "＃"
             elseif (k == "blank") then mapdraw[#mapdraw+1] = "　"
             elseif (k == "door") then mapdraw[#mapdraw+1] = "門"
+            elseif (k == "npc") then mapdraw[#mapdraw+1] = wholedungeon[mapdata[(i-1)*mapdata.width+j]].icon
+            elseif (k == "nofloor") then mapdraw[#mapdraw+1] = "凶"
             else mapdraw[#mapdraw+1] = "Error"
             end
           end
@@ -70,8 +76,8 @@
     end
     if player == true then
       local k = mapdata[(newy-1)*mapdata.width+newx]
-      if (k == "wall") then return -1
-      elseif (k == "blank") then
+      if (k == "wall") or (k == "transparent") or (k == "nofloor") then return -1
+      elseif (k == "blank" or k == "start") then
         mapdata.playerhorizontal = newx
         mapdata.playervertical = newy
       elseif (k == "door") then
@@ -258,9 +264,12 @@
     if (tile == "wall") then visible = false
     elseif (tile == "blank") then visible = true
     elseif (tile == "door") then visible = false
+    elseif (tile == "transparent") then visible = true
+    elseif (tile == "nofloor") then visible = true
     elseif (alt == "steponevent") then visible = true
     elseif (alt == "chest") then visible = true
     elseif (alt == "openedchest") then visible = true
+    elseif (alt == "npc") then visible = true
     elseif (alt == "enemy") then visible = true
     elseif (alt == "boss") then visible = true
     elseif (alt == "blank") then visible = true
@@ -280,6 +289,8 @@
       if (c == "＃") then x = "wall"
       elseif (c == "　") then x = "blank"
       elseif (c == "門") then x = "door"
+      elseif (c == "▥") then x = "transparent"
+      elseif (c == "凶") then x = "nofloor"
       else
         x = c
       end
