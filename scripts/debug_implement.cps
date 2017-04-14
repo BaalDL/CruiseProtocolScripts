@@ -54,8 +54,8 @@
   MAXENEMY = 5
   MAXPARTY = 4
 
-  EWIDTH = windowwidth / MAXENEMY
-  PWIDTH = windowwidth / MAXPARTY
+  EWIDTH = WINDOWWIDTH / MAXENEMY
+  PWIDTH = WINDOWWIDTH / MAXPARTY
   -- we assume EBARWIDTH, PBARWIDTH are odd numbers.
   EBARWIDTH = (EWIDTH - string.len("     HP [] "))
   PBARWIDTH = (PWIDTH - string.len("     魔 [] "))

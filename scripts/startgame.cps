@@ -259,11 +259,11 @@
   --깔끔하게 글을 쓸 수 있도록 지정한 영역을 지운다. startl과 endl을 지정하지 않으면 줄 전체를 지운다.
   function erase(startt, endt, startl, endl)
     if not startl then startl = 0 end
-    if not endl then endl = windowwidth end
-    local blankstring = string.rep(" ", windowwidth - 1 - startl)
+    if not endl then endl = WINDOWWIDTH end
+    local blankstring = string.rep(" ", WINDOWWIDTH - 1 - startl)
     moveto(startt, startl) 
     printl (blankstring)
-    blankstring = string.rep(" ", windowwidth - 1)
+    blankstring = string.rep(" ", WINDOWWIDTH - 1)
     for i = startt, endt do
       printl (blankstring)
     end
@@ -288,17 +288,17 @@
 
   --한 줄을 가득 지정한 문자열로 채운다.
   function printdelimiter(char)
-  printl ( string.rep(char, (windowwidth - 1)/string.len(char)))
+  printl ( string.rep(char, (WINDOWWIDTH - 1)/string.len(char)))
   end
 
   --지정한 문자열을 가운데 정렬로 표시한다.
   function printmid(line)
     moveh(0)
     local length = string.len(line)
-    if length >= windowwidth - 1 then
+    if length >= WINDOWWIDTH - 1 then
       printl (line)
     else
-      printl ( string.rep(' ', (windowwidth - length)/2) .. line )
+      printl ( string.rep(' ', (WINDOWWIDTH - length)/2) .. line )
     end
   end
 
@@ -558,6 +558,20 @@
     end
   end
 
+  function CHECKGLOBALS(func, ud)
+    local luainternal = {bit32 = true, coroutine = true, debug = true, io = true, math = true, os = true, package = true, string = true, table = true,
+    _G = true, _VERSION = true, }
+
+    for k, v in pairs(_G) do
+      if (type(v) == "function" and not func) then
+      elseif (type(v) == "userdata" and not ud) then
+      elseif luainternal[k] then
+      else
+        printl(k .. "\t" .. tostring(v))
+      end
+    end
+  end
+
   function lengthwithouttag(str)
     local strwithouttag = string.gsub(str, '/b.', '')
     strwithouttag = string.gsub(strwithouttag, '/f.', '')
@@ -568,15 +582,15 @@
 #end
 
 #function configurebasicparameters
-  windowwidth = 120
-  windowheight = 40
-  bufferwidth = 120
-  bufferheight = 300
-  defaultforeground = 'w'
-  defaultbackground = 'K'
+  WINDOWWIDTH = 120
+  WINDOWHEIGHT = 40
+  BUFFERWIDTH = 120
+  BUFFERHEIGHT = 300
+  DEFAULTFOREGROUND = 'w'
+  DEFAULTBACKGROUND = 'K'
   local askt, askl = getc()
-  _setwindowsize(windowwidth, windowheight)
-  _setbuffersize(bufferwidth, bufferheight)
-  _setdefaultcolor(defaultforeground, defaultbackground)
+  _setwindowsize(WINDOWWIDTH, WINDOWHEIGHT)
+  _setbuffersize(BUFFERWIDTH, BUFFERHEIGHT)
+  _setdefaultcolor(DEFAULTFOREGROUND, DEFAULTBACKGROUND)
   moveto(askt, askl)
 #end

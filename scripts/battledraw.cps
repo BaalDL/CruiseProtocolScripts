@@ -201,11 +201,11 @@
   function draweachtime(progress, char, ...)
     local args = {n=select('#',...),...}
     local t, l = getc()
-    if (t >= bufferheight - windowheight - 1) then
-      t = bufferheight - windowheight - 1
+    if (t >= BUFFERHEIGHT - WINDOWHEIGHT - 1) then
+      t = BUFFERHEIGHT - WINDOWHEIGHT - 1
     end
     moveto(t, l)
-    for i=1, windowheight do
+    for i=1, WINDOWHEIGHT do
       printdelimiter(" ")
     end
     moveto(t, l)
