@@ -1,7 +1,7 @@
 #function dungeonsearchfunctions
   function dungeondraw(currentfloor, wholedungeon)
-    mapdata = wholedungeon.map[currentfloor]
-    mapdraw = {}
+    local mapdata = wholedungeon.map[currentfloor]
+    local mapdraw = {}
     for i = 1, mapdata.height do
       for j = 1, mapdata.width do
         if mapdata.visualmap[(i-1)*mapdata.width+j] == "■" then
@@ -42,23 +42,23 @@
     mapdraw[(mapdata.playervertical-1)*(mapdata.width+1)+mapdata.playerhorizontal] = "主"
     _print(table.concat(mapdraw))
     --_print(wholedungeon.zonetext[mapdata.zonemap[(mapdata.playervertical-1)*mapdata.width+mapdata.playerhorizontal]])
-    drawrelatively(mapdata.zonemap[(mapdata.playervertical-1)*mapdata.width+mapdata.playerhorizontal], -21, 41)
+    drawrelatively(mapdata.zonemap[(mapdata.playervertical-1)*mapdata.width+mapdata.playerhorizontal], -20, 41)
     if wholedungeon.zonetext[mapdata.zonemap[(mapdata.playervertical-1)*mapdata.width+mapdata.playerhorizontal]] then
-      drawrelatively(wholedungeon.zonetext[mapdata.zonemap[(mapdata.playervertical-1)*mapdata.width+mapdata.playerhorizontal]], -20, 41)
+      drawrelatively(wholedungeon.zonetext[mapdata.zonemap[(mapdata.playervertical-1)*mapdata.width+mapdata.playerhorizontal]], -19, 41)
     end
     _print("")
     return currentfloor, wholedungeon
   end
 
-  function dungeonupdate(currentfloor, wholedungeon)
-    mapdata = wholedungeon.map[currentfloor]
+  function dungeonupdate(currentfloor, wholedungeon, dungeoninput)
+    local mapdata = wholedungeon.map[currentfloor]
     moveobject(mapdata, wholedungeon, dungeoninput, true)
     mapdata.visualmap = automapper(currentfloor, wholedungeon)
     return currentfloor, wholedungeon
   end
 
   function dungeongetinput()
-    dungeoninput = ask("어떻게 할까?", "w", "a", "s", "d")
+    return ask("어떻게 할까?", "w", "a", "s", "d")
   end
 
   function moveobject(mapdata, wholedungeon, dungeoninput, player)
@@ -305,16 +305,22 @@
 
   function enterdungeon(dungeonkey, entrancekey)
     local d = world.dungeon[dungeonkey]
-    local currentfloor = 1
+    local i
+    if (d.initialevent ~= nil and not d.flags["initial"]) then
+      d.flags["initial"] = true
+      d.initialevent()
+      printl("")
+    end
+    local currentfloor = d[entrancekey].floor
     local currentmap = d.map[currentfloor]
-    currentmap.playerhorizontal = d[entrancekey]["placewidth"]
+    currentmap.playerhorizontal = d[entrancekey].placewidth
+    currentmap.playervertical = d[entrancekey].placeheight
     currentmap.visiblerange = player.dungeonvisiblerange
-    currentmap.playervertical = d[entrancekey]["placeheight"]
     currentmap.visualmap = automapper(currentfloor, d)
     dungeondraw(currentfloor, d)
     while true do
-      dungeongetinput()
-      currentfloor, d = dungeonupdate(currentfloor, d)
+      i = dungeongetinput()
+      currentfloor, d = dungeonupdate(currentfloor, d, i)
       currentfloor, d = dungeondraw(currentfloor, d)
     end
   end
@@ -329,8 +335,6 @@
 
 #function firstdungeon
   world.dungeon["firstdungeon"] = {}
-  firstdungeon = {}
-  firstdungeon.name = "firstdungeon"
   world.dungeon["firstdungeon"].flags = {}
 
   world.dungeon["firstdungeon"].initialize = function()
@@ -390,7 +394,7 @@
       d.map[1].zonemap[i] = firstlevelzone:sub(2*i-1,2*i)
     end
     
-    d["０"] = {dungeonobjecttype="entry", placewidth=2, placeheight=19, linkto="outside", linkwhere="０"}
+    d["０"] = {dungeonobjecttype="entry", placewidth=2, placeheight=19, linkto="outside", linkwhere="０", floor = 1,}
 
     d["Ａ"] = {dungeonobjecttype="steponevent", event=d.firstdungeonA}
     d.flags["A"] = false
