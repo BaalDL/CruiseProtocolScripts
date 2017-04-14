@@ -1,7 +1,7 @@
 #function playerspeak
   function playerspeak(inquery, ...)
     local args = {n=select('#',...),...}
-    if (next(inquery.reference) ~= nil) then
+    if (next(inquery.references) ~= nil) then
       for i, v in ipairs(inquery.references) do
         inquery.references[v] = args[i]
       end

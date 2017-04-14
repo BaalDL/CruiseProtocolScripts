@@ -88,7 +88,7 @@
   LocationNpcDialogueList["Doctor1"]["General"].initial.inqueryreferences = {}
   LocationNpcDialogueList["Doctor1"]["General"].initial.inquery = {}
   LocationNpcDialogueList["Doctor1"]["General"].initial.inquery.question = "무슨 일로 왔나?"
-  LocationNpcDialogueList["Doctor1"]["General"].initial.inquery.reference = {}
+  LocationNpcDialogueList["Doctor1"]["General"].initial.inquery.references = {}
   LocationNpcDialogueList["Doctor1"]["General"].initial.inquery[1] = {}
   LocationNpcDialogueList["Doctor1"]["General"].initial.inquery[1].answer = "여쭙고 싶은 것이 있습니다."
   LocationNpcDialogueList["Doctor1"]["General"].initial.inquery[2] = {}
