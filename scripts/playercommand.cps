@@ -14,7 +14,7 @@
         moveto(startaskt, startaskl)
       end
       if state then
-      state = command[state](command)
+        state = command[state](command)
       else
         printl("DEBUG : 모든 playercommand는 return으로 적절한 다음 state를 반환해야 합니다. 마지막으로 return된 state: " .. (state and state or "nil"))
         break
