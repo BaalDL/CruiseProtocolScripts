@@ -58,7 +58,7 @@
     else
       printl("DEBUG: 메뉴 관련 처리 추가")
     end
-    mapdata.visualmap = automapper(currentfloor, wholedungeon)
+    mapdata.visualmap = automapper(mapdata)
     return currentfloor, wholedungeon
   end
 
@@ -74,7 +74,8 @@
   end
 
   function checkplayermovableto(mapdata, x, y)
-    local movable = {blank = true, start = true, door = true, steponevent = true, chest = true, openedchest = true, enemy = true, boss = true, hiddenpassage = true, openpassage = true, exit = true, entry = true}
+    local movable = {blank = true, start = true, door = true, steponevent = true, chest = true, openedchest = true, enemy = true, boss = true,
+    hiddenpassage = true, openpassage = true, exit = true, entry = true, blocked = true, locked = true,}
     if x < 1 or x > mapdata.width or y < 1 or y > mapdata.height then return false
     end
     local k = mapdata[(y-1)*mapdata.width + x]
@@ -127,8 +128,8 @@
             k.dungeonobjecttype = "door"
           else
             printlw("문은 잠겨 있다. 열쇠가 어디 있을 듯 하다.")
+            return -1
           end
-          return -1
         elseif (k.dungeonobjecttype == "chest") then
           mapdata.playerhorizontal = newx
           mapdata.playervertical = newy
@@ -178,116 +179,191 @@
     end
   end
 
-  function automapper(currentfloor, wholedungeon)
-    local mapdata = wholedungeon.map[currentfloor]
-    local x = mapdata.playerhorizontal
-    local y = mapdata.playervertical
-    local movex = x
-    local movey = y
-    mapdata.visualmap[(y-1)*mapdata.width+x] = "　"
-    local n = mapdata.visiblerange
-    local i, j, fieldi, fieldj, stepx, stepy, errprev, err, k, l, checkvisible, tile
-    for i = -n, n do
-      for j = -(n - math.abs(i)), (n - math.abs(i)), 2*(n - math.abs(i)) do
-        movex = x
-        movey = y
-        if j < 0 then
-          fieldj = -j
-          stepy = -1
-        else
-          fieldj = j
-          stepy = 1
-        end
-        if i < 0 then
-          fieldi = -i
-          stepx = -1
-        else
-          fieldi = i
-          stepx = 1
-        end
-        
-        local twoi = fieldi * 2
-        local twoj = fieldj * 2
-        if fieldi > fieldj then
-          errprev = fieldi
-          err = fieldi
-          for k = 1, fieldi do
-            movex = movex + stepx
-            if (movex < 1) or (movex > mapdata.width) then break end
-            err = err + twoj
-            if err > twoi then
-              movey = movey + stepy
-              if (movey < 1) or (movey > mapdata.height) then break end
-              err = err - twoi
-              if (err + errprev < twoi) then
-                l = (movey-1-stepy)*mapdata.width+movex
-                mapdata.visualmap[l] = "　"
-                checkvisible = checktile(mapdata[l], (wholedungeon[mapdata[l]] and wholedungeon[mapdata[l]].dungeonobjecttype))
-              elseif (err + errprev > twoi) then
-                l = (movey-1)*mapdata.width+movex-stepx
-                mapdata.visualmap[l] = "　"
-                checkvisible = checktile(mapdata[l], (wholedungeon[mapdata[l]] and wholedungeon[mapdata[l]].dungeonobjecttype))
-              else
-                l = (movey-1-stepy)*mapdata.width+movex
-                mapdata.visualmap[l] = "　"
-                checkvisible = checktile(mapdata[l], (wholedungeon[mapdata[l]] and wholedungeon[mapdata[l]].dungeonobjecttype))
-                l = (movey-1)*mapdata.width+movex-stepx
-                mapdata.visualmap[l] = "　"
-                checkvisible = checktile(mapdata[l], (wholedungeon[mapdata[l]] and wholedungeon[mapdata[l]].dungeonobjecttype))
-              end
-            end
-            l = (movey-1)*mapdata.width+movex
-            mapdata.visualmap[l] = "　"
-            checkvisible = checktile(mapdata[l], (wholedungeon[mapdata[l]] and wholedungeon[mapdata[l]].dungeonobjecttype))
-            errprev = err;
-            if not checkvisible then break end
+  function automapper(mapdata)
+    --Algorithm of Adam Millazo http://www.adammil.net/blog/v125_roguelike_vision_algorithms.html
+    local top = {x = 1, y = 1}
+    local bottom = {x = 1, y = 0}
+    setmetatable(top, MapHelper.slope)
+    setmetatable(bottom, MapHelper.slope)
+    local visualmap = mapdata.visualmap
+    for i = 1, 8 do
+      visualmap = automapperoctant(mapdata, i, 1, top, bottom)
+    end
+    return visualmap
+  end
+
+  function automapperoctant(mapdata, octant, initx, top, bottom)
+    local originx = mapdata.playerhorizontal
+    local originy = mapdata.playervertical
+    local vrange = mapdata.visiblerange
+    local visualmap = mapdata.visualmap
+
+    for iterx = initx, vrange do
+      
+      local topY
+      if (top.x == 1) then
+        topY = iterx
+      else
+        topY = math.floor(((2 * iterx - 1) * top.y + top.x ) / (2 * top.x))
+        if MapHelper.blockslight(mapdata, iterx, topY, octant) then
+          local x2yt2p1 = {x = 2 * iterx, y = 2 * topY + 1}
+          setmetatable(x2yt2p1, MapHelper.slope)
+          if top >= x2yt2p1 and not MapHelper.blockslight(mapdata, iterx, topY + 1, octant) then
+            topY = topY + 1
           end
         else
-          errprev = fieldj
-          err = fieldj
-          for k = 1, fieldj do
-            movey = movey + stepy
-            if (movey < 1) or (movey > mapdata.height) then break end
-            err = err + twoi
-            if err > twoj then
-              movex = movex + stepx
-              if (movex < 1) or (movex > mapdata.width) then break end
-              err = err - twoj
-              if (err + errprev > twoj) then
-                l = (movey-1-stepy)*mapdata.width+movex
-                mapdata.visualmap[l] = "　"
-                checkvisible = checktile(mapdata[l], (wholedungeon[mapdata[l]] and wholedungeon[mapdata[l]].dungeonobjecttype))
-              elseif (err + errprev < twoj) then
-                l = (movey-1)*mapdata.width+movex-stepx
-                mapdata.visualmap[l] = "　"
-                checkvisible = checktile(mapdata[l], (wholedungeon[mapdata[l]] and wholedungeon[mapdata[l]].dungeonobjecttype))
-              else
-                l = (movey-1-stepy)*mapdata.width+movex
-                mapdata.visualmap[l] = "　"
-                checkvisible = checktile(mapdata[l], (wholedungeon[mapdata[l]] and wholedungeon[mapdata[l]].dungeonobjecttype))
-                l = (movey-1)*mapdata.width+movex-stepx
-                mapdata.visualmap[l] = "　"
-                checkvisible = checktile(mapdata[l], (wholedungeon[mapdata[l]] and wholedungeon[mapdata[l]].dungeonobjecttype))
-              end
-            end
-            l = (movey-1)*mapdata.width+movex
-            mapdata.visualmap[l] = "　"
-            checkvisible = checktile(mapdata[l], (wholedungeon[mapdata[l]] and wholedungeon[mapdata[l]].dungeonobjecttype))
-            errprev = err;
-            if not checkvisible then break end
-          end     
+          local ax = 2 * iterx
+          if MapHelper.blockslight(mapdata, iterx + 1, topY + 1, octant) then
+            ax = ax + 1
+          end
+          local xayt2p1 = {x = ax, y = 2 * topY + 1}
+          setmetatable(xayt2p1, MapHelper.slope)
+          if top > xayt2p1 then
+            topY = topY + 1
+          end
         end
-        if (n - math.abs(i) == 0) then break end
       end
+      
+      local bottomY
+      if (bottom.y == 0) then
+        bottomY = 0
+      else
+        bottomY = math.floor(((2 * iterx - 1) * bottom.y + bottom.x ) / (2 * bottom.x))
+        local x2yb2p1 = {x = iterx * 2, y = 2 * bottomY + 1}
+        setmetatable(x2yb2p1, MapHelper.slope)
+        if(bottom >= x2yb2p1 and MapHelper.blockslight(mapdata, iterx, bottomY, octant) and not MapHelper.blockslight(mapdata, iterx, bottomY+1, octant)) then
+          bottomY = bottomY + 1
+        end
+      end
+
+      local wasOpaque = -1
+      for itery = topY, bottomY, -1 do
+        if MapHelper.getdistance(0, 0, iterx, itery) <= vrange then
+          local isOpaque = MapHelper.blockslight(mapdata, iterx, itery, octant)
+          local x4p1y4m1 = {x = 4 * iterx + 1, y = 4 * itery - 1}
+          setmetatable(x4p1y4m1, MapHelper.slope)
+          local x4m1y4p1 = {x = 4 * iterx - 1, y = 4 * itery + 1}
+          setmetatable(x4m1y4p1, MapHelper.slope)
+          local isVisible = isOpaque or ((itery ~= topY or top > x4p1y4m1) and (itery ~= bottomY) or bottom < x4m1y4p1)
+          if isVisible then visualmap = MapHelper.setvisible(mapdata, iterx, itery, octant) end
+
+          if iterx ~= vrange then
+            if isOpaque then
+              if wasOpaque == 0 then
+                local nx = 2 * iterx
+                local ny = 2 * itery + 1
+                if MapHelper.blockslight(mapdata, iterx, itery+1, octant) then nx = nx - 1 end
+                local xnyn = {x = nx, y = ny}
+                setmetatable(xnyn, MapHelper.slope)
+                if top > xnyn then
+                  if y == bottomY then
+                    bottom = xnyn
+                    break
+                  else
+                    visualmap = automapperoctant(mapdata, octant, initx + 1, top, xnyn)
+                  end
+                else
+                  if y == bottomY then
+                    return visualmap
+                  end
+                end
+              end
+              wasOpaque = 1
+            else
+              if wasOpaque > 0 then
+                local nx = 2 * iterx
+                local ny = 2 * itery + 1
+                if MapHelper.blockslight(mapdata, iterx + 1, itery + 1, octant) then
+                  nx = nx + 1
+                end
+                local xnyn = {x = nx, y = ny}
+                setmetatable(xnyn, MapHelper.slope)
+                if bottom > xnyn then
+                  return visualmap
+                end
+                top = xnyn
+              end
+              wasOpaque = 0
+            end
+          end
+        end
+      end
+      if(wasOpaque ~= 0) then break end
+    end
+    return visualmap
+  end
+
+
+  MapHelper = {}
+  function MapHelper.xyto1d(x, y, dim)
+    return (y-1)*dim + x
+  end
+  MapHelper.slope = {
+    __lt = function(lhs, rhs)
+      return lhs.y * rhs.x < lhs.x * rhs.y
+    end,
+    __le = function(lhs, rhs)
+      return lhs.y * rhs.x <= lhs.x * rhs.y
+    end
+  }
+  function MapHelper.octant(x, y, octant, dx, dy)
+    local coord = {}
+    if octant == 1 then
+      coord.x = x + dx
+      coord.y = y - dy
+    elseif octant == 2 then
+      coord.x = x + dy
+      coord.y = y - dx
+    elseif octant == 3 then
+      coord.x = x - dy
+      coord.y = y - dx
+    elseif octant == 4 then
+      coord.x = x - dx
+      coord.y = y - dy
+    elseif octant == 5 then
+      coord.x = x - dx
+      coord.y = y + dy
+    elseif octant == 6 then
+      coord.x = x - dy
+      coord.y = y + dx
+    elseif octant == 7 then
+      coord.x = x + dy
+      coord.y = y + dx
+    elseif octant == 8 then
+      coord.x = x + dx
+      coord.y = y + dy
+    else
+      printl("MapHelper.octant에 들어온 octant의 값이 1에서 8 사이가 아닙니다: octant = " .. tostring(octant))
+    end
+    return coord
+  end
+  function MapHelper.blockslight(mapdata, dx, dy, octant)
+    local x = mapdata.playerhorizontal
+    local y = mapdata.playervertical
+    local coord = MapHelper.octant(x, y, octant, dx, dy)
+    local index = MapHelper.xyto1d(coord.x, coord.y, mapdata.width)
+    if (1 <= index) and (index <= mapdata.height * mapdata.width) then
+      return not checktile(mapdata[index], (mapdata[mapdata[index]] and mapdata[mapdata[index]].dungeonobjecttype))
+    end
+    return true
+  end
+  function MapHelper.setvisible(mapdata, dx, dy, octant)
+    local x = mapdata.playerhorizontal
+    local y = mapdata.playervertical
+    local coord = MapHelper.octant(x, y, octant, dx, dy)
+    local index = MapHelper.xyto1d(coord.x, coord.y, mapdata.width)
+    if (1 <= index) and (index <= mapdata.height * mapdata.width) then
+      mapdata.visualmap[index] = "　"
     end
     return mapdata.visualmap
+  end
+  function MapHelper.getdistance(x1, y1, x2, y2)
+    return math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1))
   end
 
   function checktile(tile, alt)
     visible = false
-    if (tile == "wall") then visible = false
-    elseif (tile == "blank") then visible = true
-    elseif (tile == "door") then visible = false
+    if (tile == "blank") then visible = true
     elseif (tile == "transparent") then visible = true
     elseif (tile == "nofloor") then visible = true
     elseif (alt == "steponevent") then visible = true
@@ -297,6 +373,8 @@
     elseif (alt == "enemy") then visible = true
     elseif (alt == "boss") then visible = true
     elseif (alt == "blank") then visible = true
+    elseif (alt == "transparent") then visible = true
+    elseif (alt == "nofloor") then visible = true
     end
     return visible
   end
@@ -342,7 +420,7 @@
     currentmap.playerhorizontal = currentmap[currentkey].placewidth
     currentmap.playervertical = currentmap[currentkey].placeheight
     currentmap.visiblerange = player.dungeonvisiblerange
-    currentmap.visualmap = automapper(currentfloor, d)
+    currentmap.visualmap = automapper(currentmap)
     dungeondraw(currentfloor, d)
     while (i.maincommand ~= "exit") do
       i = playercommand(dungeoncommand, player, currentmap)
@@ -672,7 +750,7 @@
       end
     end
     d1.F = function()
-      if not world.dungeon["openingdungeon"].map[1]["Ｄ"].key then
+      if not d1["Ｄ"].key then
         printpara("무언가가 떨어져 있다...",
         "어떤 문을 열 수 있는 열쇠인 것 같다. 가지고 있자.")
         d1["Ｄ"].key = true
@@ -703,6 +781,7 @@
           "몸 상태가 얼마나 좋은지 모르겠으니, 당신 페이스대로 가자고.")
         printl("[DEBUG] /fb차기현/x을 파티원에 추가")
         sayw("/fb차기현/x", "메뉴를 열어서 지금 상태를 확인할 수 있는 걸 잊지 말고.")
+        player.dungeonmenuavailable = true
         d1.flags["G"] = true
       end
     end
