@@ -50,6 +50,7 @@
   player.journeypreference.confirm = false
   player.journeypreference.autocommand = true
   player.dungeonvisiblerange = 7
+  player.dungeonmenuavailable = false
   player.battlepreference = {}
   player.battlepreference.expandephemeral = true
   player.battlepreference.draworderbar = true

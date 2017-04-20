@@ -28,7 +28,7 @@
     elseif playerchoice == "2" then
       save("savetemp.txt")
     elseif playerchoice == "3" then
-      enterdungeon("openingdungeon", "Ｓ")
+      enterdungeon("openingdungeon", 1)
     elseif playerchoice == "4" then
       startgamebyenteringinitialposition("CheonhoStation")
     elseif playerchoice == "5" then
