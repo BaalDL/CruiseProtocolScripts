@@ -39,4 +39,6 @@
   EnemyPartyTempletes["thugs3"] = {"knifethug", "knifethug", "knifethug", "thug"}
   EnemyPartyTempletes["thugs4"] = {"knifethug", "knifethug", "thug", "thug"}
 
+  EnemyPartyTempletes["twoimps"] = {"tutorialimp", "tutorialimp"}
+  EnemyPartyTempletes["threeimps"] = {"tutorialimp", "tutorialimp", "tutorialimp"}
 #end

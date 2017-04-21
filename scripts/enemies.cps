@@ -127,6 +127,66 @@
     nullEphemerals = {sleep={0,1},stoned={0,1}}
   }
 
+  EnemyTempletes["tutorialimp"] = {
+    name = "임프",
+    genderTable = { 'male', 'female', 'nonbinary' },
+    strengthTable = { -1, 0, 0, 0, 0, 0, 1, 1, 2},
+    strengthPercent = 0.05,
+    HPBase = 50,
+    ResourceBase = 100,
+    ResourceType = "None",
+    Race = "Devil",
+    AttackType = "BasicAttack_Strike",
+    physicalAttack = 5,
+    physicalDefense = 8,
+    physicalSpeed = 10,
+    specialAttack = 15,
+    specialDefense = 10,
+    specialSpeed = 12,
+    skills = {
+      SkillList["SingleAttack_Fire1"],
+    },
+    maxSkillCharges = {},
+    defensiveType = {
+      Slash = "s",
+      Strike = "s",
+      Pierce = "s",
+      Bite = "s",
+      Bullet = "s",
+      Throwing = "s",
+      Burst = "s",
+      Fire = "s",
+      Water = "s",
+      Ice = "s",
+      Grass = "s",
+      Wind = "s",
+      Electric = "s",
+      Ground = "s",
+      Luminous = "s",
+      Dark = "s"
+    },
+    defensiveFactor = {
+      Slash = 100,
+      Strike = 100,
+      Pierce = 100,
+      Bite = 100,
+      Bullet = 100,
+      Throwing = 100,
+      Burst = 100,
+      Fire = 75,
+      Water = 100,
+      Ice = 100,
+      Grass = 100,
+      Wind = 100,
+      Electric = 100,
+      Ground = 100,
+      Luminous = 100,
+      Dark = 100
+    },
+    AICommand = randomlyattacktargetwithskills,
+    nullEphemerals = {}
+  }
+
 
   for k, _ in pairs(EnemyTempletes) do
     EnemyInfo[k] = false

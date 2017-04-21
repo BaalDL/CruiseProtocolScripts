@@ -139,18 +139,18 @@
           mapdata.playerhorizontal = newx
           mapdata.playervertical = newy
         elseif (k.dungeonobjecttype == "enemy") then
-          printlw("문을 열고 넘어가니, 적이 기다리고 있다!")
-          enemyparty = initializeenemyparty(EnemyPartyTempletes["thugs1"])
-          local result = battlehandler(currentpartymembers, enemyparty)
+          printlw("적과 마주쳤다!")
+          enemyparty = initializeenemyparty(EnemyPartyTempletes[k.group])
+          local result = battlehandler(enemyparty, k.fleeable)
           if result == "victory" then
             mapdata.playerhorizontal = newx
             mapdata.playervertical = newy
             k.dungeonobjecttype = "blank"
           end
         elseif (k.dungeonobjecttype == "boss") then
-          printlw("문을 열고 넘어가니, 적이 기다리고 있다!")
+          printlw("적과 마주쳤다!")
           enemyparty = initializeenemyparty(EnemyPartyTempletes["thugs4"])
-          local result = battlehandler(currentpartymembers, enemyparty)
+          local result = battlehandler(enemyparty, k.fleeable)
           if result == "victory" then
             mapdata.playerhorizontal = newx
             mapdata.playervertical = newy
@@ -492,10 +492,10 @@
     local height = 20
     local firstlevel = [[
     ＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃＃
-    ＃　　　Ｊ　　　　　　　Ｉ　　　　　　＃
-    ＃　凶　＃　＃＃　　　　＃＃＃＃　　　＃
+    ＃　　　　　　　Ｊ三　　Ｉ　　　　　　＃
+    ＃　凶　＃　＃＃　　　　＃＃＃　　　　＃
     ＃凶凶　　　　＃　　　凶凶　　＃　凶　＃
-    ＃　　　＃＃＃＃＃＃＃＃＃＃＃＃　凶　＃
+    ＃　　　＃＃＃　＃＃＃　＃＃＃＃　凶　＃
     ＃　　　　　　　　　　＃Ｈ　　　　　　＃
     ＃＃門＃＃＃＃＃＃＃＃＃門＃＃＃＃＃＃＃
     ＃　Ｋ　　　　　　　Ｎ＃　　　　Ｑ＃Ｆ＃
@@ -580,7 +580,7 @@
 
         q[1] = {answer = "답변이 늦어져서 미안하군요. 여기… 사람 있어요."}
 
-        q[2] = {answer = "나는 /fW" .. player.Name .. "/x입니다. 적의는 없어요."}
+        q[2] = {answer = "적의는 없어요."}
         
         q[3] = {answer = "여긴 어디죠? 당신은 누구죠?"}
 
@@ -779,12 +779,37 @@
           "내가 서 있던 자리는 아예 꺼져버렸고 말이야. 위헝했어….")
         sayw("/fb차기현/x", "뭐, 다른 쪽 길로 나가보자고.",
           "몸 상태가 얼마나 좋은지 모르겠으니, 당신 페이스대로 가자고.")
-        printl("[DEBUG] /fb차기현/x을 파티원에 추가")
+        addtocurrentparty("TutorialMember1")
         sayw("/fb차기현/x", "메뉴를 열어서 지금 상태를 확인할 수 있는 걸 잊지 말고.")
         player.dungeonmenuavailable = true
         d1.flags["G"] = true
       end
     end
+
+  d1.H = function()
+    if not d1.flags["H"] then
+      printpara("문을 열고 상품 진열대와 기둥의 잔해가 복잡하게 얽혀 있는 공간으로 나오니",
+        "공간 한 켠에서 소란스럽게 무언가가 떨어져 깨지고 부서지는 소리가 난다.")
+      sayw("/fb차기현/x", "뭐야! /fg강은지/x, 무사해?")
+      printpara("차기현은 소리가 들린 쪽을 향해 외쳤다.",
+        "요란한 소리가 난 쪽에서 높은 목소리로 대답이 돌아왔다.")
+      sayw("/fg강은지/x", "네가 아까 말한 대로네, 선행정찰대는 뭘 한거야!",
+        "쥐새끼만한 놈들이지만, 괴물이야!",
+        "그 쪽에도 한두 마리 있으니까, 처리 좀 해 줘!")
+      sayw("/fb차기현/x", "알겠어!")
+      printpara("그렇게 말한 청년은 나를 보고 말한다.")
+      sayw("/fb차기현/x", "상황은 알겠지? 내게서 떨어지지 않는 게 좋을 거야.",
+        "…어쩌면…",
+        "아냐. 일단 죽지 않는 걸 최우선으로 하라고.")
+      automapper(d1)
+      moveobject(d1, d, "d", true)
+      d1.flags["H"] = true
+    else
+      sayw("/fb차기현/x", "미안하지만 돌아갈 수는 없어.",
+        "동료가 위험해.")
+      moveobject(d1, d, "d", true)
+    end
+  end
 
     d1["Ｓ"] = {dungeonobjecttype="start", placewidth=3, placeheight=19, linkto="", linkwhere=""}
 
@@ -806,8 +831,8 @@
     d1.flags["G"] = false
     d1["Ｈ"] = {dungeonobjecttype="steponevent", event=d1.H}
     d1.flags["H"] = false
-    d1["Ｉ"] = {dungeonobjecttype="enemy", group="null"}
-    d1["Ｊ"] = {dungeonobjecttype="enemy", group="null"}
+    d1["Ｉ"] = {dungeonobjecttype="enemy", group="twoimps", fleeable = false}
+    d1["Ｊ"] = {dungeonobjecttype="enemy", group="threeimps", fleeable = false}
     d1["Ｋ"] = {dungeonobjecttype="steponevent", event=d1.K}
     d1.flags["K"] = false
     d1["Ｌ"] = {dungeonobjecttype="steponevent", event=d1.L}
@@ -819,6 +844,7 @@
 
     d1["一"] = {dungeonobjecttype="npc", icon="/fb人/x"}
     d1["二"] = {dungeonobjecttype="npc", icon="/fb차/x"}
+    d1["三"] = {dungeonobjecttype="npc", icon="/fg강/x"}
     
   end
 
