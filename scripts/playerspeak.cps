@@ -1,5 +1,5 @@
 #function playerspeak
-  function playerspeak(inquery, ...)
+  function playerspeak(inquery, isgreeting, ...)
     local args = {n=select('#',...),...}
     if (next(inquery.references) ~= nil) then
       for i, v in ipairs(inquery.references) do
@@ -38,7 +38,11 @@
         end
       end
     end
-    printl(inquery.question)
+    if (isgreeting and inquery.initialquestion) then
+      printl(inquery.initialquestion)
+    else
+      printl(inquery.question)
+    end
     for i, v in ipairs(answerstringtable) do
       printl(v)
     end

@@ -37,7 +37,7 @@
       campmenu()
     elseif playerchoice == "8" then
       startdialogue("Doctor1", "Explanation")
-      --playerspeak(testinquery, player)
+      --playerspeak(testinquery, false, player)
     elseif playerchoice == "9" then
       startinfiltration(7, 1, player)
     end
