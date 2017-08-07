@@ -16,11 +16,35 @@
   player.skillpoint = 0
   player.maxskillpoint = 100
   player.flags = {}
-  
+
+  player.params = {"strength", "manuever", "agility", "fortitude", "intelligence", "wisdom", "decision", "willpower", "charisma", "luck"}
+  player.paramnames = {"근력", "조작", "기민", "강인", "지식", "지혜", "판단", "의지", "매력", "행운"}
+
+  player.parammt = {}
+  function player.parammt.__add(a, b)
+    if getmetatable(a) ~= player.parammt or getmetatable(b) ~= player.parammt then
+      error("attempt to parammt.__add which do not havs param metatable", 2)
+    elseif #a ~= #b then
+      error("attempt to parammt.__add two tables which do not have same elements")
+    end
+    local result = a
+    for k, v in pairs(result) do
+      if result[k] == nil then
+        result[k] = b[k]
+      elseif b[k] == nil then
+      else
+        result[k] = result[k] + b[k]
+      end
+    end
+    return result
+  end
+
+  setmetatable(player.params, player.parammt)
+
   for _, v in ipairs(PlayerSkillHelper.GetSkillsByTag("Default")) do
     player.skills[v] = true
   end
-  player.skills["journeytype_loot"] = true
+  player.skills["journeytype_loot"] = true -- TEMPORARY
 
   function player.addskillpoint(amount)
     player.skillpoint = math.min(player.skillpoint + amount, player.maxskillpoint)
@@ -60,4 +84,22 @@
   inventory[104] = 5
   inventory[201] = 3
   table.sort(inventory)
+#end
+
+#function playercharactergeneration
+  function playercharacterparamgeneration()
+    local default = {5, 5, 5, 5, 5, 5, 5, 5, 5, 5}
+    setmetatable(default, player.parammt)
+    player.params = player.params + default
+  end
+
+  charactergenerationcommand = {}
+  charactergenerationcommand.references = {}
+  charactergenerationcommand.returns = {"params", "skills"}
+  charactergenerationcommand.commands = {}
+
+  function charactergenerationcommand:initial()
+    charactergenerationcommand.commands["params"] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+    charactergenerationcommand.commands["skills"] = {}
+  end
 #end

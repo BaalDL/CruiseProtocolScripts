@@ -10,6 +10,7 @@
   execute ("configurebasicparameters")
   execute ("loadbattledata")
   execute ("playercharacterdata")
+  execute ("playercharactergeneration")
   execute ("dungeonsearchfunctions")
   execute ("adventureoutdoors")
   execute ("infiltration")
